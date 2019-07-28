@@ -16,8 +16,6 @@ let tmdb = got.extend({
 	json   : true
 });
 
-
-
 /**
  * Send a GET request
  */
