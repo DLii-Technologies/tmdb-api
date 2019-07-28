@@ -10,6 +10,12 @@ export enum Status {
 	Rumored        = "Rumored"
 }
 
+export enum MediaType {
+	Movie  = "movie",
+	Person = "person",
+	Tv     = "tv"
+}
+
 export enum VideoType {
 	BehindTheScenes = "Behind the Scenes",
 	Bloopers        = "Bloopers",

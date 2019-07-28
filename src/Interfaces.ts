@@ -1,4 +1,4 @@
-import { Status, VideoType, EpisodeGroupType } from "Enums";
+import { Status, VideoType, EpisodeGroupType, MediaType } from "Enums";
 
 export interface Response {
 	status_code   : number;
@@ -13,7 +13,15 @@ export interface AlternativeTitles {
 		iso_3166_1: string;
 		title     : string;
 		type      : string;
-	}
+	}[]
+}
+
+export interface AlternativeNames{
+	id: number,
+	titles: {
+		name: string;
+		type: string;
+	}[];
 }
 
 export interface Member {
@@ -55,10 +63,25 @@ export interface Image {
 	width       : number;
 }
 
+export interface Logo extends Image {
+	file_type: string;
+}
+
+export interface TaggedImage extends Image {
+	id        : string;
+	media     : MovieListing[] | SeriesListing[];
+	media_type: string;
+	image_type: string;
+}
+
 export interface Images {
 	id       : number;
 	backdrops: Image[];
 	posters  : Image[];
+}
+
+export interface TaggedImages extends Paginated {
+	results: TaggedImage[];
 }
 
 export interface SeasonImages {
@@ -86,13 +109,16 @@ export interface Genre {
 	name: string;
 }
 
+export interface Company {
+	id       : number;
+	logo_path: string | null;
+	name     : string;
+}
+
 /**
  * A production company
  */
-export interface ProductionCompany {
-	id            : number;
-	logo_path     : string | null;
-	name          : string;
+export interface ProductionCompany extends Company {
 	origin_country: string;
 }
 
@@ -123,7 +149,7 @@ export interface Keyword {
 	name: string;
 }
 
-export interface Keywords {
+export interface KeywordList {
 	id      : number;
 	keywords: Keyword[];
 }
@@ -157,7 +183,67 @@ export interface TranslationList {
 	results: Translation[];
 }
 
-// Lists ------------------------------------------------------------------------------------------
+/**
+ * A single review
+ */
+export interface ReviewListing {
+	id     : string;
+	author : string;
+	content: string;
+	url    : string;
+}
+
+export interface ReviewDetails extends ReviewListing {
+	iso_639_1  : string;
+	media_id   : number;
+	media_title: string;
+	media_type : MediaType;
+}
+
+/**
+ * A list of reviews
+ */
+export interface Reviews extends Paginated {
+	id     : number;
+	results: ReviewListing[];
+}
+
+interface MediaModel {
+	media_type?: MediaType;
+}
+
+// Collections -------------------------------------------------------------------------------------
+
+/**
+ * @WARN Very similar to `MovieBase`
+ */
+export interface CollectionPart {
+	adult            : boolean;
+	backdrop_path    : string | null;
+	genre_ids        : number[];
+	id               : number;
+	original_language: string;
+	original_title   : string;
+	overview         : string;
+	release_date     : string;
+	poster_path      : string;
+	popularity       : number;
+	title            : string;
+	video            : boolean;
+	vote_average     : number;
+	vote_count       : number;
+}
+
+export interface CollectionDetails {
+	id           : number;
+	name         : string;
+	overview     : string;
+	poster_path  : string | null;
+	backdrop_path: string;
+	parts        : CollectionPart[];
+}
+
+// Lists -------------------------------------------------------------------------------------------
 
 interface ListBase {
 	description   : string;
@@ -235,7 +321,7 @@ export interface Language {
 	name     : string
 }
 
-interface MovieBase {
+interface MovieBase extends MediaModel {
 	adult            : boolean;
 	backdrop_path    : string | null;
 	id               : number;
@@ -253,7 +339,7 @@ interface MovieBase {
 
 export interface MovieListing extends MovieBase {
 	genre_ids: number[];
-	rating  ?: number;  // @WARN May cause issues later on... If so a new type needs to be made
+	rating  ?: number;
 }
 
 /**
@@ -333,37 +419,8 @@ export interface MovieTranslationList extends TranslationList {
 	translations: MovieTranslation[];
 }
 
-export interface MovieResults extends Paginated {
-	results: MovieListing[];
-}
-
-/**
- * A single review
- */
-export interface Review {
-	id     : string;
-	author : string;
-	content: string;
-	url    : string;
-}
-
-/**
- * A list of reviews
- */
-export interface Reviews extends Paginated {
-	id     : number;
-	results: Review[];
-}
-
 export interface MovieLists extends Lists {
 	id: number;
-}
-
-export interface MoviesResultsWithinDate extends MovieResults {
-	dates: {
-		minimum: string; // format: date
-		maximum: string; // format: date
-	}
 }
 
 // Networks ----------------------------------------------------------------------------------------
@@ -375,7 +432,12 @@ export interface Network {
 	name          : string;
 	id            : number;
 	logo_path     : string;
-	origin_country: string
+	origin_country: string;
+}
+
+export interface NetworkLogos {
+	id: number;
+	logos: Image;
 }
 
 // TV Shows ----------------------------------------------------------------------------------------
@@ -433,18 +495,14 @@ interface EpisodeBase {
 	vote_count     : number;
 }
 
-export interface Episode extends EpisodeBase {
-	episode_number : number;
-	production_code: string;
-	season_number  : number;
-	show_id        : number; // Another one... Fo real?
-	still_path     : string;
+export interface EpisodeListing extends EpisodeBase {
+	show_id: number;  // Another one... Fo real?
 }
 
 export interface EpisodeDetails extends EpisodeBase {
-	crew           : CrewMember[];
-	guest_stars    : GuestStar[];
-	id             : number;
+	crew       : CrewMember[];
+	guest_stars: GuestStar[];
+	id         : number;
 }
 
 export interface EpisodeGroup {
@@ -457,7 +515,7 @@ export interface EpisodeGroup {
 	type         : EpisodeGroupType;
 }
 
-export interface EpisodeGrouped extends Episode {
+export interface EpisodeGrouped extends EpisodeListing {
 	order: number;
 }
 
@@ -552,7 +610,7 @@ export interface SeriesChanges {
 	changes: SeriesChange[];
 }
 
-interface SeriesBase {
+interface SeriesBase extends MediaModel {
 	backdrop_path    : string | null;
 	first_air_date   : string;
 	id               : number;
@@ -568,7 +626,8 @@ interface SeriesBase {
 }
 
 export interface SeriesListing extends SeriesBase {
-	genre_ids        : number[];
+	genre_ids: number[];
+	rating  ?: number; // @WARN Only used when retrieving rated TV shows
 }
 
 export interface SeriesDetails extends SeriesBase {
@@ -579,8 +638,8 @@ export interface SeriesDetails extends SeriesBase {
 	in_production       : boolean;
 	languages           : string[];
 	last_air_date       : string;
-	last_episode_to_air : Episode;
-	next_episode_to_air : Episode | null;
+	last_episode_to_air : EpisodeListing;
+	next_episode_to_air : EpisodeListing | null;
 	networks            : Network[];
 	production_companies: ProductionCompany[];
 	seasons             : SeasonListing[];
@@ -624,3 +683,154 @@ export interface SeriesTranslation extends Translation {
 export interface SeriesTranslationList extends TranslationList {
 	translations: SeriesTranslation[];
 }
+
+// Searching ---------------------------------------------------------------------------------------
+
+export interface CompanyResults extends Paginated {
+	results: CompanyResults[];
+}
+
+export interface CollectionResults extends Paginated {
+	results: CollectionList[];
+}
+
+export interface KeywordResults extends Paginated {
+	results: Keyword[];
+}
+
+export interface MovieResults extends Paginated {
+	results: MovieListing[];
+}
+export interface MoviesResultsWithinDate extends MovieResults {
+	dates: {
+		minimum: string; // format: date
+		maximum: string; // format: date
+	}
+}
+
+// People ------------------------------------------------------------------------------------------
+
+export interface PersonImages {
+	id      : number,
+	profiles: Image[];
+}
+
+export interface PersonTranslation extends Translation {
+	data: {
+		biography: string;
+	}
+}
+
+export interface PersonTranslationList {
+	id          : number;
+	translations: PersonTranslation[];
+}
+
+export interface PersonExternalIdList extends ExternalIdList{
+	freebase_mid: string | null;
+	freebase_id : string | null;
+	tvrage_id   : number | null;
+}
+
+export interface PersonChangeItem {
+	id             : string;
+	action         : string;
+	time           : string;
+	original_value?: string;
+}
+
+export interface PersonChange {
+	key  : string;
+	items: PersonChangeItem[];
+}
+
+export interface PersonChanges {
+	changes: PersonChange[];
+}
+
+interface PersonBase {
+	adult       : boolean;
+	popularity  : number;
+	profile_path: string | null;
+	id          : number;
+	name        : string;
+}
+
+export interface PersonListing extends PersonBase, MediaModel {
+	known_for: MovieListing[] | SeriesListing[];
+}
+
+export interface PersonResults extends Paginated {
+	results: PersonListing[];
+}
+
+export interface PersonDetails extends PersonBase{
+	also_known_as       : string[];
+	biography           : string;
+	birthday            : string | null;
+	deathday            : string | null;
+	gender              : number;
+	homepage            : string | null;
+	imdb_id             : string;
+	known_for_department: string;
+	place_of_birth      : string | null;
+}
+
+/**
+ * Common attributes that are shared across all detailed reports
+ */
+interface MemberDetailsBase {
+	backdrop_path: string | null;
+	credit_id    : string;
+	genre_ids    : number[];
+	id           : number;
+	overview     : string;
+	popularity   : number;
+	poster_path  : string | null;
+	vote_average : number;
+	vote_count   : number;
+}
+
+/**
+ * Additional movie-specific attributes
+ */
+interface MovieMemberDetailsBase extends MemberDetailsBase {
+	adult       : boolean;
+	release_date: string;
+	title       : string;
+	video       : boolean
+}
+
+/**
+ * Additional TV-specific attributes
+ */
+interface TvMemberDetailsBase extends MemberDetailsBase {
+	episode_count    : number;
+	first_air_date   : string;
+	name             : string;
+	origin_country   : string[];
+	original_language: string;
+	original_name    : string;
+}
+
+export interface MovieCastMemberDetails extends MovieMemberDetailsBase {
+	character: string;
+}
+
+export interface MovieCrewMemberDetails extends MovieMemberDetailsBase {
+	department       : string;
+	job              : string;
+	original_language: string;
+	original_title   : string;
+}
+
+export interface TvCastMemberDetails extends TvMemberDetailsBase {
+	character        : string;
+}
+
+export interface TvCrewMemberDetails extends TvMemberDetailsBase {
+	department: string;
+	job: string;
+}
+
+
