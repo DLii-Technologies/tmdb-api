@@ -14,4 +14,18 @@ export class Tmdb
 	constructor(apiKey: string) {
 		this.__apiKey = apiKey;
 	}
+
+	/**
+	 * Find an item by an external ID
+	 */
+	find() {
+
+	}
+
+	/**
+	 * Search for a movie or TV show
+	 */
+	search() {
+
+	}
 }
