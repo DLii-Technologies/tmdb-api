@@ -1,3 +1,6 @@
+import { CompanyResults } from "./Interfaces";
+import { get, post, del } from "./Network";
+
 /**
  * API instance
  */
@@ -13,6 +16,13 @@ export class Tmdb
 	 */
 	constructor(apiKey: string) {
 		this.__apiKey = apiKey;
+	}
+
+	/**
+	 * Search a company
+	 */
+	searchCompany(query: string, page: number = 1) {
+		return get<CompanyResults>(this.__apiKey, "/search/company", {query, page});
 	}
 
 	/**

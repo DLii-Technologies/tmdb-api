@@ -691,7 +691,7 @@ export interface SeriesTranslationList extends TranslationList {
 // Searching ---------------------------------------------------------------------------------------
 
 export interface CompanyResults extends Paginated {
-	results: CompanyResults[];
+	results: Company[];
 }
 
 export interface CollectionResults extends Paginated {
