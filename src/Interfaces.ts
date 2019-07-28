@@ -234,11 +234,15 @@ export interface CollectionPart {
 	vote_count       : number;
 }
 
-export interface CollectionDetails {
+export interface CollectionListing {
 	id           : number;
+	backdrop_path: string | null;
 	name         : string;
-	overview     : string;
 	poster_path  : string | null;
+}
+
+export interface CollectionDetails extends CollectionListing {
+	overview     : string;
 	backdrop_path: string;
 	parts        : CollectionPart[];
 }
@@ -691,7 +695,7 @@ export interface CompanyResults extends Paginated {
 }
 
 export interface CollectionResults extends Paginated {
-	results: CollectionList[];
+	results: CollectionListing[];
 }
 
 export interface KeywordResults extends Paginated {
