@@ -74,7 +74,7 @@ export interface TaggedImage extends Image {
 	image_type: string;
 }
 
-export interface Images {
+export interface ImageList {
 	id       : number;
 	backdrops: Image[];
 	posters  : Image[];
@@ -203,13 +203,18 @@ export interface ReviewDetails extends ReviewListing {
 /**
  * A list of reviews
  */
-export interface Reviews extends Paginated {
+export interface ReviewList extends Paginated {
 	id     : number;
 	results: ReviewListing[];
 }
 
 interface MediaModel {
 	media_type?: MediaType;
+}
+
+export interface ChangesOptions {
+	start_date?: string;
+	end_date  ?: string;
 }
 
 // Collections -------------------------------------------------------------------------------------
@@ -269,6 +274,7 @@ export interface ListDetails extends ListBase {
 }
 
 export interface Lists extends Paginated {
+	id     : number;
 	results: List[];
 }
 
@@ -401,14 +407,14 @@ export interface MovieReleaseDate {
 	note         : string;
 }
 
-export interface MovieReleaseDateResult {
+export interface MovieReleaseDateListing {
 	iso_3166_1   : string;
 	release_dates: MovieReleaseDate[];
 }
 
-export interface MovieReleaseDates {
+export interface MovieReleaseDateResults {
 	id     : number;
-	results: MovieReleaseDateResult[];
+	results: MovieReleaseDateListing[];
 }
 
 export interface MovieTranslation extends Translation {

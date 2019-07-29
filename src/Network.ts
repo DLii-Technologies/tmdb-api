@@ -1,5 +1,4 @@
 import * as got from "got";
-import { URLSearchParams } from "url";
 import { Response } from "Interfaces";
 
 /**

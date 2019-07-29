@@ -1,1 +1,1 @@
-export * from "./Tmdb";
+export * from "./TMDb";

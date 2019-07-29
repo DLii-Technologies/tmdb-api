@@ -16,13 +16,13 @@ use(require("chai-subset"));
 /**
  * Import modules to test
  */
-import { Tmdb } from "../src";
+import { TMDb } from "../src";
 
 // -------------------------------------------------------------------------------------------------
 
 /**
  * Create the TMDB instance
  */
-export let tmdb = new Tmdb(<string>process.env["TMDB_API_KEY"]);
+export let tmdb = new TMDb(<string>process.env["TMDB_API_KEY"]);
 
 console.log("Instance created");

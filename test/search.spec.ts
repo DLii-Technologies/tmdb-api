@@ -5,11 +5,9 @@ import { tmdb } from "./config";
 /**
  * Import modules to test
  */
-import { Tmdb } from "../src";
+import { TMDb } from "../src";
 import { StatusCode, MediaType } from "../src/Enums";
-import * as Network from "../src/Network";
 import {
-	Response,
 	CompanyResults,
 	MovieResults,
 	SeriesResults,
@@ -22,17 +20,6 @@ import {
 // -------------------------------------------------------------------------------------------------
 
 describe("Search API", () => {
-	/**
-	 * Test out the error mechanism. Do so by using a bad API key
-	 */
-	it("API Error Mechanism", () => {
-		// Use a bad API key
-		return new Tmdb("12345").searchCompanies("Sony").catch((response) => {
-			expect(response.status_code).to.equal(StatusCode.InvalidApiKey);
-			expect(response.status_message).to.equal("Invalid API key: You must be granted a valid key.");
-		});
-	});
-
 	/**
 	 * Search for a specific company
 	 */

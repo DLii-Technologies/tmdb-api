@@ -43,9 +43,9 @@ export enum StatusCode {
  */
 export enum Status {
 	Canceled       = "Canceled",
-	InProduction   = "InProduction",
+	InProduction   = "In Production",
 	Planned        = "Planned",
-	PostProduction = "PostProduction",
+	PostProduction = "Post Production",
 	Released       = "Released",
 	Rumored        = "Rumored"
 }
