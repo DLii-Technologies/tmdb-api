@@ -1,33 +1,25 @@
-import { config } from "dotenv";
-import { expect, should, use } from "chai";
+import { expect } from "chai";
 import "mocha";
-
-/**
- * Load the environment configuration
- */
-config();
-
-/**
- * Setup Chai
- */
-should();
-use(require("chai-things"));
-use(require("chai-subset"));
+import { tmdb } from "./config";
 
 /**
  * Import modules to test
  */
-import { Tmdb }     from "../src";
-import { Response, CompanyResults, MovieResults, SeriesResults, PersonResults, MultiSearchResults, KeywordResults, CollectionResults } from "../src/Interfaces";
+import { Tmdb } from "../src";
 import { StatusCode, MediaType } from "../src/Enums";
 import * as Network from "../src/Network";
+import {
+	Response,
+	CompanyResults,
+	MovieResults,
+	SeriesResults,
+	PersonResults,
+	MultiSearchResults,
+	KeywordResults,
+	CollectionResults
+} from "../src/Interfaces";
 
 // -------------------------------------------------------------------------------------------------
-
-/**
- * Create the TMDB instance
- */
-let tmdb = new Tmdb(<string>process.env["TMDB_API_KEY"]);
 
 describe("Search API", () => {
 	/**

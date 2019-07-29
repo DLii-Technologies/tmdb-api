@@ -10,10 +10,15 @@ import {
 	PersonSearchOptions,
 	MultiSearchResults,
 	MultiSearchOptions,
-	CollectionSearchOptions
+	CollectionSearchOptions,
+	MovieListing,
+	SeriesListing,
+	PersonListing,
+	FindResults
 } from "./Interfaces";
 
 import { get, post, del } from "./Network";
+import { ExternalSource } from "Enums";
 
 /**
  * API instance
@@ -89,7 +94,10 @@ export class Tmdb
 	/**
 	 * Find an item by an external ID
 	 */
-	find() {
-
+	find(externalId: string, externalSource: ExternalSource, language?: string) {
+		return get<FindResults>(this.__apiKey, `/find/${externalId}`, {
+			external_source: externalSource,
+			language
+		});
 	}
 }

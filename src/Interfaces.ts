@@ -490,6 +490,7 @@ export interface EpisodeAccountState {
 interface EpisodeBase {
 	air_date       : string;
 	episode_number : number;
+	id             : number; // May have issues with this ID being here, was in `EpisodeDetails`
 	name           : string;
 	overview       : string;
 	production_code: string | null;
@@ -500,13 +501,12 @@ interface EpisodeBase {
 }
 
 export interface EpisodeListing extends EpisodeBase {
-	show_id: number;  // Another one... Fo real?
+	show_id: number;
 }
 
 export interface EpisodeDetails extends EpisodeBase {
 	crew       : CrewMember[];
 	guest_stars: GuestStar[];
-	id         : number;
 }
 
 export interface EpisodeGroup {
@@ -686,6 +686,16 @@ export interface SeriesTranslation extends Translation {
 
 export interface SeriesTranslationList extends TranslationList {
 	translations: SeriesTranslation[];
+}
+
+// Find --------------------------------------------------------------------------------------------
+
+export interface FindResults {
+	movie_results     : MovieListing[];
+	person_results    : PersonListing[];
+	tv_results        : SeriesListing[];
+	tv_episode_results: EpisodeListing[];
+	tv_season_results : SeasonListing[];
 }
 
 // Searching ---------------------------------------------------------------------------------------

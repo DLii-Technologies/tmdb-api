@@ -79,3 +79,14 @@ export enum EpisodeGroupType {
 	Production      = 6,
 	Tv              = 7
 }
+
+export enum ExternalSource {
+	Imdb        = "imdb_id",
+	FreebaseMid = "freebase_mid",
+	Freebase    = "freebase_id",
+	TvDb        = "tvdb_id",
+	TvRage      = "tvrage_id",
+	Facebook    = "facebook_id",
+	Twitter     = "twitter_id",
+	Instagram   = "instagram_id"
+}
