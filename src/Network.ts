@@ -19,23 +19,35 @@ let tmdb = got.extend({
 /**
  * Send a GET request
  */
-export function get<T extends object>(apiKey: string, uri: string, query: any = {}, body?: object) {
+export function get<T extends object>(apiKey: string, uri: string, query: any = {}) {
 	query["api_key"] = apiKey;
 	return new Promise<T>((resolve, reject) => {
-		tmdb.get(uri, {query}).then(result => resolve(<T>result.body)).catch(e => reject(e.body));
+		tmdb.get(uri, {query})
+			.then(result => resolve(<T>result.body))
+			.catch(e => reject(e.body));
 	});
 }
 
 /**
  * Send a POST request
  */
-export function post(apiKey: string, uri: string) {
-	return got.post(uri);
+export function post<T extends Response>(apiKey: string, uri: string, query: any = {}, body?: any) {
+	query["api_key"] = apiKey;
+	return new Promise<T>((resolve, reject) => {
+		tmdb.post(uri, {query, body})
+			.then(result => resolve(<T>result.body))
+			.catch(e => reject(e.body));
+	});
 }
 
 /**
  * Send a DEL request
  */
-export function del(apiKey: string, uri: string) {
-	// return got.del(uri);
+export function del<T extends Response>(apiKey: string, uri: string, query: any = {}, body?: any) {
+	query["api_key"] = apiKey;
+	return new Promise<T>((resolve, reject) => {
+		tmdb.delete(uri, {query, body})
+			.then(result => resolve(<T>result.body))
+			.catch(e => reject(e.body));
+	});
 }
