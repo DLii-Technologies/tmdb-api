@@ -11,9 +11,6 @@ import {
 	MultiSearchResults,
 	MultiSearchOptions,
 	CollectionSearchOptions,
-	MovieListing,
-	SeriesListing,
-	PersonListing,
 	FindResults,
 	MovieDetails,
 	AccountStates,
@@ -25,12 +22,15 @@ import {
 	ImageList,
 	KeywordList,
 	MovieReleaseDateResults,
-	MovieReleaseDateListing,
 	VideoList,
 	TranslationList,
 	ReviewList,
 	Lists,
-	Response
+	Response,
+	GuestSessionResponse,
+	RequestTokenResponse,
+	CreateSessionResponse,
+	DeleteSessionResponse
 } from "./Interfaces";
 
 import { get, post, del } from "./Network";
@@ -52,6 +52,46 @@ export class TMDb
 	constructor(apiKey: string) {
 		this.__apiKey = apiKey;
 	}
+
+	// Authentication ------------------------------------------------------------------------------
+
+	/**
+	 * Create a new guest session. Guest sessions will allow rating movies and TV shows without
+	 * requiring a TMDb account
+	 */
+	createGuestSession() {
+		return get<GuestSessionResponse>(this.__apiKey, `/authentication/guest_session/new`);
+	}
+
+	/**
+	 * Create a temporary request token that can be used to validate a TMDb user login
+	 */
+	createRequestToken() {
+		return get<RequestTokenResponse>(this.__apiKey, `/authentication/token/new`);
+	}
+
+	/**
+	 * Create a new session
+	 */
+	createSession(requestToken: string, username?: string, password?: string) {
+		let uri = username || password ? "token/validate_with_login" : "session/new";
+		return post<CreateSessionResponse>(this.__apiKey, `/authentication/${uri}`, {
+			request_token: requestToken,
+			username,
+			password
+		});
+	}
+
+	/**
+	 * Delete or "logout" from a session
+	 */
+	deleteSession(sessionId: string) {
+		return del<DeleteSessionResponse>(this.__apiKey, `/authentication/session`, {
+			session_id: sessionId
+		});
+	}
+
+	// Find API ------------------------------------------------------------------------------------
 
 	/**
 	 * Find an item by an external ID

@@ -25,4 +25,13 @@ import { TMDb } from "../src";
  */
 export let tmdb = new TMDb(<string>process.env["TMDB_API_KEY"]);
 
-console.log("Instance created");
+/**
+ * Store some authentication details for testing
+ */
+export let auth = {
+	guest_session_id: "",
+	session_id      : "",
+	request_token   : "",
+	username        : <string>process.env["TMDB_USERNAME"],
+	password        : <string>process.env["TMDB_PASSWORD"],
+};

@@ -108,7 +108,7 @@ export function get<T extends object>(apiKey: string, uri: string, query: any = 
 /**
  * Send a POST request
  */
-export function post<T extends Response>(apiKey: string, uri: string, query: any = {}, body?: any) {
+export function post<T extends object>(apiKey: string, uri: string, query: any = {}, body?: any) {
 	query["api_key"] = apiKey;
 	return new Promise<T>((resolve, reject) => {
 		throttle(() => {
@@ -122,7 +122,7 @@ export function post<T extends Response>(apiKey: string, uri: string, query: any
 /**
  * Send a DEL request
  */
-export function del<T extends Response>(apiKey: string, uri: string, query: any = {}, body?: any) {
+export function del<T extends object>(apiKey: string, uri: string, query: any = {}, body?: any) {
 	query["api_key"] = apiKey;
 	return new Promise<T>((resolve, reject) => {
 		throttle(() => {

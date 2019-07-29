@@ -5,6 +5,27 @@ export interface Response {
 	status_message: string;
 }
 
+export interface RequestTokenResponse {
+	success      : boolean;
+	expires_at   : string;
+	request_token: string;
+}
+
+export interface GuestSessionResponse {
+	success         : boolean;
+	guest_session_id: string;
+	expires_at      : string;
+}
+
+export interface CreateSessionResponse {
+	success   : boolean;
+	session_id: string;
+}
+
+export interface DeleteSessionResponse {
+	success: boolean;
+}
+
 // Shared -----------------------------------------------------------------------------------------
 
 export interface AlternativeTitles {
