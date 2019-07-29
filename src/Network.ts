@@ -3,6 +3,11 @@ import { URLSearchParams } from "url";
 import { Response } from "Interfaces";
 
 /**
+ * Create a simple Request type
+ */
+type Request = () => Promise<any>;
+
+/**
  * Constants
  */
 const BASE_URL    = "https://api.themoviedb.org";
@@ -19,22 +24,22 @@ export var throttleEnabled = true;
 var requestBucket: number[] = [];
 
 /**
+ * Keep a queue of pending requests once limit is reached
+ */
+var queue: Request[] = [];
+
+/**
+ * Used to delay execution of the next request
+ */
+var executeTimeout: NodeJS.Timeout | null = null;
+
+/**
  * Extend Got to use JSON and the base URL
  */
 let tmdb = got.extend({
 	baseUrl: `${BASE_URL}/${API_VERSION}`,
 	json   : true
 });
-
-/**
- * A simple asynchronous timeout function
- */
-function timeout(delay: number) {
-	if (delay <= 0) {
-		return null;
-	}
-	return new Promise(resolve => setTimeout(resolve, delay));
-}
 
 /**
  * Get the current timestamp in milliseconds
@@ -44,16 +49,47 @@ function getMilliseconds() {
 }
 
 /**
+ * Remove any unneeded requests from the bucket
+ */
+function cleanBucket() {
+	let ms = getMilliseconds();
+	while (requestBucket.length && ms - requestBucket[0] >= 10000) {
+		requestBucket.shift();
+	}
+}
+
+/**
+ * Send the next request when the time is ready
+ */
+function executeNext() {
+	cleanBucket();
+	let ms = getMilliseconds();
+	if (requestBucket.length >= 39 && ms - requestBucket[0] < 10000) {
+		if (executeTimeout) {
+			clearTimeout(executeTimeout);
+		}
+		executeTimeout = setTimeout(executeNext, 10000 - (ms - requestBucket[0]));
+	} else {
+		if (queue[0]) {
+			queue.shift()!();
+			requestBucket.push(ms);
+			if (queue.length) {
+				executeNext();
+			}
+		}
+	}
+}
+
+/**
  * Used to throttle too frequent requests
  */
-async function throttle(callback: Function) {
+async function throttle(request: Request) {
 	if (throttleEnabled) {
-		if (requestBucket.length >= 40) {
-			await timeout(10000 - (getMilliseconds() - requestBucket.shift()!));
-		}
-		requestBucket.push(getMilliseconds());
+		queue.push(request);
+		executeNext();
+	} else {
+		request();
 	}
-	callback();
 }
 
 /**
@@ -63,7 +99,7 @@ export function get<T extends object>(apiKey: string, uri: string, query: any = 
 	query["api_key"] = apiKey;
 	return new Promise<T>((resolve, reject) => {
 		throttle(() => {
-			tmdb.get(uri, {query})
+			return tmdb.get(uri, {query})
 				.then(result => resolve(<T>result.body))
 				.catch(e => reject(e.body));
 		});
@@ -77,7 +113,7 @@ export function post<T extends Response>(apiKey: string, uri: string, query: any
 	query["api_key"] = apiKey;
 	return new Promise<T>((resolve, reject) => {
 		throttle(() => {
-			tmdb.post(uri, {query, body})
+			return tmdb.post(uri, {query, body})
 				.then(result => resolve(<T>result.body))
 				.catch(e => reject(e.body));
 		});
@@ -91,7 +127,7 @@ export function del<T extends Response>(apiKey: string, uri: string, query: any 
 	query["api_key"] = apiKey;
 	return new Promise<T>((resolve, reject) => {
 		throttle(() => {
-			tmdb.delete(uri, {query, body})
+			return tmdb.delete(uri, {query, body})
 				.then(result => resolve(<T>result.body))
 				.catch(e => reject(e.body));
 		});
