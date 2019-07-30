@@ -39,7 +39,7 @@ export interface AlternativeTitles {
 
 export interface AlternativeNames{
 	id: number,
-	titles: {
+	results: {
 		name: string;
 		type: string;
 	}[];
@@ -117,7 +117,6 @@ export interface EpisodeImages {
 
 export interface Paginated {
 	page         : number;
-	results      : any[];
 	total_pages  : number;
 	total_results: number;
 }
@@ -271,6 +270,11 @@ export interface CollectionDetails extends CollectionListing {
 	overview     : string;
 	backdrop_path: string;
 	parts        : CollectionPart[];
+}
+
+// Discover ----------------------------------------------------------------------------------------
+
+export interface DiscoverMovieOptions {
 }
 
 // Lists -------------------------------------------------------------------------------------------
@@ -544,7 +548,7 @@ export interface EpisodeDetails extends EpisodeBase {
 	guest_stars: GuestStar[];
 }
 
-export interface EpisodeGroup {
+export interface EpisodeGroupListing {
 	description  : string;
 	episode_count: number;
 	group_count  : number;
@@ -554,25 +558,24 @@ export interface EpisodeGroup {
 	type         : EpisodeGroupType;
 }
 
-export interface EpisodeGrouped extends EpisodeListing {
+export interface EpisodeListingGrouped extends EpisodeListing {
 	order: number;
 }
 
-export interface EpisodeGroupItem {
+export interface EpisodeGroup {
 	id      : string;
 	name    : string;
 	order   : number;
-	episodes: EpisodeGrouped[];
+	episodes: EpisodeListingGrouped[];
 }
 
-export interface EpisodeGroupDetails extends EpisodeGroup {
-	groups: EpisodeGroupItem[];
-
+export interface EpisodeGroupDetails extends EpisodeGroupListing {
+	groups: EpisodeGroup[];
 }
 
-export interface EpisodeGroups {
+export interface EpisodeGroupResults {
 	id     : number;
-	results: EpisodeGroup[];
+	results: EpisodeGroupListing[];
 }
 
 // TV Seasons --------------------------------------------------------------------------------------

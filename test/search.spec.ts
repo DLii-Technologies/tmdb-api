@@ -54,7 +54,7 @@ describe("Search API", () => {
 	 * Search for a movie
 	 */
 	it("Search for and find The Incredibles 2", () => {
-		return tmdb.searchMovies("The Incredibles 2", {}, 1).then((result: MovieResults) => {
+		return tmdb.searchMovies("The Incredibles 2", 1, {}).then((result: MovieResults) => {
 			expect(result.total_results).to.equal(1);
 			expect(result.results[0].title).to.equal("Incredibles 2");
 		});

@@ -77,7 +77,7 @@ describe("Movie API", () => {
 	});
 
 	it("Delete a rating from a movie", () => {
-		return tmdb.deleteMovieRating(260513, auth.session_id);
+		return tmdb.unrateMovie(260513, auth.session_id);
 	});
 
 	it("Get the latest movie", () => {

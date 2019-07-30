@@ -1,6 +1,8 @@
+import { expect } from "chai";
 import "mocha";
 import { tmdb, auth } from "./init";
-import { MediaType } from "../src/Enums";
+import { MediaType, StatusCode } from "../src/Enums";
+import { Response } from "../src/Interfaces";
 
 describe("Find API", () => {
 	it("Get account details", () => {
@@ -20,18 +22,26 @@ describe("Find API", () => {
 	});
 
 	it("Mark a movie as favorite", () => {
-		return tmdb.markFavoriteMovie(260513, auth.session_id, true);
+		return tmdb.markFavoriteMovie(260513, auth.session_id, true).then((result: Response) => {
+			expect(result.status_code).to.equal(StatusCode.Success);
+		});
 	});
 
 	it("Unmark a movie as favorite", () => {
-		return tmdb.markFavorite(MediaType.Movie, 260513, auth.session_id, false);
+		return tmdb.markFavorite(MediaType.Movie, 260513, auth.session_id, false).then((result: Response) => {
+			expect(result.status_code).to.equal(StatusCode.RecordDeleteSuccess);
+		});
 	})
 
 	it("Mark a TV show as favorite", () => {
-		return tmdb.markFavoriteTvShow(60059, auth.session_id, true);
+		return tmdb.markFavoriteTvShow(60059, auth.session_id, true).then((result: Response) => {
+			expect(result.status_code).to.equal(StatusCode.Success);
+		});
 	});
 
-	it("Get a TV show as favorite", () => {
-		return tmdb.markFavorite(MediaType.Tv, 60059, auth.session_id, false);
+	it("Unmark a TV show as favorite", () => {
+		return tmdb.markFavorite(MediaType.Tv, 60059, auth.session_id, false).then((result: Response) => {
+			expect(result.status_code).to.equal(StatusCode.RecordDeleteSuccess);
+		});
 	});
 });
