@@ -486,6 +486,11 @@ export interface Network {
 	origin_country: string;
 }
 
+export interface NetworkDetails extends Network {
+	headquarters: string;
+	homepage    : string;
+}
+
 export interface NetworkLogos {
 	id: number;
 	logos: Logo[];

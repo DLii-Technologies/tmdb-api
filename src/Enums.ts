@@ -59,9 +59,15 @@ export enum Status {
 }
 
 export enum MediaType {
+	All    = "all",
 	Movie  = "movie",
 	Person = "person",
 	Tv     = "tv"
+}
+
+export enum TimeWindow {
+	Day  = "day",
+	Week = "week"
 }
 
 export enum VideoType {

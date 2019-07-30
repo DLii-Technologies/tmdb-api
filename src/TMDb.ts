@@ -59,11 +59,12 @@ import {
 	Keyword,
 	MovieResultsWithId,
 	CompanyDetails,
-	NetworkLogos
+	NetworkLogos,
+	NetworkDetails
 } from "./Interfaces";
 
 import { get, post, del } from "./Network";
-import { ExternalSource, Sort, MediaType } from "./Enums";
+import { ExternalSource, Sort, MediaType, TimeWindow } from "./Enums";
 
 /**
  * API instance
@@ -590,6 +591,29 @@ export class TMDb
 		return get<MovieResults>(this.__apiKey, `/movie/upcoming`, { language, page, region });
 	}
 
+	// Networks API --------------------------------------------------------------------------------
+
+	/**
+	 * Get the details of a company
+	 */
+	getNetworkDetails(networkId: number) {
+		return get<NetworkDetails>(this.__apiKey, `/network/${networkId}`);
+	}
+
+	/**
+	 * Get a company's alternative names
+	 */
+	getNetworkAltNames(networkId: number) {
+		return get<AlternativeNames>(this.__apiKey, `/network/${networkId}/alternative_names`);
+	}
+
+	/**
+	 * Get images associated with a company
+	 */
+	getNetworkImages(networkId: number) {
+		return get<NetworkLogos>(this.__apiKey, `/network/${networkId}/images`);
+	}
+
 	// Search API ----------------------------------------------------------------------------------
 
 	/**
@@ -644,6 +668,15 @@ export class TMDb
 	search(query: string, page?: number, options: MultiSearchOptions = {}) {
 		return get<MultiSearchResults>(this.__apiKey, "/search/multi",
 			Object.assign(options, {query, page}));
+	}
+
+	// Trending ------------------------------------------------------------------------------------
+
+	/**
+	 * Get a list of trending media
+	 */
+	getTrending(mediaType: MediaType, timeWindow: TimeWindow) {
+		return get<MovieResults>(this.__apiKey, `/trending/${mediaType}/${timeWindow}`);
 	}
 
 	// TV Series -----------------------------------------------------------------------------------
