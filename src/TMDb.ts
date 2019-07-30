@@ -60,7 +60,8 @@ import {
 	MovieResultsWithId,
 	CompanyDetails,
 	NetworkLogos,
-	NetworkDetails
+	NetworkDetails,
+	ReviewDetails
 } from "./Interfaces";
 
 import { get, post, del } from "./Network";
@@ -594,24 +595,33 @@ export class TMDb
 	// Networks API --------------------------------------------------------------------------------
 
 	/**
-	 * Get the details of a company
+	 * Get the details of a network
 	 */
 	getNetworkDetails(networkId: number) {
 		return get<NetworkDetails>(this.__apiKey, `/network/${networkId}`);
 	}
 
 	/**
-	 * Get a company's alternative names
+	 * Get a network's alternative names
 	 */
 	getNetworkAltNames(networkId: number) {
 		return get<AlternativeNames>(this.__apiKey, `/network/${networkId}/alternative_names`);
 	}
 
 	/**
-	 * Get images associated with a company
+	 * Get images associated with a network
 	 */
 	getNetworkImages(networkId: number) {
 		return get<NetworkLogos>(this.__apiKey, `/network/${networkId}/images`);
+	}
+
+	// Reviews API ---------------------------------------------------------------------------------
+
+	/**
+	 * Get the details of a review
+	 */
+	getReviewDetails(reviewId: string) {
+		return get<ReviewDetails>(this.__apiKey, `/review/${reviewId}`);
 	}
 
 	// Search API ----------------------------------------------------------------------------------
