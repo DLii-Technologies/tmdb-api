@@ -1,12 +1,11 @@
 import { expect } from "chai";
 import "mocha";
-import { tmdb } from "./config";
+import { tmdb } from "./init";
 
 /**
  * Import modules to test
  */
-import { TMDb } from "../src";
-import { StatusCode, MediaType } from "../src/Enums";
+import { MediaType } from "../src/Enums";
 import {
 	CompanyResults,
 	MovieResults,

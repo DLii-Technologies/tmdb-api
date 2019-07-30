@@ -289,6 +289,10 @@ export interface List extends ListBase {
 	list_type: string;
 }
 
+export interface ListResults extends Paginated {
+	results: List[];
+}
+
 export interface ListDetails extends ListBase {
 	created_by: string;
 	items     : MovieListing[];
@@ -529,6 +533,10 @@ interface EpisodeBase {
 
 export interface EpisodeListing extends EpisodeBase {
 	show_id: number;
+}
+
+export interface EpisodeResults extends Paginated {
+	results: EpisodeListing[];
 }
 
 export interface EpisodeDetails extends EpisodeBase {

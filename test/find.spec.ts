@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import "mocha";
-import { tmdb } from "./config";
+import { tmdb } from "./init";
 import { ExternalSource } from "../src/Enums";
 import { FindResults } from "../src/Interfaces";
 

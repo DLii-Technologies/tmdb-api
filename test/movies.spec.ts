@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import "mocha";
-import { tmdb } from "./config";
+import { tmdb, auth } from "./init";
 import { AlternativeTitles, ImageList, ExternalIdList, KeywordList, MovieReleaseDateResults, Credits } from "../src/Interfaces";
 
 describe("Movie API", () => {
@@ -72,13 +72,13 @@ describe("Movie API", () => {
 		return tmdb.getMovieLists(156022);
 	});
 
-	// it("Rate a movie", () => {
-	// 	return tmdb.getMovieVideos(396940);
-	// });
+	it("Rate a movie", () => {
+		return tmdb.rateMovie(260513, 8, auth.session_id);
+	});
 
-	// it("Delete a rating from a movie", () => {
-	// 	return tmdb.deleteMovieRating();
-	// });
+	it("Delete a rating from a movie", () => {
+		return tmdb.deleteMovieRating(260513, auth.session_id);
+	});
 
 	it("Get the latest movie", () => {
 		return tmdb.getLatestMovie();

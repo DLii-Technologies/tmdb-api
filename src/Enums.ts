@@ -39,6 +39,14 @@ export enum StatusCode {
 }
 
 /**
+ * @TODO Most likely temporary
+ */
+export enum Sort {
+	CreatedAtAsc  = "created_at.asc",
+	CreatedAtDesc = "created_at.desc"
+}
+
+/**
  * Movie status
  */
 export enum Status {

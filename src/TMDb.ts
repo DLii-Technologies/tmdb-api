@@ -30,11 +30,14 @@ import {
 	GuestSessionResponse,
 	RequestTokenResponse,
 	CreateSessionResponse,
-	DeleteSessionResponse
+	DeleteSessionResponse,
+	AccountDetails,
+	ListResults,
+	EpisodeResults
 } from "./Interfaces";
 
 import { get, post, del } from "./Network";
-import { ExternalSource } from "Enums";
+import { ExternalSource, Sort, MediaType } from "./Enums";
 
 /**
  * API instance
@@ -51,6 +54,173 @@ export class TMDb
 	 */
 	constructor(apiKey: string) {
 		this.__apiKey = apiKey;
+	}
+
+	// Account -------------------------------------------------------------------------------------
+
+	/**
+	 * Get the details of the provided account
+	 */
+	getAccountDetails(sessionId: string) {
+		return get<AccountDetails>(this.__apiKey, "/account", { session_id: sessionId });
+	}
+
+	/**
+	 * Get all of the lists created by an account
+	 */
+	getAccountLists(sessionId: string, accountId?: number, page?: number, language?: string) {
+		let uri = accountId != undefined ? accountId : "{account_id}";
+		return get<ListResults>(this.__apiKey, `/account/${uri}/lists`, {
+			session_id: sessionId,
+			language,
+			page,
+		});
+	}
+
+	/**
+	 * Get an account's favorite movies
+	 */
+	getFavoriteMovies(sessionId: string, accountId?: number, page?: number, sortBy?: Sort,
+		language?: string)
+	{
+		let uri = accountId != undefined ? accountId : "{account_id}";
+		return get<MovieResults>(this.__apiKey, `/account/${uri}/favorite/movies`, {
+			session_id: sessionId,
+			sort_by: sortBy,
+			language,
+			page
+		});
+	}
+
+	/**
+	 * Get an account's favorite TV shows
+	 */
+	getFavoriteTvShows(sessionId: string, accountId?: number, page?: number, sortBy?: Sort,
+		language?: string)
+	{
+		let uri = accountId != undefined ? accountId : "{account_id}";
+		return get<SeriesResults>(this.__apiKey, `/account/${uri}/favorite/tv`, {
+			session_id: sessionId,
+			sort_by: sortBy,
+			language,
+			page
+		});
+	}
+
+	/**
+	 * Mark a movie or TV show favorite
+	 */
+	markFavorite(mediaType: MediaType.Movie | MediaType.Tv, mediaId: number, sessionId: string,
+		favorite: boolean, accountId?: number)
+	{
+		let uri = accountId != undefined ? accountId : "{account_id}";
+		return post<Response>(this.__apiKey, `/account/${uri}/favorite`, {
+			media_type: mediaType,
+			session_id: sessionId,
+			media_id: mediaId,
+			favorite
+		});
+	}
+
+	/**
+	 * Mark a movie as favorite
+	 */
+	markFavoriteMovie(mediaId: number, sessionId: string, favorite: boolean, accountId?: number) {
+		return this.markFavorite(MediaType.Movie, mediaId, sessionId, favorite, accountId);
+	}
+
+	/**
+	 * Mark a TV show as favorite
+	 */
+	markFavoriteTvShow(mediaId: number, sessionId: string, favorite: boolean, accountId?: number) {
+		return this.markFavorite(MediaType.Tv, mediaId, sessionId, favorite, accountId);
+	}
+
+	/**
+	 * Get the movies rated by an account
+	 */
+	getRatedMovies(sessionId: string, accountId?: number, page?: number, sortBy?: Sort,
+		language?: string)
+	{
+		let uri = accountId != undefined ? accountId : "{account_id}";
+		return get<MovieResults>(this.__apiKey, `/account/${uri}/rated/movies`, {
+			session_id: sessionId,
+			sort_by: sortBy,
+			language,
+			page
+		});
+	}
+
+	/**
+	 * Get the TV shows rated by an account
+	 */
+	getRatedTvShows(sessionId: string, accountId?: number, page?: number, sortBy?: Sort,
+		language?: string)
+	{
+		let uri = accountId != undefined ? accountId : "{account_id}";
+		return get<SeriesResults>(this.__apiKey, `/account/${uri}/rated/tv`, {
+			session_id: sessionId,
+			sort_by: sortBy,
+			language,
+			page
+		});
+	}
+
+	/**
+	 * Get the TV show episodes rated by an account
+	 */
+	getRatedTvEpisodes(sessionId: string, accountId?: number, page?: number, sortBy?: Sort,
+		language?: string)
+	{
+		let uri = accountId != undefined ? accountId : "{account_id}";
+		return get<EpisodeResults>(this.__apiKey, `/account/${uri}/rated/episodes`, {
+			session_id: sessionId,
+			sort_by: sortBy,
+			language,
+			page
+		});
+	}
+
+	/**
+	 * Get an account's movie watchlist
+	 */
+	getMovieWatchlist(sessionId: string, accountId?: number, page?: number, sortBy?: Sort,
+		language?: string)
+	{
+		let uri = accountId != undefined ? accountId : "{account_id}";
+		return get<MovieResults>(this.__apiKey, `/account/${uri}/watchlist/movies`, {
+			session_id: sessionId,
+			sort_by: sortBy,
+			language,
+			page
+		});
+	}
+
+	/**
+	 * Get an account's TV show watchlist
+	 */
+	getTvShowWatchList(sessionId: string, accountId?: number, page?: number, sortBy?: Sort,
+		language?: string)
+	{
+		let uri = accountId != undefined ? accountId : "{account_id}";
+		return get<SeriesResults>(this.__apiKey, `/account/${uri}/watchlist/tv`, {
+			session_id: sessionId,
+			sort_by: sortBy,
+			language,
+			page
+		});
+	}
+
+	markInWatchlist(mediaType: MediaType.Movie | MediaType.Tv, mediaId: number, sessionId: string,
+		inWatchlist: boolean, accountId?: number)
+	{
+		let uri = accountId != undefined ? accountId : "{account_id}";
+		return get<Response>(this.__apiKey, `/account/${uri}/watchlist/tv`, {
+			media_type: mediaType,
+			session_id: sessionId,
+			watchlist: inWatchlist,
+			media_id: mediaId
+		});
 	}
 
 	// Authentication ------------------------------------------------------------------------------
@@ -71,14 +241,22 @@ export class TMDb
 	}
 
 	/**
-	 * Create a new session
+	 * Validate a request token by login
 	 */
-	createSession(requestToken: string, username?: string, password?: string) {
-		let uri = username || password ? "token/validate_with_login" : "session/new";
-		return post<CreateSessionResponse>(this.__apiKey, `/authentication/${uri}`, {
+	validateRequestToken(requestToken: string, username: string, password: string) {
+		return post<RequestTokenResponse>(this.__apiKey, `/authentication/token/validate_with_login`, {
 			request_token: requestToken,
 			username,
 			password
+		});
+	}
+
+	/**
+	 * Create a new session
+	 */
+	createSession(requestToken: string) {
+		return post<CreateSessionResponse>(this.__apiKey, `/authentication/session/new`, {
+			request_token: requestToken,
 		});
 	}
 
@@ -242,7 +420,7 @@ export class TMDb
 	/**
 	 * Rate a movie. A valid session or guest session ID is required
 	 */
-	rateMovie(movieId: number, value: number, guestSessionId?: string, sessionId?: string) {
+	rateMovie(movieId: number, value: number, sessionId?: string, guestSessionId?: string) {
 		return post<Response>(this.__apiKey, `/movie/${movieId}/rating`, {
 			guest_session_id: guestSessionId,
 			session_id      : sessionId
@@ -252,7 +430,7 @@ export class TMDb
 	/**
 	 * Remove your rating for a movie. A valid session or guest session ID is required
 	 */
-	deleteMovieRating(movieId: number, guestSessionId?: string, sessionId?: string) {
+	deleteMovieRating(movieId: number, sessionId?: string, guestSessionId?: string) {
 		return del<Response>(this.__apiKey, `/movie/${movieId}/rating`, {
 			guest_session_id: guestSessionId,
 			session_id      : sessionId

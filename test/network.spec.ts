@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import "mocha";
-import { tmdb } from "./config";
+import { tmdb } from "./init";
 
 /**
  * Import modules to test
@@ -24,11 +24,11 @@ describe("Network API", () => {
 	/**
 	 * Test the throttle mechanism
 	 */
-	// it("Request throttle mechanism", () => {
-	// 	let requests: Promise<MovieResults>[] = [];
-	// 	for (let i = 0; i < 60; i++) {
-	// 		requests.push(tmdb.searchMovies("The Fast and the Furious"));
-	// 	}
-	// 	return Promise.all(requests);
-	// });
+	it("Request throttle mechanism", () => {
+		let requests: Promise<MovieResults>[] = [];
+		for (let i = 0; i < 60; i++) {
+			requests.push(tmdb.searchMovies("The Fast and the Furious"));
+		}
+		return Promise.all(requests);
+	});
 });
