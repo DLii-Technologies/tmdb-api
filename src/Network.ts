@@ -1,5 +1,4 @@
 import * as got from "got";
-import { Response } from "Interfaces";
 
 /**
  * Create a simple Request type
@@ -100,7 +99,10 @@ export function get<T extends object>(apiKey: string, uri: string, query: any = 
 		throttle(() => {
 			return tmdb.get(uri, {query})
 				.then(result => resolve(<T>result.body))
-				.catch(e => reject(e.body));
+				.catch(e => {
+					console.error(e);
+					reject(e.body);
+				});
 		});
 	});
 }
@@ -114,7 +116,10 @@ export function post<T extends object>(apiKey: string, uri: string, query: any =
 		throttle(() => {
 			return tmdb.post(uri, {query, body})
 				.then(result => resolve(<T>result.body))
-				.catch(e => reject(e.body));
+				.catch(e => {
+					console.error(e);
+					reject(e.body);
+				});
 		});
 	});
 }
@@ -128,7 +133,10 @@ export function del<T extends object>(apiKey: string, uri: string, query: any = 
 		throttle(() => {
 			return tmdb.delete(uri, {query, body})
 				.then(result => resolve(<T>result.body))
-				.catch(e => reject(e.body));
+				.catch(e => {
+					console.error(e);
+					reject(e.body);
+				});
 		});
 	});
 }
