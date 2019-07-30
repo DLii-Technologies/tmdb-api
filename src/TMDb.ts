@@ -57,7 +57,9 @@ import {
 	EpisodeGroupDetails,
 	GenreList,
 	Keyword,
-	MovieResultsWithId
+	MovieResultsWithId,
+	CompanyDetails,
+	NetworkLogos
 } from "./Interfaces";
 
 import { get, post, del } from "./Network";
@@ -325,6 +327,29 @@ export class TMDb
 		return del<DeleteSessionResponse>(this.__apiKey, `/authentication/session`, {}, {
 			session_id: sessionId
 		});
+	}
+
+	// Company API ---------------------------------------------------------------------------------
+
+	/**
+	 * Get the details of a company
+	 */
+	getCompanyDetails(companyId: number) {
+		return get<CompanyDetails>(this.__apiKey, `/company/${companyId}`);
+	}
+
+	/**
+	 * Get a company's alternative names
+	 */
+	getCompanyAltNames(companyId: number) {
+		return get<AlternativeNames>(this.__apiKey, `/company/${companyId}/alternative_names`);
+	}
+
+	/**
+	 * Get images associated with a company
+	 */
+	getCompanyImages(companyId: number) {
+		return get<NetworkLogos>(this.__apiKey, `/company/${companyId}/images`);
 	}
 
 	// Find API ------------------------------------------------------------------------------------

@@ -37,8 +37,8 @@ export interface AlternativeTitles {
 	}[]
 }
 
-export interface AlternativeNames{
-	id: number,
+export interface AlternativeNames {
+	id: number;
 	results: {
 		name: string;
 		type: string;
@@ -85,6 +85,7 @@ export interface Image {
 }
 
 export interface Logo extends Image {
+	id       : number;
 	file_type: string;
 }
 
@@ -144,6 +145,13 @@ export interface Company {
  */
 export interface ProductionCompany extends Company {
 	origin_country: string;
+}
+
+export interface CompanyDetails extends ProductionCompany {
+	description   : string;
+	headquarters  : string;
+	homepage      : string;
+	parent_company: ProductionCompany | null; // @WARN This could be incorrect...
 }
 
 export interface ExternalIdList {
@@ -328,7 +336,7 @@ export interface AccountDetails {
 		gravatar: {
 			hash: string
 		}
-	},
+	};
 	id           : number;
 	iso_639_1    : string;
 	iso_3166_1   : string;
@@ -352,16 +360,16 @@ export interface AccountStates {
  * A single production country
  */
 export interface ProductionCountry {
-	iso_3166_1: string,
-	name      : string
+	iso_3166_1: string;
+	name      : string;
 }
 
 /**
  * Information on a language
  */
 export interface Language {
-	iso_639_1: string,
-	name     : string
+	iso_639_1: string;
+	name     : string;
 }
 
 interface MovieBase extends MediaModel {
@@ -480,7 +488,7 @@ export interface Network {
 
 export interface NetworkLogos {
 	id: number;
-	logos: Image;
+	logos: Logo[];
 }
 
 // TV Shows ----------------------------------------------------------------------------------------
@@ -804,7 +812,7 @@ export interface MultiSearchResults extends Paginated {
 // People ------------------------------------------------------------------------------------------
 
 export interface PersonImages {
-	id      : number,
+	id      : number;
 	profiles: Image[];
 }
 
