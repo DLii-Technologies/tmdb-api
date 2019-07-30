@@ -54,7 +54,10 @@ import {
 	EpisodeExternalIdList,
 	EpisodeImages,
 	EpisodeTranslationList,
-	EpisodeGroupDetails
+	EpisodeGroupDetails,
+	GenreList,
+	Keyword,
+	MovieResultsWithId
 } from "./Interfaces";
 
 import { get, post, del } from "./Network";
@@ -174,6 +177,16 @@ export class TMDb
 	}
 
 	/**
+	 * Get the movies rated by a guest session
+	 */
+	getGuestRatedMovies(guestSessionId: string, sortBy?: Sort, language?: string) {
+		return get<MovieResults>(this.__apiKey, `/guest_session/${guestSessionId}/rated/movies`, {
+			sort_by: sortBy,
+			language
+		});
+	}
+
+	/**
 	 * Get the TV shows rated by an account
 	 */
 	getRatedTvShows(sessionId: string, accountId?: number, page?: number, sortBy?: Sort,
@@ -185,6 +198,16 @@ export class TMDb
 			sort_by: sortBy,
 			language,
 			page
+		});
+	}
+
+	/**
+	 * Get the movies rated by a guest session
+	 */
+	getGuestRatedTvShows(guestSessionId: string, sortBy?: Sort, language?: string) {
+		return get<SeriesResults>(this.__apiKey, `/guest_session/${guestSessionId}/rated/tv`, {
+			sort_by: sortBy,
+			language
 		});
 	}
 
@@ -201,6 +224,17 @@ export class TMDb
 			language,
 			page
 		});
+	}
+
+	/**
+	 * Get the movies rated by a guest session
+	 */
+	getGuestRatedTvEpisodes(guestSessionId: string, sortBy?: Sort, language?: string) {
+		return get<EpisodeResults>(this.__apiKey,
+			`/guest_session/${guestSessionId}/rated/tv/episodes`, {
+				sort_by: sortBy,
+				language
+			});
 	}
 
 	/**
@@ -305,13 +339,48 @@ export class TMDb
 		});
 	}
 
+	// Genre API -----------------------------------------------------------------------------------
+
+	/**
+	 * Get the list of official genres for movies
+	 */
+	getMovieGenreList(language?: string) {
+		return get<GenreList>(this.__apiKey, `/genre/movie/list`, { language });
+	}
+
+	/**
+	 * Get the list of official genres for TV shows
+	 */
+	getTvShowGenreList(language?: string) {
+		return get<GenreList>(this.__apiKey, `/genre/tv/list`, { language });
+	}
+
+	// Keyword API ---------------------------------------------------------------------------------
+
+	/**
+	 * Get the details of a keyword
+	 */
+	getKeywordDetails(keywordId: number) {
+		return get<Keyword>(this.__apiKey, `/keyword/${keywordId}`);
+	}
+
+	/**
+	 * Get the movies that bleong to a keyword
+	 */
+	getMoviesWithKeyword(keywordId: number, language?: string, includeAdult?: boolean) {
+		return get<MovieResultsWithId>(this.__apiKey, `/keyword/${keywordId}/movies`, {
+			include_adult: includeAdult,
+			language
+		});
+	}
+
 	// Movie API -----------------------------------------------------------------------------------
 
 	/**
 	 * Get the primary information about a movie
 	 */
 	getMovieDetails(movieId: number, language?: string) {
-		return get<MovieDetails>(this.__apiKey, `/movie/${movieId}`, {language});
+		return get<MovieDetails>(this.__apiKey, `/movie/${movieId}`, { language });
 	}
 
 	/**

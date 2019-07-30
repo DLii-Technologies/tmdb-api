@@ -129,6 +129,10 @@ export interface Genre {
 	name: string;
 }
 
+export interface GenreList {
+	genres: Genre[];
+}
+
 export interface Company {
 	id       : number;
 	logo_path: string | null;
@@ -752,6 +756,10 @@ export interface KeywordResults extends Paginated {
 
 export interface MovieResults extends Paginated {
 	results: MovieListing[];
+}
+
+export interface MovieResultsWithId extends MovieResults {
+	id: number;
 }
 export interface MoviesResultsWithinDate extends MovieResults {
 	dates: {

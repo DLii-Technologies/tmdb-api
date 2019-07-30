@@ -7,12 +7,6 @@ let requestToken: string;
 let sessionId   : string;
 
 describe("Authentication API", () => {
-	it("Create a guest session", () => {
-		return tmdb.createGuestSession().then((result: GuestSessionResponse) => {
-			expect(result.success).to.equal(true);
-		});
-	});
-
 	it("Create a request token", () => {
 		return tmdb.createRequestToken().then((result: RequestTokenResponse) => {
 			expect(result.success).to.equal(true);
