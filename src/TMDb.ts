@@ -195,7 +195,7 @@ export class TMDb
 		language?: string)
 	{
 		let uri = accountId != undefined ? accountId : "{account_id}";
-		return get<EpisodeResults>(this.__apiKey, `/account/${uri}/rated/episodes`, {
+		return get<EpisodeResults>(this.__apiKey, `/account/${uri}/rated/tv/episodes`, {
 			session_id: sessionId,
 			sort_by: sortBy,
 			language,
@@ -237,7 +237,7 @@ export class TMDb
 		inWatchlist: boolean, accountId?: number)
 	{
 		let uri = accountId != undefined ? accountId : "{account_id}";
-		return post<Response>(this.__apiKey, `/account/${uri}/watchlist/tv`, {
+		return post<Response>(this.__apiKey, `/account/${uri}/watchlist`, {
 			session_id: sessionId,
 		}, {
 			media_type: mediaType,

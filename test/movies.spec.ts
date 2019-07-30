@@ -1,11 +1,17 @@
 import { expect } from "chai";
 import "mocha";
 import { tmdb, auth } from "./init";
-import { AlternativeTitles, ImageList, ExternalIdList, KeywordList, MovieReleaseDateResults, Credits } from "../src/Interfaces";
+import { AlternativeTitles, ImageList, ExternalIdList, KeywordList, MovieReleaseDateResults, Credits, AccountStates } from "../src/Interfaces";
 
 describe("Movie API", () => {
 	it("Get a movie's details", () => {
 		return tmdb.getMovieDetails(235);
+	});
+
+	it("Get a movie's account states", () => {
+		return tmdb.getMovieAccountStates(278, auth.session_id).then((result: AccountStates) => {
+			expect(result.rated).to.not.equal(undefined);
+		});
 	});
 
 	it("Get a movie's alternative titles", () => {
