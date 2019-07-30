@@ -13,12 +13,22 @@ describe("Network API", () => {
 	/**
 	 * Test out the error mechanism. Do so by using a bad API key
 	 */
-	it("API Error Mechanism", () => {
+	it("API error Mechanism", () => {
 		// Use a bad API key
-		return new TMDb("12345").searchCompanies("Sony").catch((response) => {
-			expect(response.status_code).to.equal(StatusCode.InvalidApiKey);
-			expect(response.status_message).to.equal("Invalid API key: You must be granted a valid key.");
-		});
+		let tmdb = new TMDb("12345");
+		return Promise.all([
+			tmdb.searchCompanies("Sony").catch((response) => {
+				expect(response.status_code).to.equal(StatusCode.InvalidApiKey);
+				expect(response.status_message).to.equal("Invalid API key: You must be granted a valid key.");
+			}),
+			tmdb.rateMovie(278, 10).catch((response) => {
+				expect(response.status_code).to.equal(StatusCode.InvalidApiKey);
+			}),
+			tmdb.unrateMovie(278).catch((response) => {
+				expect(response.status_code).to.equal(StatusCode.InvalidApiKey);
+			})
+		]);
+
 	});
 
 	/**

@@ -12,11 +12,6 @@ const BASE_URL    = "https://api.themoviedb.org";
 const API_VERSION = 3;
 
 /**
- * Enable throttling to prevent too frequent requests
- */
-export var throttleEnabled = true;
-
-/**
  * Keep track of the requests if throttling is enabled
  */
 var requestBucket: number[] = [];
@@ -57,37 +52,40 @@ function cleanBucket() {
 }
 
 /**
- * Send the next request when the time is ready
+ * Throttle too frequent requests
  */
-function executeNext() {
-	cleanBucket();
+function throttle() {
 	let ms = getMilliseconds();
+	cleanBucket();
 	if (requestBucket.length >= 39 && ms - requestBucket[0] < 10000) {
 		if (executeTimeout) {
 			clearTimeout(executeTimeout);
 		}
-		executeTimeout = setTimeout(executeNext, 10000 - (ms - requestBucket[0]));
-	} else {
-		if (queue[0]) {
-			queue.shift()!();
-			requestBucket.push(ms);
-			if (queue.length) {
-				executeNext();
-			}
+		executeTimeout = setTimeout(sendNextRequest, 10000 - (ms - requestBucket[0]));
+		return true;
+	}
+	return false;
+}
+
+/**
+ * Send the next request if it's ready
+ */
+function sendNextRequest() {
+	if (!throttle()) {
+		queue.shift()!();
+		requestBucket.push(getMilliseconds());
+		if (queue.length) {
+			sendNextRequest();
 		}
 	}
 }
 
 /**
- * Used to throttle too frequent requests
+ * Enqueue and attempt to send the next request
  */
-async function throttle(request: Request) {
-	if (throttleEnabled) {
-		queue.push(request);
-		executeNext();
-	} else {
-		request();
-	}
+function enqueueRequest(request: Request) {
+	queue.push(request);
+	sendNextRequest();
 }
 
 /**
@@ -96,7 +94,7 @@ async function throttle(request: Request) {
 export function get<T extends object>(apiKey: string, uri: string, query: any = {}) {
 	query["api_key"] = apiKey;
 	return new Promise<T>((resolve, reject) => {
-		throttle(() => {
+		enqueueRequest(() => {
 			return tmdb.get(uri, {query})
 				.then(result => resolve(<T>result.body))
 				.catch(e => reject(e.body));
@@ -107,10 +105,10 @@ export function get<T extends object>(apiKey: string, uri: string, query: any = 
 /**
  * Send a POST request
  */
-export function post<T extends object>(apiKey: string, uri: string, query: any = {}, body?: any) {
+export function post<T extends object>(apiKey: string, uri: string, query: any, body: any) {
 	query["api_key"] = apiKey;
 	return new Promise<T>((resolve, reject) => {
-		throttle(() => {
+		enqueueRequest(() => {
 			return tmdb.post(uri, {query, body})
 				.then(result => resolve(<T>result.body))
 				.catch(e => reject(e.body));
@@ -121,10 +119,10 @@ export function post<T extends object>(apiKey: string, uri: string, query: any =
 /**
  * Send a DEL request
  */
-export function del<T extends object>(apiKey: string, uri: string, query: any = {}, body?: any) {
+export function del<T extends object>(apiKey: string, uri: string, query: any, body: any = {}) {
 	query["api_key"] = apiKey;
 	return new Promise<T>((resolve, reject) => {
-		throttle(() => {
+		enqueueRequest(() => {
 			return tmdb.delete(uri, {query, body})
 				.then(result => resolve(<T>result.body))
 				.catch(e => reject(e.body));

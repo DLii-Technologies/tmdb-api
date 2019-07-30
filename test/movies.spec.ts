@@ -38,10 +38,16 @@ describe("Movie API", () => {
 	});
 
 	it("Get a movie's images", () => {
-		return tmdb.getMovieImages(346364).then((result: ImageList) => {
-			expect(result.backdrops.length).to.be.greaterThan(0);
-			expect(result.posters.length).to.be.greaterThan(0);
-		});
+		return Promise.all([
+			tmdb.getMovieImages(346364).then((result: ImageList) => {
+				expect(result.backdrops.length).to.be.greaterThan(0);
+				expect(result.posters.length).to.be.greaterThan(0);
+			}),
+			tmdb.getMovieImages(346364, "en", ["en"]).then((result: ImageList) => {
+				expect(result.backdrops.length).to.be.greaterThan(0);
+				expect(result.posters.length).to.be.greaterThan(0);
+			}),
+		]);
 	});
 
 	it("Get a movie's keywords", () => {
