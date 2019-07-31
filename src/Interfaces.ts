@@ -244,9 +244,20 @@ interface MediaModel {
 	media_type?: MediaType;
 }
 
+// Changes -----------------------------------------------------------------------------------------
+
 export interface ChangesOptions {
 	start_date?: string;
 	end_date  ?: string;
+}
+
+export interface MediaChange {
+	id   : number,
+	adult: boolean | null;
+}
+
+export interface MediaChanges extends Paginated {
+	results: MediaChange[];
 }
 
 // Collections -------------------------------------------------------------------------------------

@@ -64,15 +64,14 @@ import {
 	ReviewDetails,
 	PersonDetails,
 	PersonChanges,
-	MovieCastMemberDetails,
 	MovieCredits,
 	TvCredits,
 	CombinedCredits,
 	PersonExternalIdList,
 	PersonImages,
-	TaggedImage,
 	TaggedImages,
-	PersonTranslationList
+	PersonTranslationList,
+	MediaChanges
 } from "./Interfaces";
 
 import { get, post, del } from "./Network";
@@ -340,6 +339,30 @@ export class TMDb
 		return del<DeleteSessionResponse>(this.__apiKey, `/authentication/session`, {}, {
 			session_id: sessionId
 		});
+	}
+
+	// Change API ----------------------------------------------------------------------------------
+
+	/**
+	 * Get a list of the most recently changed movies
+	 */
+	getChangedMovies(page?: number, options: ChangesOptions = {}) {
+		return get<MediaChanges>(this.__apiKey, `/movie/changes`, Object.assign(options, { page }));
+	}
+
+	/**
+	 * Get a list of the most recently changed TV shows
+	 */
+	getChangedTvShows(page?: number, options: ChangesOptions = {}) {
+		return get<MediaChanges>(this.__apiKey, `/tv/changes`, Object.assign(options, { page }));
+	}
+
+	/**
+	 * Get a list of the most recently changed people
+	 */
+	getChangedPeople(page?: number, options: ChangesOptions = {}) {
+		return get<MediaChanges>(this.__apiKey, `/person/changes`,
+			Object.assign(options, { page }));
 	}
 
 	// Company API ---------------------------------------------------------------------------------
