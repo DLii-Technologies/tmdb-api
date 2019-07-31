@@ -61,7 +61,18 @@ import {
 	CompanyDetails,
 	NetworkLogos,
 	NetworkDetails,
-	ReviewDetails
+	ReviewDetails,
+	PersonDetails,
+	PersonChanges,
+	MovieCastMemberDetails,
+	MovieCredits,
+	TvCredits,
+	CombinedCredits,
+	PersonExternalIdList,
+	PersonImages,
+	TaggedImage,
+	TaggedImages,
+	PersonTranslationList
 } from "./Interfaces";
 
 import { get, post, del } from "./Network";
@@ -613,6 +624,90 @@ export class TMDb
 	 */
 	getNetworkImages(networkId: number) {
 		return get<NetworkLogos>(this.__apiKey, `/network/${networkId}/images`);
+	}
+
+	// People API ----------------------------------------------------------------------------------
+
+	/**
+	 * Get details of a person
+	 */
+	getPersonDetails(personId: number, language?: string) {
+		return get<PersonDetails>(this.__apiKey, `/person/${personId}`, { language });
+	}
+
+	/**
+	 * Get the recent changes on a person
+	 */
+	getPersonChanges(personId: number, page?: number, options: ChangesOptions = {}) {
+		return get<PersonChanges>(this.__apiKey, `/person/${personId}/changes`,
+			Object.assign(options, { page }));
+	}
+
+	/**
+	 * Get the movie credits for a person
+	 */
+	getPersonMovieCredits(personId: number, language?: string) {
+		return get<MovieCredits>(this.__apiKey, `/person/${personId}/movie_credits`, { language });
+	}
+
+	/**
+	 * Get the TV credits for a person
+	 */
+	getPersonTvCredits(personId: number, language?: string) {
+		return get<TvCredits>(this.__apiKey, `/person/${personId}/tv_credits`, { language });
+	}
+
+	/**
+	 * Get movie and TV credits for a person
+	 */
+	getPersonCredits(personId: number, language?: string) {
+		return get<CombinedCredits>(this.__apiKey, `/person/${personId}/combined_credits`,
+			{ language });
+	}
+
+	/**
+	 * Get the external IDs of a person
+	 */
+	getPersonExternalIds(personId: number, language?: string) {
+		return get<PersonExternalIdList>(this.__apiKey, `/person/${personId}/external_ids`,
+			{ language });
+	}
+
+	/**
+	 * Get images for a person
+	 */
+	getPersonImages(personId: number) {
+		return get<PersonImages>(this.__apiKey, `/person/${personId}/images`);
+	}
+
+	/**
+	 * Get tagged images for a person
+	 */
+	getPersonTaggedImages(personId: number, page?: number, language?: string) {
+		return get<TaggedImages>(this.__apiKey, `/person/${personId}/tagged_images`,
+			{ page, language });
+	}
+
+	/**
+	 * Get a list of translations that have been created for a person
+	 */
+	getPersonTranslations(personId: number, language?: string) {
+		return get<PersonTranslationList>(this.__apiKey, `/person/${personId}/translations`,
+			{ language });
+	}
+
+	/**
+	 * Get the most newly created person
+	 */
+	getLatestPerson(language?: string) {
+		return get<PersonDetails>(this.__apiKey, `/person/latest`, { language });
+	}
+
+	/**
+	 * Get a list of popular people on TMDb
+	 */
+	getPopularPeople(page?: number, language?: string) {
+		return get<PersonResults>(this.__apiKey, `/person/popular`, { language, page });
 	}
 
 	// Reviews API ---------------------------------------------------------------------------------

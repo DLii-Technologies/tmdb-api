@@ -870,7 +870,7 @@ export interface PersonResults extends Paginated {
 	results: PersonListing[];
 }
 
-export interface PersonDetails extends PersonBase{
+export interface PersonDetails extends PersonBase {
 	also_known_as       : string[];
 	biography           : string;
 	birthday            : string | null;
@@ -931,12 +931,28 @@ export interface MovieCrewMemberDetails extends MovieMemberDetailsBase {
 }
 
 export interface TvCastMemberDetails extends TvMemberDetailsBase {
-	character        : string;
+	character: string;
 }
 
 export interface TvCrewMemberDetails extends TvMemberDetailsBase {
 	department: string;
-	job: string;
+	job       : string;
 }
 
+export interface MovieCredits {
+	id  : number;
+	cast: MovieCastMemberDetails[];
+	crew: MovieCrewMemberDetails[];
+}
 
+export interface TvCredits {
+	id  : number;
+	cast: TvCastMemberDetails[];
+	crew: TvCrewMemberDetails[];
+}
+
+export interface CombinedCredits {
+	id  : number,
+	cast: (MovieCastMemberDetails & MediaModel)[];
+	crew: (MovieCastMemberDetails & MediaModel)[];
+}
