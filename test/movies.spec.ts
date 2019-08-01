@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import "mocha";
 import { tmdb, auth } from "./init";
-import { AlternativeTitles, ImageList, ExternalIdList, KeywordList, MovieReleaseDateResults, Credits, AccountStates } from "../src/Interfaces";
+import { AlternativeTitles, ImageList, ExternalIdList, KeywordList, Credits, AccountStates } from "../src/Interfaces";
 
 describe("Movie API", () => {
 	it("Get a movie's details", () => {

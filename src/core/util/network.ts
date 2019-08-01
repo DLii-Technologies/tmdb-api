@@ -95,7 +95,7 @@ export function get<T extends object>(apiKey: string, uri: string, query: any = 
 	query["api_key"] = apiKey;
 	return new Promise<T>((resolve, reject) => {
 		enqueueRequest(() => {
-			return tmdb.get(uri, {query})
+			return tmdb.get(uri, { query })
 				.then(result => resolve(<T>result.body))
 				.catch(e => reject(e.body));
 		});
@@ -109,7 +109,7 @@ export function post<T extends object>(apiKey: string, uri: string, query: any, 
 	query["api_key"] = apiKey;
 	return new Promise<T>((resolve, reject) => {
 		enqueueRequest(() => {
-			return tmdb.post(uri, {query, body})
+			return tmdb.post(uri, { query, body })
 				.then(result => resolve(<T>result.body))
 				.catch(e => reject(e.body));
 		});
@@ -123,7 +123,7 @@ export function del<T extends object>(apiKey: string, uri: string, query: any, b
 	query["api_key"] = apiKey;
 	return new Promise<T>((resolve, reject) => {
 		enqueueRequest(() => {
-			return tmdb.delete(uri, {query, body})
+			return tmdb.delete(uri, { query, body })
 				.then(result => resolve(<T>result.body))
 				.catch(e => reject(e.body));
 		});
