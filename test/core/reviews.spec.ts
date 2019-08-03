@@ -9,7 +9,7 @@ import { review } from "../../src/core";
 import { MediaType } from "../../src/core/enums";
 import { IReviews, IReviewDetails } from "../../src/core/interface/reviews";
 
-describe("Reviews API", () => {
+describe("Core: Reviews API", () => {
 	it("Get the details of a review", () => {
 		return review.getDetails(auth.api_key, "5488c29bc3a3686f4a00004a").then((result: IReviewDetails) => {
 			expect(result.author).to.equal("Travis Bell");

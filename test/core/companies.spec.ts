@@ -10,7 +10,7 @@ import { ICompanyDetails, INetworkDetails } from "../../src/core/interface/compa
 import { INetworkLogos }                    from "../../src/core/interface/media";
 import { IAlternativeNames }                from "../../src/core/interface/info";
 
-describe("Company API", () => {
+describe("Core: Company API", () => {
 	it("Get the details of a company", () => {
 		return company.getCompanyDetails(auth.api_key, 1).then((result: ICompanyDetails) => {
 			expect(result.name).to.equal("Lucasfilm");

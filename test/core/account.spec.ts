@@ -11,7 +11,7 @@ import { StatusCode }                                     from "../../src/core/e
 import { IResponse }                                      from "../../src/core/interface/response";
 import { IMovieResults, ISeriesResults, IEpisodeResults } from "../../src/core/interface/results";
 
-describe("Account API", () => {
+describe("Core: Account API", () => {
 	it("Get account details", () => {
 		return account.getDetails(auth.api_key, auth.session_id);
 	});

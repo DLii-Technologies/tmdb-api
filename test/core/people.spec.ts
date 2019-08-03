@@ -13,7 +13,7 @@ import { IPersonImages, ITaggedImageResults }          from "../../src/core/inte
 import { IPersonTranslations }                         from "../../src/core/interface/language";
 import { IPersonResults }                              from "../../src/core/interface/results";
 
-describe("People API", () => {
+describe("Core: People API", () => {
 	it("Get the details of a person", () => {
 		return people.getDetails(auth.api_key, 287).then((result: IPersonDetails) => {
 			expect(result.name).to.equal("Brad Pitt");

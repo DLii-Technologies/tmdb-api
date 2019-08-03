@@ -20,7 +20,7 @@ import { IseriesTranslations }             from "../../src/core/interface/langua
 import { IResponse }                       from "../../src/core/interface/response";
 import { StatusCode }                      from "../../src/core/enums";
 
-describe("TV", () => {
+describe("Core: TV", () => {
 	it("Get TV series details", () => {
 		return tv.getSeriesDetails(auth.api_key, 1396).then((result: ISeriesDetails) => {
 			expect(result.name).to.equal("Breaking Bad");

@@ -10,7 +10,7 @@ import { ICredits }               from "../../src/core/interface/credits";
 import { ISeasonExternalIds }     from "../../src/core/interface/external";
 import { ISeasonImages, IVideos } from "../../src/core/interface/media";
 
-describe("TV Seasons API", () => {
+describe("Core: TV Seasons API", () => {
 	it("Get season details", () => {
 		return tv.getSeasonDetails(auth.api_key, 2190, 22).then((result: ISeasonDetails) => {
 			expect(result.id).to.equal(109933);

@@ -11,7 +11,7 @@ import { ICompanyResults, ICollectionResults, IKeywordResults, IMovieResults, IS
 	IPersonResults, ICombinedResults, IFindResults } from "../../src/core/interface/results";
 import { ExternalSource }                            from "../../src/core/enums";
 
-describe("Search API", () => {
+describe("Core: Search API", () => {
 	it("Find a TV show episode from IMDb ID", () => {
 		return search.find(auth.api_key, "tt4197088", ExternalSource.Imdb).then((result: IFindResults) => {
 			expect(result.tv_episode_results.length).to.equal(1);

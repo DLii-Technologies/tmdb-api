@@ -12,7 +12,7 @@ import { ICredits }                      from "../../src/core/interface/credits"
 import { IExternalIds }                  from "../../src/core/interface/external";
 import { IImages }                       from "../../src/core/interface/media";
 
-describe("Movie API", () => {
+describe("Core: Movie API", () => {
 	it("Get a movie's details", () => {
 		return movie.getDetails(auth.api_key, 235);
 	});

@@ -12,7 +12,7 @@ import { IRequestTokenResponse, ICreateSessionResponse, IDeleteSessionResponse }
 let requestToken: string;
 let sessionId   : string;
 
-describe("Authentication API", () => {
+describe("Core: Authentication API", () => {
 	it("Create a request token", () => {
 		return authentication.createRequestToken(auth.api_key).then((result: IRequestTokenResponse) => {
 			expect(result.success).to.equal(true);

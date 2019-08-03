@@ -1,6 +1,5 @@
 import { expect } from "chai";
 import "mocha";
-import { auth } from "../init";
 
 /**
  * Import modules to test
@@ -8,7 +7,7 @@ import { auth } from "../init";
 import "../../src/core/util/utils";
 import { uriF } from "../../src/core/util/utils";
 
-describe("Core Utils", () => {
+describe("Core: Utils", () => {
 	it("Format URI", () => {
 		expect(uriF("/account/{account_id}/details", undefined)).to.equal("/account/{account_id}/details");
 		expect(uriF("/account/{account_id}/details", "test")).to.equal("/account/test/details");

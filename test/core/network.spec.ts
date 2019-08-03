@@ -10,7 +10,7 @@ import { IMovieResults } from "../../src/core/interface/results";
 import { IResponse }     from "../../src/core/interface/response";
 import { StatusCode }    from "../../src/core/enums";
 
-describe("Network API", () => {
+describe("Core: Network API", () => {
 	/**
 	 * Test out the error mechanism. Do so by using a bad API key
 	 */

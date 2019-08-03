@@ -12,7 +12,7 @@ import { IEpisodeExternalIds }     from "../../src/core/interface/external";
 import { IEpisodeCredits }         from "../../src/core/interface/credits";
 import { IEpisodeAccountState }    from "../../src/core/interface/account";
 
-describe("TV Episodes API", () => {
+describe("Core: TV Episodes API", () => {
 	it("Get episode details", () => {
 		return tv.getEpisodeDetails(auth.api_key, 2190, 14, 3).then((result: IEpisodeDetails) => {
 			expect(result.name).to.equal("Medicinal Fried Chicken");

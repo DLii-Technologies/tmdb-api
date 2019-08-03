@@ -8,7 +8,7 @@ import { auth } from "../init";
 import { changes }       from "../../src/core";
 import { IMediaChanges, IChanges, ISeasonChanges } from "../../src/core/interface/changes";
 
-describe("Changes API", () => {
+describe("Core: Changes API", () => {
 	it("Get a list of recent movies that have been edited", () => {
 		return changes.getChangedMovies(auth.api_key).then((result: IMediaChanges) => {
 			expect(result.results).to.be.an("array");

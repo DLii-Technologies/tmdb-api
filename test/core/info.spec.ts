@@ -9,7 +9,7 @@ import { info }              from "../../src/core";
 import { IGenres, IKeyword } from "../../src/core/interface/info";
 import { IWithId, IMovieResults }           from "../../src/core/interface/results";
 
-describe("Information API", () => {
+describe("Core: Information API", () => {
 	it("Get list of movie genres", () => {
 		return info.getMovieGenreList(auth.api_key, ).then((result: IGenres) => {
 			expect(result.genres.length).to.be.greaterThan(0);

@@ -11,7 +11,7 @@ import { IGuestSessionResponse }                          from "../../src/core/i
 
 let guestSessionId: string;
 
-describe("Guest Session API", () => {
+describe("Core: Guest Session API", () => {
 	it("Create a guest session", () => {
 		return guest.createSession(auth.api_key).then((result: IGuestSessionResponse) => {
 			expect(result.success).to.equal(true);
