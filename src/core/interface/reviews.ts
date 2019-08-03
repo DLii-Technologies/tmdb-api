@@ -15,7 +15,7 @@ export interface IReviewDetails extends IReview {
 	media_type : MediaType;
 }
 
-export interface IReviewResults extends IPaginated {
+export interface IReviews extends IPaginated {
 	id     : number;
 	results: IReview[];
 }

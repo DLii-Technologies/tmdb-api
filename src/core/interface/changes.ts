@@ -5,7 +5,7 @@ export interface IMediaChange {
 	adult: boolean | null;
 }
 
-export interface MediaChanges extends IPaginated {
+export interface IMediaChanges extends IPaginated {
 	results: IMediaChange[];
 }
 

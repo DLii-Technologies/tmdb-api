@@ -1,4 +1,4 @@
-import { config } from "dotenv";
+import { config }      from "dotenv";
 import { should, use } from "chai";
 
 /**
@@ -13,17 +13,9 @@ should();
 use(require("chai-things"));
 use(require("chai-subset"));
 
-/**
- * Import modules to test
- */
-import { TMDb } from "../src";
-
 // -------------------------------------------------------------------------------------------------
 
-/**
- * Create the TMDB instance
- */
-export let tmdb = new TMDb(<string>process.env["TMDB_API_KEY"]);
+import { account, auth as authentication } from "../src/core";
 
 /**
  * Store some authentication details for testing
@@ -40,14 +32,14 @@ export let auth = {
 /**
  * Initialize the user session
  */
-tmdb.createRequestToken().then((result) => {
+authentication.createRequestToken(auth.api_key).then((result) => {
 	auth.request_token = result.request_token;
-	return tmdb.validateRequestToken(auth.request_token = result.request_token, auth.username, auth.password);
+	return authentication.login(auth.api_key, auth.request_token = result.request_token, auth.username, auth.password);
 }).then((result) => {
-	return tmdb.createSession(result.request_token);
+	return authentication.createSession(auth.api_key, result.request_token);
 }).then((result) => {
 	auth.session_id = result.session_id;
-	return tmdb.getAccountDetails(auth.session_id);
+	return account.getDetails(auth.api_key, auth.session_id);
 }).then((result) => {
 	auth.account_id = result.id;
 	run(); // Start the tests

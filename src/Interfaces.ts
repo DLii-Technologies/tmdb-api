@@ -1,4 +1,4 @@
-import { Status, VideoType, EpisodeGroupType, MediaType } from "Enums";
+import { Status, VideoType, EpisodeGroupType, MediaType } from "enums";
 
 export interface Response {
 	status_code   : number;

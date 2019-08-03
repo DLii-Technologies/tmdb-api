@@ -75,7 +75,7 @@ import {
 } from "./Interfaces";
 
 import { get, post, del } from "./Network";
-import { ExternalSource, Sort, MediaType, TimeWindow } from "./Enums";
+import { ExternalSource, Sort, MediaType, TimeWindow } from "./enums";
 
 /**
  * API instance

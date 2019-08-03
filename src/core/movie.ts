@@ -10,7 +10,7 @@ import { ILists }                        from "./interface/list";
 import { IMovieDetails, IReleaseDates }  from "./interface/movie";
 import { IMovieResults }                 from "./interface/results";
 import { IResponse }                     from "./interface/response";
-import { IReviewResults }                from "./interface/review";
+import { IReviews }                      from "./interface/reviews";
 import { ITranslations }                 from "./interface/language";
 
 export let movie = {
@@ -38,15 +38,6 @@ export let movie = {
 		return get<IAlternativeTitles>(apiKey, `/movie/${movieId}/alternative_titles`, {
 			country
 		});
-	},
-
-	/**
-	 * Get the changes for a movie. By default only the last 24 hours are returned
-	 * @DEPRECATED
-	 */
-	getChanges(apiKey: string, movieId: number, page?: number, options: IChangesOptions = {}) {
-		return get<IChanges>(apiKey, `/movie/${movieId}/changes`,
-			Object.assign(options, {page}));
 	},
 
 	/**
@@ -136,13 +127,6 @@ export let movie = {
 	},
 
 	/**
-	 * Get the user reviews for a movie
-	 */
-	getReviews(apiKey: string, movieId: number, language?: string, page?: number) {
-		return get<IReviewResults>(apiKey, `/movie/${movieId}/reviews`, { language, page });
-	},
-
-	/**
 	 * Get a list of lists that a movie belongs to
 	 */
 	getLists(apiKey: string, movieId: number, language?: string, page?: number) {
@@ -186,21 +170,21 @@ export let movie = {
 	/**
 	 * Get a list of the current popular movies on TMDb. This list updates daily
 	 */
-	getPopularList(apiKey: string, page?: number, region?: string, language?: string) {
+	getPopular(apiKey: string, page?: number, region?: string, language?: string) {
 		return get<IMovieResults>(apiKey, `/movie/popular`, { language, page, region });
 	},
 
 	/**
 	 * Get the top rated movies on TMDb
 	 */
-	getTopRatedList(apiKey: string, page?: number, region?: string, language?: string) {
+	getTopRated(apiKey: string, page?: number, region?: string, language?: string) {
 		return get<IMovieResults>(apiKey, `/movie/top_rated`, { language, page, region });
 	},
 
 	/**
 	 * Get a list of upcoming movies in theaters
 	 */
-	getUpcomingList(apiKey: string, page?: number, region?: string, language?: string) {
+	getUpcoming(apiKey: string, page?: number, region?: string, language?: string) {
 		return get<IMovieResults>(apiKey, `/movie/upcoming`, { language, page, region });
 	}
-}
+};

@@ -79,10 +79,6 @@ export interface IEpisodeDetails extends IEpisodeBase {
 	guest_stars: IGuestStar[];
 }
 
-export interface IEpisodeResults extends IPaginated {
-	results: IEpisode[];
-}
-
 interface ISeasonBase {
 	air_date     : string;
 	id           : number;

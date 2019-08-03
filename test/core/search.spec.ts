@@ -1,80 +1,62 @@
 import { expect } from "chai";
 import "mocha";
-import { tmdb } from "./init";
+import { auth } from "../init";
 
 /**
  * Import modules to test
  */
-import { MediaType } from "../src/Enums";
-import {
-	CompanyResults,
-	MovieResults,
-	SeriesResults,
-	PersonResults,
-	MultiSearchResults,
-	KeywordResults,
-	CollectionResults
-} from "../src/Interfaces";
-
-// -------------------------------------------------------------------------------------------------
+import { search }                                    from "../../src/core";
+import { MediaType }                                 from "../../src/enums";
+import { ICompanyResults, ICollectionResults, IKeywordResults, IMovieResults, ISeriesResults,
+	IPersonResults, ICombinedResults, IFindResults } from "../../src/core/interface/results";
+import { ExternalSource }                            from "../../src/core/enums";
 
 describe("Search API", () => {
-	/**
-	 * Search for a specific company
-	 */
+	it("Find a TV show episode from IMDb ID", () => {
+		return search.find(auth.api_key, "tt4197088", ExternalSource.Imdb).then((result: IFindResults) => {
+			expect(result.tv_episode_results.length).to.equal(1);
+			expect(result.tv_episode_results[0].name).to.equal("Member Berries");
+		});
+	});
+
 	it("Search for and find Sony Pictures", () => {
-		return tmdb.searchCompanies("Sony Pictures").then((result: CompanyResults) => {
+		return search.companies(auth.api_key, "Sony Pictures").then((result: ICompanyResults) => {
 			expect(result.total_results).to.be.greaterThan(0);
 			expect(result.results[0].name).to.equal("Sony Pictures");
 		});
 	});
 
-	/**
-	 * Search for a movie collection
-	 */
 	it("Search for a collection", () => {
 		let name = "The Fast and the Furious Collection";
-		return tmdb.searchCollections(name).then((result: CollectionResults) => {
+		return search.collections(auth.api_key, name).then((result: ICollectionResults) => {
 			expect(result.total_results).to.equal(1);
 			expect(result.results[0].name).to.equal(name);
 		});
 	});
 
-	/**
-	 * Search for a specific keyword
-	 */
 	it("Search for a keyword", () => {
-		return tmdb.searchKeywords("action").then((result: KeywordResults) => {
+		return search.keywords(auth.api_key, "action").then((result: IKeywordResults) => {
 			expect(result.total_results).to.be.greaterThan(0);
 			expect(result.results[0].name).to.equal("action");
 		});
 	});
 
-	/**
-	 * Search for a movie
-	 */
 	it("Search for and find The Incredibles 2", () => {
-		return tmdb.searchMovies("The Incredibles 2", 1, {}).then((result: MovieResults) => {
+		return search.movies(auth.api_key, "The Incredibles 2", 1, {}).then((result: IMovieResults) => {
 			expect(result.total_results).to.equal(1);
 			expect(result.results[0].title).to.equal("Incredibles 2");
 		});
 	});
 
-	/**
-	 * Search for a TV show
-	 */
 	it("Search for and find Breaking Bad", () => {
-		return tmdb.searchSeries("Breaking Bad").then((result: SeriesResults) => {
+		return search.series(auth.api_key, "Breaking Bad").then((result: ISeriesResults) => {
 			expect(result.total_results).to.equal(1);
 			expect(result.results[0].name).to.equal("Breaking Bad");
 		});
 	});
 
-	/**
-	 * Search for a person
-	 */
 	it("Search for and find Keanu Reeves", () => {
-		return tmdb.searchPeople("Keanu Reeves").then((result: PersonResults) => {
+		return search.people(auth.api_key, "Keanu Reeves").then((result: IPersonResults) => {
 			expect(result.total_results).to.equal(1);
 			expect(result.results[0].name).to.equal("Keanu Reeves");
 		});
@@ -85,7 +67,7 @@ describe("Search API", () => {
 	 * Should find his Movies, TV show(s), and himself
 	 */
 	it("Search and find a movie, TV show, and person with multi search", () => {
-		return tmdb.search("Fluffy").then((result: MultiSearchResults) => {
+		return search.multi(auth.api_key, "Fluffy").then((result: ICombinedResults) => {
 			expect(result.total_results).to.be.greaterThan(2);
 			result.results.should.include.something.that.has.property("media_type", MediaType.Movie);
 			result.results.should.include.something.that.has.property("media_type", MediaType.Person);

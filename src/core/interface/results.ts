@@ -42,7 +42,7 @@ export interface ICombinedResults extends IPaginated {
 	results: IMovie[] | ISeries[] | IPerson[];
 }
 
-export interface PersonResults extends IPaginated {
+export interface IPersonResults extends IPaginated {
 	results: IPerson[];
 }
 

@@ -37,7 +37,7 @@ export interface ISeasonAccountState extends IAccountStateBase {
 	episode: number;
 }
 
-export interface ISeasonAccountStateCollection {
+export interface ISeasonAccountStates {
 	id     : number;
 	results: ISeasonAccountState[];
 }

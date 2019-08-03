@@ -1,13 +1,14 @@
 import { expect } from "chai";
 import "mocha";
-import { tmdb } from "./init";
+import { auth } from "../init";
 
 /**
  * Import modules to test
  */
-import { TMDb } from "../src";
-import { StatusCode } from "../src/Enums";
-import { MovieResults } from "../src/Interfaces";
+import { search, movie } from "../../src/core";
+import { IMovieResults } from "../../src/core/interface/results";
+import { IResponse }     from "../../src/core/interface/response";
+import { StatusCode }    from "../../src/core/enums";
 
 describe("Network API", () => {
 	/**
@@ -15,29 +16,27 @@ describe("Network API", () => {
 	 */
 	it("API error Mechanism", () => {
 		// Use a bad API key
-		let tmdb = new TMDb("12345");
 		return Promise.all([
-			tmdb.searchCompanies("Sony").catch((response) => {
+			search.companies("12345", "Sony").catch((response: IResponse) => {
 				expect(response.status_code).to.equal(StatusCode.InvalidApiKey);
 				expect(response.status_message).to.equal("Invalid API key: You must be granted a valid key.");
 			}),
-			tmdb.rateMovie(278, 10).catch((response) => {
+			movie.rate("12345", 278, 10).catch((response: IResponse) => {
 				expect(response.status_code).to.equal(StatusCode.InvalidApiKey);
 			}),
-			tmdb.unrateMovie(278).catch((response) => {
+			movie.unrate("12345", 278).catch((response: IResponse) => {
 				expect(response.status_code).to.equal(StatusCode.InvalidApiKey);
 			})
 		]);
-
 	});
 
 	/**
 	 * Test the throttle mechanism
 	 */
 	it("Request throttle mechanism", () => {
-		let requests: Promise<MovieResults>[] = [];
+		let requests: Promise<IMovieResults>[] = [];
 		for (let i = 0; i < 60; i++) {
-			requests.push(tmdb.searchMovies("The Fast and the Furious"));
+			requests.push(search.movies(auth.api_key, "The Fast and the Furious"));
 		}
 		return Promise.all(requests);
 	});
