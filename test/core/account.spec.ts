@@ -7,7 +7,7 @@ import { auth } from "../init";
  */
 import { account }                                        from "../../src/core";
 import { MediaType }                                      from "../../src/core/enums";
-import { StatusCode }                                     from "../../src/enums";
+import { StatusCode }                                     from "../../src/core/enums";
 import { IResponse }                                      from "../../src/core/interface/response";
 import { IMovieResults, ISeriesResults, IEpisodeResults } from "../../src/core/interface/results";
 

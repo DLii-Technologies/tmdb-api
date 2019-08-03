@@ -3,7 +3,7 @@ import "mocha";
 import { auth } from "../init";
 
 import { tv }                      from "../../src/core";
-import { StatusCode }              from "../../src/enums";
+import { StatusCode }              from "../../src/core/enums";
 import { IEpisodeDetails }         from "../../src/core/interface/tv";
 import { IVideos, IEpisodeImages } from "../../src/core/interface/media";
 import { IResponse }               from "../../src/core/interface/response";

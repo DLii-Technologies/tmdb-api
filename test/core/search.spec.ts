@@ -6,7 +6,7 @@ import { auth } from "../init";
  * Import modules to test
  */
 import { search }                                    from "../../src/core";
-import { MediaType }                                 from "../../src/enums";
+import { MediaType }                                 from "../../src/core/enums";
 import { ICompanyResults, ICollectionResults, IKeywordResults, IMovieResults, ISeriesResults,
 	IPersonResults, ICombinedResults, IFindResults } from "../../src/core/interface/results";
 import { ExternalSource }                            from "../../src/core/enums";

@@ -5,11 +5,10 @@ import { auth } from "../init";
 /**
  * Modules to test
  */
-import { company }          from "../../src/core";
-import { ICompanyDetails, INetworkDetails }  from "../../src/core/interface/company";
-import { INetworkLogos }    from "../../src/core/interface/media";
-import { AlternativeNames } from "../../src/Interfaces";
-import { IAlternativeNames } from "../../src/core/interface/info";
+import { company }                          from "../../src/core";
+import { ICompanyDetails, INetworkDetails } from "../../src/core/interface/company";
+import { INetworkLogos }                    from "../../src/core/interface/media";
+import { IAlternativeNames }                from "../../src/core/interface/info";
 
 describe("Company API", () => {
 	it("Get the details of a company", () => {
@@ -19,7 +18,7 @@ describe("Company API", () => {
 	});
 
 	it("Get a company's alternative names", () => {
-		return company.getCompanyAltNames(auth.api_key, 3).then((result: AlternativeNames) => {
+		return company.getCompanyAltNames(auth.api_key, 3).then((result: IAlternativeNames) => {
 			result.results.should.include.something.with.property("name", "Pixar Animation Studios");
 		});
 	});
