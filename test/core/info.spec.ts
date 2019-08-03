@@ -5,19 +5,32 @@ import { auth } from "../init";
 /**
  * Modules to test
  */
-import { info }              from "../../src/core";
-import { IGenres, IKeyword } from "../../src/core/interface/info";
-import { IWithId, IMovieResults }           from "../../src/core/interface/results";
+import { info } from "../../src/core";
+import { IGenres, IKeyword, IMovieCertifications, ITvCertifications } from "../../src/core/interface/info";
+import { IWithId, IMovieResults } from "../../src/core/interface/results";
 
 describe("Core: Information API", () => {
+	it("Get list of movie certifications", () => {
+		return info.getMovieCertifications(auth.api_key).then((result: IMovieCertifications) => {
+			expect(result.certifications.IN.length).to.be.greaterThan(0);
+		});
+	});
+
+	it("Get list of TV certifications", () => {
+		return info.getTvCertifications(auth.api_key).then((result: ITvCertifications) => {
+			expect(result.certifications.KR.length).to.be.greaterThan(0);
+		});
+	});
+
 	it("Get list of movie genres", () => {
-		return info.getMovieGenreList(auth.api_key, ).then((result: IGenres) => {
+		return info.getMovieGenreList(auth.api_key).then((result: IGenres) => {
 			expect(result.genres.length).to.be.greaterThan(0);
 		});
 	});
 
+
 	it("Get list of TV show genres", () => {
-		return info.getTvShowGenreList(auth.api_key, ).then((result: IGenres) => {
+		return info.getTvGenreList(auth.api_key).then((result: IGenres) => {
 			expect(result.genres.length).to.be.greaterThan(0);
 		});
 	});

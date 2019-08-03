@@ -1,20 +1,34 @@
-import { IGenres, IKeyword }      from "./interface/info";
-import { get }                    from "./util/network";
-import { IWithId, IMovieResults } from "./interface/results";
+import { IGenres, IKeyword, IMovieCertifications, ITvCertifications } from "./interface/info";
+import { IWithId, IMovieResults }                                     from "./interface/results";
+import { get }                                                        from "./util/network";
 
 export let info = {
+	/**
+	 * Get an up-to-date list of the officially supported movie certifications on TMDb
+	 */
+	getMovieCertifications(apiKey: string) {
+		return get<IMovieCertifications>(apiKey, "/certification/movie/list");
+	},
+
+	/**
+	 * Get an up-to-date list of the officially supported TV certifications on TMDb
+	 */
+	getTvCertifications(apiKey: string) {
+		return get<ITvCertifications>(apiKey, "/certification/tv/list");
+	},
+
 	/**
 	 * Get the list of official genres for movies
 	 */
 	getMovieGenreList(apiKey: string, language?: string) {
-		return get<IGenres>(apiKey, `/genre/movie/list`, { language });
+		return get<IGenres>(apiKey, "/genre/movie/list", { language });
 	},
 
 	/**
 	 * Get the list of official genres for TV shows
 	 */
-	getTvShowGenreList(apiKey: string, language?: string) {
-		return get<IGenres>(apiKey, `/genre/tv/list`, { language });
+	getTvGenreList(apiKey: string, language?: string) {
+		return get<IGenres>(apiKey, "/genre/tv/list", { language });
 	},
 
 	/**

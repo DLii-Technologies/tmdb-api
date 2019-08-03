@@ -15,6 +15,41 @@ export interface IAlternativeNames {
 	}[];
 }
 
+export interface ICertification {
+	certification: string;
+	meaning      : string;
+	order        : number;
+}
+
+export interface IMovieCertifications {
+	certifications: {
+		US: ICertification[];
+		CA: ICertification[];
+		DE: ICertification[];
+		GB: ICertification[];
+		AU: ICertification[];
+		BR: ICertification[];
+		FR: ICertification[];
+		NZ: ICertification[];
+		IN: ICertification[];
+	}
+}
+
+export interface ITvCertifications {
+	certifications: {
+		US: ICertification[];
+		CA: ICertification[];
+		DE: ICertification[];
+		GB: ICertification[];
+		AU: ICertification[];
+		BR: ICertification[];
+		FR: ICertification[];
+		NZ: ICertification[];
+		RU: ICertification[];
+		KR: ICertification[];
+	}
+}
+
 export interface IGenre {
 	id  : number;
 	name: string;
