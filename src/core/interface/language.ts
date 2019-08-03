@@ -25,8 +25,14 @@ export interface IMovieTranslation extends ITranslation {
 }
 
 export interface IMovieTranslations {
-	id          : number;
 	translations: IMovieTranslation[];
+}
+
+export interface ICollectionTranslation extends IMovieTranslation
+{}
+
+export interface ICollectionTranslations {
+	translations: ICollectionTranslation[];
 }
 
 export interface IPersonTranslation extends ITranslation {
@@ -36,7 +42,6 @@ export interface IPersonTranslation extends ITranslation {
 }
 
 export interface IPersonTranslations extends ITranslations {
-	id          : number;
 	translations: IPersonTranslation[];
 }
 
@@ -47,8 +52,7 @@ export interface IEpisodeTranslation {
 	};
 }
 
-export interface IEpisodeTranslations {
-	id          : number;
+export interface IEpisodeTranslations extends ITranslations {
 	translations: IEpisodeTranslation[];
 }
 

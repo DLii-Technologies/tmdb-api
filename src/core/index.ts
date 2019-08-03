@@ -1,6 +1,7 @@
 export * from "./account";
 export * from "./auth";
 export * from "./changes";
+export * from "./collection";
 export * from "./company";
 export * from "./discover";
 export * from "./guest";

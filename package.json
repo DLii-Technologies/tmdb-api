@@ -7,7 +7,9 @@
   "scripts": {
     "build": "tsc",
     "coverage": "nyc npm run test",
-    "test": "mocha -r node_modules/ts-node/register ./test/**/*.spec.ts --timeout 30000 --delay"
+    "test": "mocha -r node_modules/ts-node/register ./test/**/*.spec.ts --timeout 30000 --delay",
+    "test-core": "mocha -r node_modules/ts-node/register ./test/core/*.spec.ts --timeout 30000 --delay",
+    "test-main": "mocha -r node_modules/ts-node/register ./test/*.spec.ts --timeout 30000 --delay"
   },
   "repository": {
     "type": "git",
