@@ -5,8 +5,9 @@ import { auth } from "../init";
 /**
  * Modules to test
  */
-import { changes }       from "../../src/core";
-import { IMediaChanges, IChanges, ISeasonChanges } from "../../src/core/interface/changes";
+import { changes } from "../../src/core";
+import { IMediaChanges, IChanges, ISeasonChanges, IPersonChanges }
+	from "../../src/core/interface/changes";
 
 describe("Core: Changes API", () => {
 	it("Get a list of recent movies that have been edited", () => {
@@ -28,7 +29,15 @@ describe("Core: Changes API", () => {
 	});
 
 	it("Get a movie's recent changes", () => {
-		return changes.getMovieChanges(auth.api_key, 559969);
+		return changes.getMovieChanges(auth.api_key, 559969).then((result: IChanges) => {
+			expect(result.changes).to.be.an("array");
+		});
+	});
+
+	it("Get a person's recent changes", () => {
+		return changes.getPersonChanges(auth.api_key, 287).then((result: IPersonChanges) => {
+			expect(result.changes).to.be.an("array");
+		});
 	});
 
 	it("Get recent episode changes", () => {

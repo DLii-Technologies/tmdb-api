@@ -71,16 +71,6 @@ export let account = {
 	},
 
 	/**
-	 * Get the movies rated by a guest session
-	 */
-	getGuestRatedMovies(apiKey: string, guestSessionId: string, sortBy?: Sort, language?: string) {
-		return get<IMovieResults>(apiKey, `/guest_session/${guestSessionId}/rated/movies`, {
-			sort_by: sortBy,
-			language
-		});
-	},
-
-	/**
 	 * Get the TV shows rated by an account
 	 */
 	getRatedTvShows(apiKey: string, sessionId: string, accountId?: number, page?: number,
@@ -95,16 +85,6 @@ export let account = {
 	},
 
 	/**
-	 * Get the movies rated by a guest session
-	 */
-	getGuestRatedTvShows(apiKey: string, guestSessionId: string, sortBy?: Sort, language?: string) {
-		return get<ISeriesResults>(apiKey, `/guest_session/${guestSessionId}/rated/tv`, {
-			sort_by: sortBy,
-			language
-		});
-	},
-
-	/**
 	 * Get the TV show episodes rated by an account
 	 */
 	getRatedTvEpisodes(apiKey: string, sessionId: string, accountId?: number, page?: number,
@@ -115,18 +95,6 @@ export let account = {
 			sort_by   : sortBy,
 			language,
 			page
-		});
-	},
-
-	/**
-	 * Get the movies rated by a guest session
-	 */
-	getGuestRatedEpisodes(apiKey: string, guestSessionId: string, sortBy?: Sort,
-		language?: string)
-	{
-		return get<IEpisodeResults>(apiKey, `/guest_session/${guestSessionId}/rated/tv/episodes`, {
-			sort_by: sortBy,
-			language
 		});
 	},
 
