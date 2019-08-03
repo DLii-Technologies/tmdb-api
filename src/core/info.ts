@@ -1,8 +1,52 @@
-import { IGenres, IKeyword, IMovieCertifications, ITvCertifications } from "./interface/info";
-import { IWithId, IMovieResults }                                     from "./interface/results";
-import { get }                                                        from "./util/network";
+import { IGenres, IKeyword, IMovieCertifications, ITvCertifications, IApiConfiguration, ICountry,
+	IJob, ITimezone }                  from "./interface/info";
+import { IWithId, IMovieResults }      from "./interface/results";
+import { get }                         from "./util/network";
+import { ILanguage, IWithEnglishName } from "./interface/language";
 
 export let info = {
+	/**
+	 * Get the system-wide configuration information
+	 */
+	getApiConfiguration(apiKey: string) {
+		return get<IApiConfiguration>(apiKey, "/configuration");
+	},
+
+	/**
+	 * Get the list of countries used throughout TMDb
+	 */
+	getCountries(apiKey: string) {
+		return get<ICountry[]>(apiKey, "/configuration/countries");
+	},
+
+	/**
+	 * Get a list of the jobs and departments used on TMDb
+	 */
+	getJobs(apiKey: string) {
+		return get<IJob[]>(apiKey, "/configuration/jobs");
+	},
+
+	/**
+	 * Get a list of the languages used on TMDb
+	 */
+	getLanguages(apiKey: string) {
+		return get<(ILanguage & IWithEnglishName)[]>(apiKey, "/configuration/languages");
+	},
+
+	/**
+	 * Get a list of the *officially* supported translations on TMDb
+	 */
+	getPrimaryTranslations(apiKey: string) {
+		return get<string[]>(apiKey, "/configuration/primary_translations");
+	},
+
+	/**
+	 * Get the list of timezones used throughout TMDb
+	 */
+	getTimezones(apiKey: string) {
+		return get<ITimezone[]>(apiKey, "/configuration/timezones");
+	},
+
 	/**
 	 * Get an up-to-date list of the officially supported movie certifications on TMDb
 	 */

@@ -3,6 +3,10 @@ export interface ILanguage {
 	name     : string;
 }
 
+export interface IWithEnglishName {
+	english_name: string;
+}
+
 export interface ITranslation {
 	iso_3166_1  : string;
 	iso_639_1   : string;

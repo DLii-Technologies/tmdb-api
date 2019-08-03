@@ -91,7 +91,7 @@ function enqueueRequest(request: Request) {
 /**
  * Send a GET request
  */
-export function get<T extends object>(apiKey: string, uri: string, query: any = {}) {
+export function get<T>(apiKey: string, uri: string, query: any = {}) {
 	query["api_key"] = apiKey;
 	return new Promise<T>((resolve, reject) => {
 		enqueueRequest(() => {
@@ -105,7 +105,7 @@ export function get<T extends object>(apiKey: string, uri: string, query: any = 
 /**
  * Send a POST request
  */
-export function post<T extends object>(apiKey: string, uri: string, query: any, body: any) {
+export function post<T>(apiKey: string, uri: string, query: any, body: any) {
 	query["api_key"] = apiKey;
 	return new Promise<T>((resolve, reject) => {
 		enqueueRequest(() => {
@@ -119,7 +119,7 @@ export function post<T extends object>(apiKey: string, uri: string, query: any, 
 /**
  * Send a DEL request
  */
-export function del<T extends object>(apiKey: string, uri: string, query: any, body: any = {}) {
+export function del<T>(apiKey: string, uri: string, query: any, body: any = {}) {
 	query["api_key"] = apiKey;
 	return new Promise<T>((resolve, reject) => {
 		enqueueRequest(() => {
