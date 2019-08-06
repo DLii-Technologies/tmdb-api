@@ -1,5 +1,7 @@
+import { StatusCode } from "core/enums";
+
 export interface IResponse {
-	status_code   : number;
+	status_code   : StatusCode;
 	status_message: string;
 }
 

@@ -51,4 +51,10 @@ describe("Core: Changes API", () => {
 			expect(result.changes).to.be.an("array");
 		});
 	});
+
+	it("Get recent series changes", () => {
+		return changes.getSeriesChanges(auth.api_key, 2190).then((result: IChanges) => {
+			expect(result.changes).to.be.an("array");
+		});
+	});
 });

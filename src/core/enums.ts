@@ -38,12 +38,36 @@ export enum StatusCode {
 	NotFound               = 34
 }
 
+export enum ReleaseType {
+
+}
+
 /**
- * @TODO Most likely temporary
+ * Methods of sorting
+ * @TODO Get rid of the .asc and .desc
  */
 export enum Sort {
 	CreatedAtAsc  = "created_at.asc",
 	CreatedAtDesc = "created_at.desc"
+}
+
+export enum SortDirection {
+	Asc  = "asc",
+	Desc = "desc"
+}
+
+/**
+ * Several fields are missing from the TV-discover documentation
+ */
+export enum DiscoverSort {
+	Popularity         = "popularity",
+	ReleaseDate        = "release_date",
+	Revenue            = "revenue",
+	PrimaryReleaseDate = "primary_release_date",
+	OriginalTitle      = "original_title",
+	VoteAverage        = "vote_average",
+	VoteCount          = "vote_count",
+	FirstAirDate       = "vote_average"
 }
 
 /**

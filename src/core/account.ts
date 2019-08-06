@@ -1,9 +1,8 @@
-import { IListResults }                                   from "./interface/list";
-import { get, post }                                      from "./util/network";
 import { IAccountDetails }                                from "./interface/account";
 import { MediaType, Sort }                                from "./enums";
 import { IMovieResults, ISeriesResults, IEpisodeResults } from "./interface/results";
 import { IResponse }                                      from "./interface/response";
+import { get, post }                                      from "./util/network";
 import { uriF }                                           from "./util/utils";
 
 export let account = {
@@ -12,19 +11,6 @@ export let account = {
 	 */
 	getDetails(apiKey: string, sessionId: string) {
 		return get<IAccountDetails>(apiKey, "/account", { session_id: sessionId });
-	},
-
-	/**
-	 * Get all of the lists created by an account
-	 */
-	getLists(apiKey: string, sessionId: string, accountId?: number, page?: number,
-		language?: string)
-	{
-		return get<IListResults>(apiKey, uriF("/account/{account_id}/lists", accountId), {
-			session_id: sessionId,
-			language,
-			page,
-		});
 	},
 
 	/**

@@ -5,6 +5,7 @@ import { IKeyword }                   from "./info";
 import { ICompany }                   from "./company";
 import { ICollection }                from "./collections";
 import { IPerson }                    from "./people";
+import { IList }                      from "./list";
 
 export interface ICompanyResults extends IPaginated {
 	results: ICompany[];
@@ -24,6 +25,10 @@ export interface IFindResults {
 
 export interface IEpisodeResults extends IPaginated {
 	results: IEpisode[];
+}
+
+export interface IListResults extends IPaginated {
+	results: IList[];
 }
 
 export interface IMovieResults extends IPaginated {

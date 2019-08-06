@@ -16,13 +16,6 @@ describe("Core: Account API", () => {
 		return account.getDetails(auth.api_key, auth.session_id);
 	});
 
-	it("Get the account's created lists", () => {
-		return Promise.all([
-			account.getLists(auth.api_key, auth.session_id),
-			account.getLists(auth.api_key, auth.session_id, auth.account_id)
-		]);
-	});
-
 	it("Get the account's favorite movies", () => {
 		return Promise.all([
 			account.getFavoriteMovies(auth.api_key, auth.session_id),

@@ -105,7 +105,7 @@ export function get<T>(apiKey: string, uri: string, query: any = {}) {
 /**
  * Send a POST request
  */
-export function post<T>(apiKey: string, uri: string, query: any, body: any) {
+export function post<T>(apiKey: string, uri: string, query: any, body: any = {}) {
 	query["api_key"] = apiKey;
 	return new Promise<T>((resolve, reject) => {
 		enqueueRequest(() => {

@@ -11,7 +11,7 @@ import { IGenres, IKeyword, IMovieCertifications, ITvCertifications, IApiConfigu
 import { IWithId, IMovieResults }      from "../../src/core/interface/results";
 import { IWithEnglishName, ILanguage } from "../../src/core/interface/language";
 
-describe.only("Core: Information API", () => {
+describe("Core: Information API", () => {
 	it("Get API configuration", () => {
 		return info.getApiConfiguration(auth.api_key).then((result: IApiConfiguration) => {
 			expect(result.change_keys).to.include("birthday");

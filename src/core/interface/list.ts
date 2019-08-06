@@ -4,7 +4,7 @@ import { IPaginated } from "./core";
 interface IListBase {
 	description   : string;
 	favorite_count: number;
-	id            : number;
+	id            : string | number;
 	item_count    : number;
 	iso_639_1     : string;
 	name          : string;
@@ -18,10 +18,6 @@ export interface IList extends IListBase {
 export interface IListDetails extends IListBase {
 	created_by: string;
 	items     : IMovie[];
-}
-
-export interface IListResults extends IPaginated {
-	results: IList[];
 }
 
 export interface ILists extends IPaginated {
