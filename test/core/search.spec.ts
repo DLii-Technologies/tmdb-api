@@ -37,13 +37,13 @@ describe("Core: Search API", () => {
 	it("Search for a keyword", () => {
 		return search.keywords(auth.api_key, "action").then((result: IKeywordResults) => {
 			expect(result.total_results).to.be.greaterThan(0);
-			expect(result.results[0].name).to.equal("action");
+			result.results.should.include.something.that.has.property("name", "action");
 		});
 	});
 
 	it("Search for and find The Incredibles 2", () => {
-		return search.movies(auth.api_key, "The Incredibles 2", 1, {}).then((result: IMovieResults) => {
-			expect(result.total_results).to.equal(1);
+		return search.movies(auth.api_key, "Incredibles 2", 1, {}).then((result: IMovieResults) => {
+			expect(result.total_results).to.be.greaterThan(0);
 			expect(result.results[0].title).to.equal("Incredibles 2");
 		});
 	});

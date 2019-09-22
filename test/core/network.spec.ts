@@ -35,7 +35,7 @@ describe("Core: Network API", () => {
 	 */
 	it("Request throttle mechanism", () => {
 		let requests: Promise<IMovieResults>[] = [];
-		for (let i = 0; i < 60; i++) {
+		for (let i = 0; i < 100; i++) {
 			requests.push(search.movies(auth.api_key, "The Fast and the Furious"));
 		}
 		return Promise.all(requests);

@@ -31,7 +31,8 @@ var executeTimeout: NodeJS.Timeout | null = null;
  */
 let tmdb = got.extend({
 	baseUrl: `${BASE_URL}/${API_VERSION}`,
-	json   : true
+	json   : true,
+	timeout: 10000
 });
 
 /**
