@@ -58,7 +58,7 @@ function cleanBucket() {
 function throttle() {
 	let ms = getMilliseconds();
 	cleanBucket();
-	if (requestBucket.length >= 39 && ms - requestBucket[0] < 10000) {
+	if (requestBucket.length >= 38 && ms - requestBucket[0] < 10000) {
 		if (executeTimeout) {
 			clearTimeout(executeTimeout);
 		}

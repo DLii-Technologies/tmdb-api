@@ -48,3 +48,12 @@ authentication.createRequestToken(auth.api_key).then((result) => {
 	console.error("Initialization failed!");
 	process.exit(1);
 });
+
+// -------------------------------------------------------------------------------------------------
+
+import { TMDb } from "../src";
+
+/**
+ * Create a TMDb singleton
+ */
+new TMDb(auth.api_key);
