@@ -1,9 +1,15 @@
-import { IGenre }                from "../core/interface/info";
-import { IMovie, IMovieDetails } from "../core/interface/movie";
-import { ISerializable }         from "../interfaces";
-import { Component }             from "./Component";
-import { TMDb }                  from "../TMDb";
-import { movie }                 from "../core";
+import { IGenre, IAlternativeTitle }                from "../core/interface/info";
+import { IMovie, IMovieDetails, IReleaseDateGroup } from "../core/interface/movie";
+import { Component }                                from "./Component";
+import { TMDb }                                     from "../TMDb";
+import { changes, movie, review }                   from "../core";
+import { IMovieTranslation }                        from "../core/interface/language";
+import { PaginatedResponse, IPaginatedResponse }    from "../util/PaginatedResponse";
+import { IChange }                                  from "../core/interface/changes";
+import { IChangesOptions }                          from "../core/interface/options";
+import { IVideo }                                   from "../core/interface/media";
+import { MediaType }                                from "../core/enums";
+import { ReviewListing }                            from "./Review";
 
 export interface ISerializedMovieListing extends IMovie
 {}
@@ -28,7 +34,7 @@ class Movie extends Component
 	public readonly voteCount       : number;
 
 	constructor(movie: IMovie|IMovieDetails, tmdb?: TMDb) {
-		super(tmdb || TMDb.instance(true));
+		super(tmdb);
 		this.backdropPath     = movie.backdrop_path;
 		this.hasVideo         = movie.video;
 		this.id               = movie.id;
@@ -47,62 +53,142 @@ class Movie extends Component
 	/**
 	 * Get the alternative titles for this movie
 	 */
-	getAlternativeTitles() {}
+	getAlternativeTitles(country?: string) {
+		return new Promise<IAlternativeTitle[]>((resolve, reject) => {
+			movie.getAltTitles(this.tmdb.apiKey, this.id, country).then((titles) => {
+				resolve(titles.titles);
+			}).catch(reject);
+		});
+	}
 
 	/**
 	 * Get the recent changes for this movie
 	 */
-	getChanges() {}
+	getChanges(page: number = 1, options: IChangesOptions) {
+		return PaginatedResponse.create(page, (p: number) => {
+			return new Promise<IPaginatedResponse<IChange[]>>((resolve, reject) => {
+				changes.getMovieChanges(this.tmdb.apiKey, this.id, p, options)
+					.then(changes => resolve({
+						body: changes.changes,
+						page: p
+					})).catch(reject);
+			});
+		});
+	}
 
 	/**
 	 * Get the credits for this movie
+	 *
+	 * @TODO May make individual credit items a class
 	 */
 	getCredits() {}
 
 	/**
 	 * Get the external ID list for this movie
 	 */
-	getExternalIDs() {}
+	getExternalIDs() {
+		return movie.getExternalIds(this.tmdb.apiKey, this.id);
+	}
 
 	/**
 	 * Get a list of images for this movie
 	 */
-	getImages() {}
+	getImages(lang: string) {
+		return movie.getImages(this.tmdb.apiKey, this.id, lang);
+	}
 
 	/**
 	 * Get the keywords for this movie
 	 */
-	getKeywords() {}
+	getKeywords() {
+		return movie.getKeywords(this.tmdb.apiKey, this.id);
+	}
 
 	/**
 	 * Get the release dates for this movie
 	 */
-	getReleaseDates() {}
+	getReleaseDates() {
+		return new Promise<IReleaseDateGroup[]>((resolve, reject) => {
+			movie.getReleaseDates(this.tmdb.apiKey, this.id).then((releaseDates) => {
+				resolve(releaseDates.results);
+			}).catch(reject);
+		});
+	}
 
 	/**
 	 * Get a list of videos for this movie
 	 */
-	getVideos() {}
+	getVideos() {
+		return new Promise<IVideo[]>((resolve, reject) => {
+			movie.getVideos(this.tmdb.apiKey, this.id).then((videos) => {
+				resolve(videos.results);
+			}).catch(reject);
+		});
+	}
 
 	/**
 	 * Get a list of translations for this movie
 	 */
-	getTranslations() {}
+	getTranslations() {
+		return new Promise<IMovieTranslation[]>((resolve, reject) => {
+			movie.getTranslations(this.tmdb.apiKey, this.id).then((translations) => {
+				resolve(translations.translations);
+			}).catch(reject);
+		});
+	}
 
 	/**
 	 * Get a list of recommended movies from this movie
 	 */
-	getRecommendations() {}
+	getRecommendations(page: number, lang: string) {
+		return PaginatedResponse.create(page, (p: number) => {
+			return new Promise<IPaginatedResponse<MovieListing[]>>((resolve, reject) => {
+				movie.getRecommendations(this.tmdb.apiKey, this.id, p, lang)
+					.then(movies => resolve({
+						body        : MovieListing.fromJson(movies.results, this.tmdb),
+						page        : movies.page,
+						totalPages  : movies.total_pages,
+						totalResults: movies.total_results
+					})).catch(reject);
+			});
+		});
+	}
 
 	/**
 	 * Get a list of similar movies to this movie
 	 */
-	getSimilarMovies() {}
+	getSimilarMovies(page: number, lang: string) {
+		return PaginatedResponse.create(page, (p: number) => {
+			return new Promise<IPaginatedResponse<MovieListing[]>>((resolve, reject) => {
+				movie.getSimilar(this.tmdb.apiKey, this.id, p, lang)
+					.then(movies => resolve({
+						body        : MovieListing.fromJson(movies.results),
+						page        : movies.page,
+						totalPages  : movies.total_pages,
+						totalResults: movies.total_results
+					})).catch(reject);
+			});
+		});
+	}
 
 	/**
 	 * Get the reviews for this movie
+	 *
+	 * @TODO Store total results into response
 	 */
-	getReviews() {}
+	getReviews(page: number, lang: string) {
+		return PaginatedResponse.create(page, (p: number) => {
+			return new Promise<IPaginatedResponse<ReviewListing[]>>((resolve, reject) => {
+				review.getReviews(this.tmdb.apiKey, MediaType.Movie, this.id, p, lang)
+					.then(reviews => resolve({
+						body        : ReviewListing.fromJson(reviews.results, this.tmdb),
+						page        : reviews.page,
+						totalPages  : reviews.total_pages,
+						totalResults: reviews.total_results
+					})).catch(reject);
+			});
+		});
+	}
 
 	/**
 	 * Get lists that contain this movie
@@ -128,6 +214,17 @@ export class MovieListing extends Movie
 	public readonly genres: number[];
 
 	/**
+	 * Create an array of movies from JSON
+	 */
+	public static fromJson(movies: IMovie[], tmdb?: TMDb) {
+		let result: MovieListing[] = [];
+		for (let movie of movies) {
+			result.push(new MovieListing(movie, tmdb));
+		}
+		return result;
+	}
+
+	/**
 	 * Unserialize the object
 	 */
 	static unserialize(serialized: ISerializedMovieListing, tmdb?: TMDb) {
@@ -135,7 +232,7 @@ export class MovieListing extends Movie
 	}
 
 	constructor(movie: IMovie, tmdb?: TMDb) {
-		super(movie, tmdb || TMDb.instance(true));
+		super(movie, tmdb);
 		this.genres = movie.genre_ids;
 	}
 
@@ -143,7 +240,11 @@ export class MovieListing extends Movie
 	 * Get the details of the movie listing
 	 */
 	getDetails() {
-		movie.getDetails(this.tmdb.apiKey, this.id);
+		return new Promise<MovieDetails>((resolve, reject) => {
+			movie.getDetails(this.tmdb.apiKey, this.id).then((details) => {
+				resolve(new MovieDetails(details, this.tmdb));
+			}).catch(reject);
+		});
 	}
 }
 
@@ -155,7 +256,7 @@ export class MovieDetails extends Movie
 	public readonly genres: IGenre[];
 
 	constructor(movie: IMovieDetails, tmdb?: TMDb) {
-		super(movie, tmdb || TMDb.instance(true));
+		super(movie, tmdb);
 		this.genres = movie.genres;
 	}
 }

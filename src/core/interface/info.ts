@@ -26,13 +26,15 @@ export interface ITimezone {
 	zones     : string[];
 }
 
+export interface IAlternativeTitle {
+	iso_3166_1: string;
+	title     : string;
+	type      : string;
+}
+
 export interface IAlternativeTitles {
 	id    : number;
-	titles: {
-		iso_3166_1: string;
-		title     : string;
-		type      : string;
-	}[];
+	titles: IAlternativeTitle[];
 }
 
 export interface IAlternativeNames {

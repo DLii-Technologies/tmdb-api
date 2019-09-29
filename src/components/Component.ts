@@ -10,8 +10,8 @@ export class Component
 	 */
 	private __tmdb: TMDb;
 
-	constructor(tmdb: TMDb) {
-		this.__tmdb = tmdb;
+	constructor(tmdb?: TMDb) {
+		this.__tmdb = tmdb || TMDb.instance(true);
 	}
 
 	/**
