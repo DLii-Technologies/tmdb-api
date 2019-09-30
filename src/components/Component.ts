@@ -1,4 +1,4 @@
-import { TMDb } from "TMDb";
+import { TMDb } from "../TMDb";
 
 /**
  * A component is an item of TMDb, such as a list, movie, etc.

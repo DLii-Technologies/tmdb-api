@@ -1,19 +1,21 @@
-// import { MixinMovie } from "./mixin";
-import { Mixin } from "ts-mixer";
-import * as Mix from "./mixin";
+import * as Module from "./module/MovieModule";
 
-/**
- * The TMDb module
- *
- * Each module within TMDb is comprised of mixins.
- * For example, all movie functionality comes from the `MixinMovie` mixin
- */
-export class TMDb extends Mixin(Mix.MixinMovie, Mix.MixinTv)
+export class TMDb
 {
 	/**
 	 * Store a singleton instance of TMDb
 	 */
 	private static __instance: TMDb;
+
+	/**
+	 * Keep a reference to the API key
+	 */
+	public apiKey: string;
+
+	/**
+	 * TMDb Modules
+	 */
+	public movie: Module.MovieModule;
 
 	/**
 	 * Get the current instance if it exists
@@ -29,7 +31,8 @@ export class TMDb extends Mixin(Mix.MixinMovie, Mix.MixinTv)
 	 * Create a new TMDb instance
 	 */
 	constructor(apiKey: string, useSingleton: boolean = true) {
-		super(apiKey);
+		this.apiKey = apiKey;
+		this.movie  = new Module.MovieModule(this);
 		if (useSingleton) {
 			TMDb.__instance = this;
 		}

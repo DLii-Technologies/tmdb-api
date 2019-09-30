@@ -59,6 +59,30 @@ export class PaginatedResponse<T>
 		this.__request = requestCallback;
 	}
 
+	// Accessors -----------------------------------------------------------------------------------
+
+	/**
+	 * The content of the response
+	 */
+	public get results() { return this.__body || []; }
+
+	/**
+	 * The current page of the response
+	 */
+	public get page() { return this.__page; }
+
+	/**
+	 * The total number of pages (may be undefined)
+	 */
+	public get totalPages() { return this.__totalPages; }
+
+	/**
+	 * The total number of results (may be undefined)
+	 */
+	public get totalResults() { return this.__totalResults; }
+
+	// Mutators ------------------------------------------------------------------------------------
+
 	/**
 	 * Load the previous page
 	 */
