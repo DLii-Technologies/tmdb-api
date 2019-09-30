@@ -9,6 +9,7 @@ import { IVideo }                                    from "../core/interface/med
 import { MovieListing, ReviewListing, MovieDetails } from "../components";
 import { MediaType }                                 from "../core/enums";
 import TMDbModule                                    from "./TMDbModule";
+import { ListListing }                               from "../components";
 
 export class MovieModule extends TMDbModule
 {
@@ -162,21 +163,20 @@ export class MovieModule extends TMDbModule
 	}
 
 	/**
-	 * @TODO Requires List components to be complete first
 	 * Get lists that contain this movie
 	 */
 	public getLists(id: number, page: number = 1, lang?: string) {
-		// return PaginatedResponse.create(page, (p: number) => {
-		// 	return new Promise<IPaginatedResponse<List>>((resolve, reject) => {
-		// 		movie.getLists(this.tmdb.apiKey, id, p, lang)
-		// 			.then(movies => resolve({
-		// 				body: ReviewListing.fromJson(movies., this.tmdb),
-		// 				page: reviews.page,
-		// 				totalPages: reviews.total_pages,
-		// 				totalResults: reviews.total_results
-		// 			})).catch(reject);
-		// 	});
-		// });
+		return PaginatedResponse.create(page, (p: number) => {
+			return new Promise<IPaginatedResponse<ListListing>>((resolve, reject) => {
+				movie.getLists(this.tmdb.apiKey, id, p, lang)
+					.then(lists => resolve({
+						body        : ListListing.fromJson(lists.results, this.tmdb),
+						page        : lists.page,
+						totalPages  : lists.total_pages,
+						totalResults: lists.total_results
+					})).catch(reject);
+			});
+		});
 	}
 
 	/**

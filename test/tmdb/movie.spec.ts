@@ -13,7 +13,7 @@ let tmdb = TMDb.instance();
 let listing: MovieListing;
 let details: MovieDetails;
 
-describe.only("TMDb: Movie Module", () => {
+describe("TMDb: Movie Module", () => {
 	it("Get the latest movie", () => {
 		return tmdb.movie.getLatest().then((movie) => {
 			expect(movie).to.be.an.instanceOf(MovieDetails);

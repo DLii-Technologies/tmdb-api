@@ -1,4 +1,4 @@
-import * as Module from "./module/MovieModule";
+import * as Module from "./module";
 
 export class TMDb
 {
@@ -15,6 +15,7 @@ export class TMDb
 	/**
 	 * TMDb Modules
 	 */
+	public list: Module.ListModule;
 	public movie: Module.MovieModule;
 
 	/**
@@ -32,6 +33,7 @@ export class TMDb
 	 */
 	constructor(apiKey: string, useSingleton: boolean = true) {
 		this.apiKey = apiKey;
+		this.list   = new Module.ListModule(this);
 		this.movie  = new Module.MovieModule(this);
 		if (useSingleton) {
 			TMDb.__instance = this;
