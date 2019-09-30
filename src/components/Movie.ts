@@ -69,14 +69,14 @@ class Movie extends Component
 	/**
 	 * Get the external ID list for this movie
 	 */
-	getExternalIDs() {
+	getExternalIds() {
 		return this.tmdb.movie.getExternalIds(this.id);
 	}
 
 	/**
 	 * Get a list of images for this movie
 	 */
-	getImages(lang: string) {
+	getImages(lang?: string) {
 		return this.tmdb.movie.getImages(this.id, lang);
 	}
 
@@ -111,28 +111,30 @@ class Movie extends Component
 	/**
 	 * Get a list of recommended movies from this movie
 	 */
-	getRecommendations(page: number, lang: string) {
-		this.tmdb.movie.getRecommendations(this.id, page, lang);
+	getRecommendations(page: number = 1, lang?: string) {
+		return this.tmdb.movie.getRecommendations(this.id, page, lang);
 	}
 
 	/**
 	 * Get a list of similar movies to this movie
 	 */
-	getSimilarMovies(page: number, lang: string) {
+	getSimilarMovies(page: number = 1, lang?: string) {
 		return this.tmdb.movie.getSimilarMovies(this.id, page, lang);
 	}
 
 	/**
 	 * Get the reviews for this movie
 	 */
-	getReviews(page: number, lang: string) {
+	getReviews(page: number = 1, lang?: string) {
 		return this.tmdb.movie.getReviews(this.id, page, lang);
 	}
 
 	/**
 	 * Get lists that contain this movie
 	 */
-	getLists() {}
+	getLists() {
+		return this.tmdb.movie.getLists(this.id);
+	}
 
 	/**
 	 * Rate this movie

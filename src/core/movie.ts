@@ -126,7 +126,7 @@ export let movie = {
 	/**
 	 * Get a list of lists that a movie belongs to
 	 */
-	getLists(apiKey: string, movieId: number, language?: string, page?: number) {
+	getLists(apiKey: string, movieId: number, page?: number, language?: string) {
 		return get<ILists>(apiKey, `/movie/${movieId}/lists`, { language, page });
 	},
 

@@ -3,7 +3,7 @@ import { IPaginated } from "../core/interface/core";
 type RequestCallback<T> = (page: number) => Promise<IPaginatedResponse<T>>;
 
 export interface IPaginatedResponse<T> {
-	body         : T;
+	body         : T[];
 	page         : number;
 	totalPages  ?: number;
 	totalResults?: number;
@@ -14,7 +14,7 @@ export class PaginatedResponse<T>
 	/**
 	 * The current response
 	 */
-	private __body?: T;
+	private __body: T[] = [];
 
 	/**
 	 * Store the current page
@@ -64,7 +64,7 @@ export class PaginatedResponse<T>
 	/**
 	 * The content of the response
 	 */
-	public get results() { return this.__body || []; }
+	public get results() { return this.__body; }
 
 	/**
 	 * The current page of the response
