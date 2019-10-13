@@ -13,7 +13,10 @@ let tmdb = TMDb.instance();
 let listing: ListListing;
 let details: ListDetails;
 
-describe.only("TMDb: Movie Module", () => {
+/**
+ * @TODO Waiting for account module
+ */
+describe("TMDb: List Module", () => {
 	it("Get the lists that Star Wars is in", () => {
 		return tmdb.movie.getLists(11).then((result) => {
 			expect(result.totalResults).to.be.greaterThan(0);
