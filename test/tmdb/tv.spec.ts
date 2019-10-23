@@ -14,7 +14,7 @@ let tmdb = TMDb.instance();
 let listing: TvSeriesListing;
 let details: TvSeriesDetails;
 
-describe.only("TMDb: TV Module", () => {
+describe("TMDb: TV Module", () => {
 	it("Get the latest TV show added on TMDb", () => {
 		return tmdb.tv.getLatestSeries().then((result) => {
 			expect(result).to.be.an.instanceOf(TvSeriesDetails);
