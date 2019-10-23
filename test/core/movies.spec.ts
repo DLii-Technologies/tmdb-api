@@ -26,7 +26,7 @@ describe("Core: Movie API", () => {
 	it("Get a movie's alternative titles", () => {
 		return movie.getAltTitles(auth.api_key, 813).then((result: IAlternativeTitles) => {
 			expect(result.titles.length).to.be.greaterThan(0);
-			result.titles.should.include.something.that.has.property("title", "Flying High!");
+			result.titles.should.include.something.that.has.property("title", "Flying High");
 		});
 	});
 
