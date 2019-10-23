@@ -152,5 +152,5 @@ export interface ITheatricalScreening {
 
 export interface ITheatricalScreenings {
 	id     : number;
-	results: ITheatricalScreening;
+	results: ITheatricalScreening[];
 }

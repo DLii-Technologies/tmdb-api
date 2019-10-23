@@ -1,11 +1,11 @@
 import { ISeriesDetails, ISeriesContentRatings, IEpisodeGroups, ITheatricalScreenings,
 	IEpisodeDetails, IEpisodeGroupDetails, ISeasonDetails }            from "./interface/tv";
 import { IAccountState, ISeasonAccountStates, IEpisodeAccountState }   from "./interface/account";
-import { IAlternativeNames }                                           from "./interface/info";
+import { IAlternativeNames, IKeywordsAlt }                             from "./interface/info";
 import { ICredits, IEpisodeCredits }                                   from "./interface/credits";
 import { ISeriesExternalIds, ISeasonExternalIds, IEpisodeExternalIds } from "./interface/external";
 import { IImages, IVideos, ISeasonImages, IEpisodeImages }             from "./interface/media";
-import { IKeywordResults, ISeriesResults }                             from "./interface/results";
+import { ISeriesResults }                                              from "./interface/results";
 import { IseriesTranslations, IEpisodeTranslations }                   from "./interface/language";
 import { IResponse }                                                   from "./interface/response";
 import { get, post, del }                                              from "./util/network";
@@ -83,7 +83,7 @@ export let tv = {
 	 * Get the list of keywords for a TV show
 	 */
 	getSeriesKeywords(apiKey: string, seriesId: number) {
-		return get<IKeywordResults>(apiKey, `/tv/${seriesId}/keywords`);
+		return get<IKeywordsAlt>(apiKey, `/tv/${seriesId}/keywords`);
 	},
 
 	/**

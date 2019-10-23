@@ -37,12 +37,14 @@ export interface IAlternativeTitles {
 	titles: IAlternativeTitle[];
 }
 
+export interface IAlternativeName {
+	name: string;
+	type: string;
+}
+
 export interface IAlternativeNames {
 	id     : number;
-	results: {
-		name: string;
-		type: string;
-	}[];
+	results: IAlternativeName[];
 }
 
 export interface ICertification {
@@ -102,4 +104,14 @@ export interface IKeyword {
 export interface IKeywords {
 	id      : number;
 	keywords: IKeyword[];
+}
+
+/**
+ * @variation
+ * Due to inconsistencies in the REST API, sometimes keywords are returned with a `results` field
+ * instead of the `keywords` field
+ */
+export interface IKeywordsAlt {
+	id     : number;
+	results: IKeyword[];
 }

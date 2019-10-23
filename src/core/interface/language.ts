@@ -68,6 +68,7 @@ export interface ISeriesTranslation extends ITranslation {
 	};
 }
 
-export interface IseriesTranslations extends ITranslations {
+export interface IseriesTranslations {
+	id          : number;
 	translations: ISeriesTranslation[];
 }

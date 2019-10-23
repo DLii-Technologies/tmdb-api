@@ -1,8 +1,8 @@
 import { IGenre }                from "../core/interface/info";
 import { IMovie, IMovieDetails } from "../core/interface/movie";
+import { IChangesOptions }       from "../core/interface/options";
 import { Component }             from "./Component";
 import { TMDb }                  from "../TMDb";
-import { IChangesOptions }       from "core/interface/options";
 
 export interface ISerializedMovieListing extends IMovie
 {}

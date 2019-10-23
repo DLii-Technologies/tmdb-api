@@ -58,7 +58,7 @@ describe("TMDb: Movie Module", () => {
 	});
 	it("Get the movie's alternative titles", () => {
 		return details.getAlternativeTitles().then((result) => {
-			expect(result[0].title).to.equal("The Incredibles 2");
+			result.should.include.something.with.property("title", "The Incredibles 2");
 		});
 	});
 	it("Get the movie's external ID's", () => {

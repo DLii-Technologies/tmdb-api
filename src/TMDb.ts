@@ -15,8 +15,9 @@ export class TMDb
 	/**
 	 * TMDb Modules
 	 */
-	public list: Module.ListModule;
+	public list : Module.ListModule;
 	public movie: Module.MovieModule;
+	public tv   : Module.TvModule;
 
 	/**
 	 * Get the current instance if it exists
@@ -35,6 +36,7 @@ export class TMDb
 		this.apiKey = apiKey;
 		this.list   = new Module.ListModule(this);
 		this.movie  = new Module.MovieModule(this);
+		this.tv     = new Module.TvModule(this);
 		if (useSingleton) {
 			TMDb.__instance = this;
 		}
