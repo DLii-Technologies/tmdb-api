@@ -1,4 +1,4 @@
-import { IPaginated, IMediaModel }          from "./core";
+import { IMediaModel }                      from "./core";
 import { IGuestStar, ICrewMember, IMember } from "./credits";
 import { INetwork, IProductionCompany }     from "./company";
 import { EpisodeGroupType }                 from "../enums";
@@ -31,9 +31,9 @@ export interface IEpisodeDetails extends IEpisodeBase {
 }
 
 export interface IEpisodeGroupItem {
-	id   : string;
-	name : string;
-	order: number;
+	id      : string;
+	name    : string;
+	order   : number;
 	episodes: IEpisodeOrdered[];
 }
 
@@ -80,7 +80,7 @@ export interface IEpisodeDetails extends IEpisodeBase {
 }
 
 interface ISeasonBase {
-	air_date     : string;
+	air_date     : string | null;
 	id           : number;
 	name         : string;
 	overview     : string;
@@ -128,6 +128,8 @@ export interface ISeriesDetails extends ISeriesBase {
 	last_episode_to_air : IEpisode;
 	next_episode_to_air : IEpisode | null;
 	networks            : INetwork[];
+	number_of_episodes  : number;
+	number_of_seasons   : number;
 	production_companies: IProductionCompany[];
 	seasons             : ISeason[];
 	status              : string;

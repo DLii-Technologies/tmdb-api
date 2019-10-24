@@ -1,5 +1,3 @@
-import { IPaginated } from "../core/interface/core";
-
 type RequestCallback<T> = (page: number) => Promise<IPaginatedResponse<T>>;
 
 export interface IPaginatedResponse<T> {

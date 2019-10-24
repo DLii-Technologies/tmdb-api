@@ -11,6 +11,7 @@ import { IResponse }                                                   from "./i
 import { get, post, del }                                              from "./util/network";
 
 export let tv = {
+
 	// TV Series -----------------------------------------------------------------------------------
 
 	/**

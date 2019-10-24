@@ -1,8 +1,12 @@
-import { ISeries, ISeriesDetails, IEpisode } from "../core/interface/tv";
-import { IMember }                           from "../core/interface/credits";
-import { IGenre }                            from "../core/interface/info";
-import { Component }                         from "./Component";
-import { TMDb }                              from "../TMDb";
+import { IProductionCompany, INetwork }     from "../core/interface/company";
+import { ISeries, ISeriesDetails, ISeason } from "../core/interface/tv";
+import { IMember }                          from "../core/interface/credits";
+import { IGenre }                           from "../core/interface/info";
+import { Component }                        from "./Component";
+import { TMDb }                             from "../TMDb";
+import { TvEpisodeListing }                 from "./TvEpisode";
+import utils                                from "../util";
+import { TvSeasonListing } from "./TvSeason";
 
 class TvShow extends Component
 {
@@ -16,8 +20,8 @@ class TvShow extends Component
 	public readonly overview        : string;
 	public readonly popularity      : number;
 	public readonly posterPath      : string | null;
-	public readonly vote_average    : number;
-	public readonly vote_count      : number;
+	public readonly voteAverage     : number;
+	public readonly voteCount       : number;
 
 	constructor(series: ISeries|ISeriesDetails, tmdb?: TMDb) {
 		super(tmdb);
@@ -31,8 +35,8 @@ class TvShow extends Component
 		this.overview         = series.overview;
 		this.popularity       = series.popularity;
 		this.posterPath       = series.poster_path;
-		this.vote_average     = series.vote_average;
-		this.vote_count       = series.vote_count;
+		this.voteAverage      = series.vote_average;
+		this.voteCount        = series.vote_count;
 	}
 
 	/**
@@ -172,29 +176,42 @@ export class TvSeriesListing extends TvShow
 	}
 }
 
-/**
- * @TODO Some things here need to be swapped with classes soon
- */
 export class TvSeriesDetails extends TvShow
 {
-	public readonly createdBy         : IMember[];
-	public readonly runTime           : number[];
-	public readonly genres            : IGenre[];
-	public readonly homepage          : string;
-	public readonly in_production     : boolean;
-	public readonly languages         : string[];
-	public readonly lastAirDate       : Date;
-	public readonly latestAiredEpisode: IEpisode;
+	public readonly createdBy          : IMember[];
+	public readonly runTime            : number[];
+	public readonly genres             : IGenre[];
+	public readonly episodeCount       : number;
+	public readonly homepage           : string;
+	public readonly isInProduction     : boolean;
+	public readonly languages          : string[];
+	public readonly lastAirDate        : Date;
+	public readonly latestAiredEpisode : TvEpisodeListing;
+	public readonly nextEpisodeToAir   : TvEpisodeListing | null;
+	public readonly networks           : INetwork[];
+	public readonly productionCompanies: IProductionCompany[];
+	public readonly seasons            : TvSeasonListing[];
+	public readonly seasonCount        : number;
+	public readonly status             : string;
+	public readonly type               : string;
 
 	constructor(series: ISeriesDetails, tmdb?: TMDb) {
 		super(series, tmdb);
-		this.createdBy          = series.created_by;
-		this.runTime            = series.episode_run_time;
-		this.genres             = series.genres;
-		this.homepage           = series.homepage;
-		this.in_production      = series.in_production;
-		this.languages          = series.languages;
-		this.lastAirDate        = new Date(series.last_air_date);
-		this.latestAiredEpisode = series.last_episode_to_air;
+		this.createdBy           = series.created_by;
+		this.runTime             = series.episode_run_time;
+		this.genres              = series.genres;
+		this.episodeCount        = series.number_of_episodes;
+		this.homepage            = series.homepage;
+		this.isInProduction      = series.in_production;
+		this.languages           = series.languages;
+		this.lastAirDate         = new Date(series.last_air_date);
+		this.latestAiredEpisode  = new TvEpisodeListing(series.last_episode_to_air);
+		this.nextEpisodeToAir    = utils.classOrNull(series.next_episode_to_air, TvEpisodeListing);
+		this.networks            = series.networks;
+		this.productionCompanies = series.production_companies;
+		this.seasons             = TvSeasonListing.fromJson(this.id, series.seasons);
+		this.seasonCount         = series.number_of_seasons
+		this.status              = series.status;
+		this.type                = series.type;
 	}
 }

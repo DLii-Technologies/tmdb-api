@@ -4,7 +4,7 @@ import "mocha";
 /**
  * Modules to test
  */
-import { TMDb, TvSeriesListing, TvSeriesDetails } from "../../src";
+import { TMDb, TvSeriesListing, TvSeriesDetails, TvSeasonDetails } from "../../src";
 import { VideoType }                              from "../../src/core/enums";
 
 /**
@@ -13,8 +13,12 @@ import { VideoType }                              from "../../src/core/enums";
 let tmdb = TMDb.instance();
 let listing: TvSeriesListing;
 let details: TvSeriesDetails;
+let seasonDetails: TvSeasonDetails;
 
-describe("TMDb: TV Module", () => {
+describe.only("TMDb: TV Module", () => {
+
+	// TV Shows ------------------------------------------------------------------------------------
+
 	it("Get the latest TV show added on TMDb", () => {
 		return tmdb.tv.getLatestSeries().then((result) => {
 			expect(result).to.be.an.instanceOf(TvSeriesDetails);
@@ -120,4 +124,45 @@ describe("TMDb: TV Module", () => {
 			result.should.include.something.with.property("type", VideoType.OpeningCredits);
 		});
 	});
+
+	// TV Seasons ----------------------------------------------------------------------------------
+
+	it("Get a TV show's season's details", () => {
+		return details.seasons[14].getDetails().then((result) => {
+			seasonDetails = result;
+			expect(result.seriesId).to.equal(details.id);
+			expect(result.episodes.length).to.equal(14);
+		});
+	});
+	/**
+	 * @TODO
+	 */
+	// it("Get a TV show's season's changes", () => {});
+	// it("Get season account states", () => {});
+	// it("Get season credits", () => {});
+
+	it("Get a TV show's season's external ID's", () => {
+		return seasonDetails.getExternalIds().then((result) => {
+			expect(result.tvdb_id).to.equal(195781);
+		});
+	});
+	it("Get a TV show's season's images", () => {
+		return seasonDetails.getImages().then((result) => {
+			expect(result.posters).to.be.an("array");
+			expect(result.posters.length).to.be.greaterThan(0);
+		});
+	});
+	it("Get a TV show's season's videos", () => {
+		return seasonDetails.getVideos().then((result) => {
+			expect(result).to.be.an("array");
+		});
+	});
+
+	// TV Episodes ---------------------------------------------------------------------------------
+
+	// it("Get a TV show's season's episodes", () => {
+	// 	return seasonDetails.getImages().then((result) => {
+	// 		expect(result.posters.length).to.be.greaterThan(0);
+	// 	});
+	// });
 });

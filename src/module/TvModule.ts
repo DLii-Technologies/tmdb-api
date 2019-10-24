@@ -2,7 +2,8 @@ import { tv, search }                            from "../core";
 import { IAlternativeName, IKeyword }            from "../core/interface/info";
 import { ISeriesContentRating, IEpisodeGroup, ITheatricalScreening }
                                                  from "../core/interface/tv";
-import { TvSeriesDetails, TvSeriesListing }      from "../components";
+import { TvSeriesDetails, TvSeriesListing, TvSeasonDetails,
+	TvSeasonListing }                            from "../components";
 import { ISeriesSearchOptions }                  from "../core/interface/options";
 import { PaginatedResponse, IPaginatedResponse } from "../util/PaginatedResponse";
 import TMDbModule                                from "./TMDbModule";
@@ -16,9 +17,9 @@ export class TvModule extends TMDbModule
 	 */
 	getSeriesDetails(seriesId: number, language?: string) {
 		return new Promise<TvSeriesDetails>((resolve, reject) => {
-			tv.getSeriesDetails(this.tmdb.apiKey, seriesId, language).then((details) => {
-				resolve(new TvSeriesDetails(details, this.tmdb));
-			}).catch(reject);
+			tv.getSeriesDetails(this.tmdb.apiKey, seriesId, language)
+				.then(details => resolve(new TvSeriesDetails(details, this.tmdb)))
+				.catch(reject);
 		});
 	}
 
@@ -32,9 +33,9 @@ export class TvModule extends TMDbModule
 	 */
 	getSeriesAlternativeTitles(seriesId: number, language?: string) {
 		return new Promise<IAlternativeName[]>((resolve, reject) => {
-			tv.getSeriesAltTitles(this.tmdb.apiKey, seriesId, language).then((titles) => {
-				resolve(titles.results);
-			}).catch(reject);
+			tv.getSeriesAltTitles(this.tmdb.apiKey, seriesId, language)
+				.then(titles => resolve(titles.results))
+				.catch(reject);
 		});
 	}
 
@@ -43,9 +44,9 @@ export class TvModule extends TMDbModule
 	 */
 	getSeriesContentRatings(seriesId: number, language?: string) {
 		return new Promise<ISeriesContentRating[]>((resolve, reject) => {
-			tv.getSeriesContentRatings(this.tmdb.apiKey, seriesId, language).then((ratings) => {
-				resolve(ratings.results);
-			}).catch(reject);
+			tv.getSeriesContentRatings(this.tmdb.apiKey, seriesId, language)
+				.then(ratings => resolve(ratings.results))
+				.catch(reject);
 		});
 	}
 
@@ -274,7 +275,11 @@ export class TvModule extends TMDbModule
 	 * Get the details of a TV show's season
 	 */
 	getSeasonDetails(seriesId: number, season: number, language?: string) {
-		return tv.getSeasonDetails(this.tmdb.apiKey, seriesId, season, language);
+		return new Promise<TvSeasonDetails>((resolve, reject) => {
+			tv.getSeasonDetails(this.tmdb.apiKey, seriesId, season, language)
+				.then(result => resolve(new TvSeasonDetails(seriesId, result)))
+				.catch(reject);
+		});
 	}
 
 	/**
@@ -289,7 +294,7 @@ export class TvModule extends TMDbModule
 	 * Get the credits for a TV show's season
 	 */
 	getSeasonCredits(seriesId: number, season: number, language?: string) {
-		return tv.getSeasonCredits(this.tmdb.apiKey, seriesId, season, language);
+		// return tv.getSeasonCredits(this.tmdb.apiKey, seriesId, season, language);
 	}
 
 	/**
@@ -310,7 +315,11 @@ export class TvModule extends TMDbModule
 	 * Get a list of videos for a TV show's season
 	 */
 	getSeasonVideos(seriesId: number, season: number, language?: string) {
-		return tv.getSeasonVideos(this.tmdb.apiKey, seriesId, season, language);
+		return new Promise<IVideo[]>((resolve, reject) => {
+			tv.getSeasonVideos(this.tmdb.apiKey, seriesId, season, language)
+				.then(result => resolve(result.results))
+				.catch(reject);
+		});
 	}
 
 	// TV Episodes ---------------------------------------------------------------------------------

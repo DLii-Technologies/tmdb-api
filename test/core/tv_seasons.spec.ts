@@ -4,7 +4,6 @@ import { auth } from "../init";
 
 import { tv }                     from "../../src/core";
 import { ISeasonDetails }         from "../../src/core/interface/tv";
-import { ISeasonChanges }         from "../../src/core/interface/changes";
 import { ISeasonAccountStates }   from "../../src/core/interface/account";
 import { ICredits }               from "../../src/core/interface/credits";
 import { ISeasonExternalIds }     from "../../src/core/interface/external";
