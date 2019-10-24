@@ -151,17 +151,6 @@ export class TvSeriesListing extends TvShow
 	public readonly genreIds: number[];
 	public readonly rating ?: number;
 
-	/**
-	 * Create an array of TV shows from JSON
-	 */
-	public static fromJson(movies: ISeries[], tmdb?: TMDb) {
-		let result: TvSeriesListing[] = [];
-		for (let movie of movies) {
-			result.push(new TvSeriesListing(movie, tmdb));
-		}
-		return result;
-	}
-
 	constructor(series: ISeries, tmdb?: TMDb) {
 		super(series, tmdb);
 		this.genreIds = series.genre_ids;
@@ -205,11 +194,11 @@ export class TvSeriesDetails extends TvShow
 		this.isInProduction      = series.in_production;
 		this.languages           = series.languages;
 		this.lastAirDate         = new Date(series.last_air_date);
-		this.latestAiredEpisode  = new TvEpisodeListing(series.last_episode_to_air);
+		this.latestAiredEpisode  = new TvEpisodeListing(series.last_episode_to_air, tmdb);
 		this.nextEpisodeToAir    = utils.classOrNull(series.next_episode_to_air, TvEpisodeListing);
 		this.networks            = series.networks;
 		this.productionCompanies = series.production_companies;
-		this.seasons             = TvSeasonListing.fromJson(this.id, series.seasons);
+		this.seasons             = utils.wrap(TvSeasonListing, series.seasons, this.id, tmdb);
 		this.seasonCount         = series.number_of_seasons
 		this.status              = series.status;
 		this.type                = series.type;

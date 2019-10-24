@@ -8,8 +8,9 @@ import { IMovieTranslation }                         from "../core/interface/lan
 import { IVideo }                                    from "../core/interface/media";
 import { MovieListing, ReviewListing, MovieDetails } from "../components";
 import { MediaType }                                 from "../core/enums";
-import TMDbModule                                    from "./TMDbModule";
 import { ListListing }                               from "../components";
+import TMDbModule                                    from "./TMDbModule";
+import utils                                         from "../util";
 
 export class MovieModule extends TMDbModule
 {
@@ -119,7 +120,7 @@ export class MovieModule extends TMDbModule
 			return new Promise<IPaginatedResponse<MovieListing>>((resolve, reject) => {
 				movie.getRecommendations(this.tmdb.apiKey, id, p, lang)
 					.then(movies => resolve({
-						body        : MovieListing.fromJson(movies.results, this.tmdb),
+						body        : utils.wrap(MovieListing, movies.results, this.tmdb),
 						page        : movies.page,
 						totalPages  : movies.total_pages,
 						totalResults: movies.total_results
@@ -136,7 +137,7 @@ export class MovieModule extends TMDbModule
 			return new Promise<IPaginatedResponse<MovieListing>>((resolve, reject) => {
 				movie.getSimilar(this.tmdb.apiKey, id, p, lang)
 					.then(movies => resolve({
-						body        : MovieListing.fromJson(movies.results, this.tmdb),
+						body        : utils.wrap(MovieListing, movies.results, this.tmdb),
 						page        : movies.page,
 						totalPages  : movies.total_pages,
 						totalResults: movies.total_results
@@ -153,7 +154,7 @@ export class MovieModule extends TMDbModule
 			return new Promise<IPaginatedResponse<ReviewListing>>((resolve, reject) => {
 				review.getReviews(this.tmdb.apiKey, MediaType.Movie, id, p, lang)
 					.then(reviews => resolve({
-						body        : ReviewListing.fromJson(reviews.results, this.tmdb),
+						body        : utils.wrap(ReviewListing, reviews.results, this.tmdb),
 						page        : reviews.page,
 						totalPages  : reviews.total_pages,
 						totalResults: reviews.total_results
@@ -170,7 +171,7 @@ export class MovieModule extends TMDbModule
 			return new Promise<IPaginatedResponse<ListListing>>((resolve, reject) => {
 				movie.getLists(this.tmdb.apiKey, id, p, lang)
 					.then(lists => resolve({
-						body        : ListListing.fromJson(lists.results, this.tmdb),
+						body        : utils.wrap(ListListing, lists.results, this.tmdb),
 						page        : lists.page,
 						totalPages  : lists.total_pages,
 						totalResults: lists.total_results
@@ -198,7 +199,7 @@ export class MovieModule extends TMDbModule
 		return PaginatedResponse.create(page, (p: number) => {
 			return new Promise<IPaginatedResponse<MovieListing>>((resolve, reject) => {
 				search.movies(this.tmdb.apiKey, query, p, options).then(result => resolve({
-					body        : MovieListing.fromJson(result.results, this.tmdb),
+					body        : utils.wrap(MovieListing, result.results, this.tmdb),
 					page        : result.page,
 					totalPages  : result.total_pages,
 					totalResults: result.total_results
@@ -225,7 +226,7 @@ export class MovieModule extends TMDbModule
 		return PaginatedResponse.create(page, (p: number) => {
 			return new Promise<IPaginatedResponse<MovieListing>>((resolve, reject) => {
 				movie.getNowPlaying(this.tmdb.apiKey, p, region, lang).then(result => resolve({
-					body        : MovieListing.fromJson(result.results, this.tmdb),
+					body        : utils.wrap(MovieListing, result.results, this.tmdb),
 					page        : result.page,
 					totalPages  : result.total_pages,
 					totalResults: result.total_results
@@ -241,7 +242,7 @@ export class MovieModule extends TMDbModule
 		return PaginatedResponse.create(page, (p: number) => {
 			return new Promise<IPaginatedResponse<MovieListing>>((resolve, reject) => {
 				movie.getPopular(this.tmdb.apiKey, p, region, lang).then(result => resolve({
-					body: MovieListing.fromJson(result.results, this.tmdb),
+					body: utils.wrap(MovieListing, result.results, this.tmdb),
 					page: result.page,
 					totalPages: result.total_pages,
 					totalResults: result.total_results
@@ -257,7 +258,7 @@ export class MovieModule extends TMDbModule
 		return PaginatedResponse.create(page, (p: number) => {
 			return new Promise<IPaginatedResponse<MovieListing>>((resolve, reject) => {
 				movie.getTopRated(this.tmdb.apiKey, p, region, lang).then(result => resolve({
-					body: MovieListing.fromJson(result.results, this.tmdb),
+					body: utils.wrap(MovieListing, result.results, this.tmdb),
 					page: result.page,
 					totalPages: result.total_pages,
 					totalResults: result.total_results
@@ -273,7 +274,7 @@ export class MovieModule extends TMDbModule
 		return PaginatedResponse.create(page, (p: number) => {
 			return new Promise<IPaginatedResponse<MovieListing>>((resolve, reject) => {
 				movie.getUpcoming(this.tmdb.apiKey, p, region, lang).then(result => resolve({
-					body: MovieListing.fromJson(result.results, this.tmdb),
+					body: utils.wrap(MovieListing, result.results, this.tmdb),
 					page: result.page,
 					totalPages: result.total_pages,
 					totalResults: result.total_results

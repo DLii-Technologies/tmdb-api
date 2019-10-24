@@ -9,6 +9,7 @@ import { PaginatedResponse, IPaginatedResponse } from "../util/PaginatedResponse
 import TMDbModule                                from "./TMDbModule";
 import { ISeriesTranslation }                    from "../core/interface/language";
 import { IVideo }                                from "../core/interface/media";
+import utils                                     from "../util";
 
 export class TvModule extends TMDbModule
 {
@@ -102,7 +103,7 @@ export class TvModule extends TMDbModule
 			return new Promise<IPaginatedResponse<TvSeriesListing>>((resolve, reject) => {
 				tv.getSeriesRecommendations(this.tmdb.apiKey, seriesId, page, language)
 					.then(result => resolve({
-						body        : TvSeriesListing.fromJson(result.results, this.tmdb),
+						body        : utils.wrap(TvSeriesListing, result.results, this.tmdb),
 						page        : result.page,
 						totalPages  : result.total_pages,
 						totalResults: result.total_results
@@ -119,7 +120,7 @@ export class TvModule extends TMDbModule
 			return new Promise<IPaginatedResponse<TvSeriesListing>>((resolve, reject) => {
 				tv.getSimilarShows(this.tmdb.apiKey, seriesId, page, language)
 					.then(result => resolve({
-						body        : TvSeriesListing.fromJson(result.results, this.tmdb),
+						body        : utils.wrap(TvSeriesListing, result.results, this.tmdb),
 						page        : result.page,
 						totalPages  : result.total_pages,
 						totalResults: result.total_results
@@ -180,8 +181,8 @@ export class TvModule extends TMDbModule
 	getLatestSeries(language?: string) {
 		return new Promise<TvSeriesDetails>((resolve, reject) => {
 			tv.getLatestSeries(this.tmdb.apiKey, language)
-				.then(result => resolve(new TvSeriesDetails(result)))
-				.catch();
+				.then(result => resolve(new TvSeriesDetails(result, this.tmdb)))
+				.catch(reject);
 		});
 	}
 
@@ -193,7 +194,7 @@ export class TvModule extends TMDbModule
 		return PaginatedResponse.create(page, (p: number) => {
 			return new Promise<IPaginatedResponse<TvSeriesListing>>((resolve, reject) => {
 				tv.getShowsAiringToday(this.tmdb.apiKey, page, language).then(result => resolve({
-					body        : TvSeriesListing.fromJson(result.results, this.tmdb),
+					body        : utils.wrap(TvSeriesListing, result.results, this.tmdb),
 					page        : result.page,
 					totalPages  : result.total_pages,
 					totalResults: result.total_results
@@ -210,7 +211,7 @@ export class TvModule extends TMDbModule
 		return PaginatedResponse.create(page, (p: number) => {
 			return new Promise<IPaginatedResponse<TvSeriesListing>>((resolve, reject) => {
 				tv.getShowsOnAir(this.tmdb.apiKey, page, language).then(result => resolve({
-					body        : TvSeriesListing.fromJson(result.results, this.tmdb),
+					body        : utils.wrap(TvSeriesListing, result.results, this.tmdb),
 					page        : result.page,
 					totalPages  : result.total_pages,
 					totalResults: result.total_results
@@ -227,7 +228,7 @@ export class TvModule extends TMDbModule
 		return PaginatedResponse.create(page, (p: number) => {
 			return new Promise<IPaginatedResponse<TvSeriesListing>>((resolve, reject) => {
 				tv.getPopularShows(this.tmdb.apiKey, page, language).then(result => resolve({
-					body        : TvSeriesListing.fromJson(result.results, this.tmdb),
+					body        : utils.wrap(TvSeriesListing, result.results, this.tmdb),
 					page        : result.page,
 					totalPages  : result.total_pages,
 					totalResults: result.total_results
@@ -244,7 +245,7 @@ export class TvModule extends TMDbModule
 		return PaginatedResponse.create(page, (p: number) => {
 			return new Promise<IPaginatedResponse<TvSeriesListing>>((resolve, reject) => {
 				tv.getTopRatedShows(this.tmdb.apiKey, page, language).then(result => resolve({
-					body        : TvSeriesListing.fromJson(result.results, this.tmdb),
+					body        : utils.wrap(TvSeriesListing, result.results, this.tmdb),
 					page        : result.page,
 					totalPages  : result.total_pages,
 					totalResults: result.total_results
@@ -260,7 +261,7 @@ export class TvModule extends TMDbModule
 		return PaginatedResponse.create(page, (p: number) => {
 			return new Promise<IPaginatedResponse<TvSeriesListing>>((resolve, reject) => {
 				search.series(this.tmdb.apiKey, query, p, options).then(result => resolve({
-					body        : TvSeriesListing.fromJson(result.results, this.tmdb),
+					body        : utils.wrap(TvSeriesListing, result.results, this.tmdb),
 					page        : result.page,
 					totalPages  : result.total_pages,
 					totalResults: result.total_results
@@ -277,7 +278,7 @@ export class TvModule extends TMDbModule
 	getSeasonDetails(seriesId: number, season: number, language?: string) {
 		return new Promise<TvSeasonDetails>((resolve, reject) => {
 			tv.getSeasonDetails(this.tmdb.apiKey, seriesId, season, language)
-				.then(result => resolve(new TvSeasonDetails(seriesId, result)))
+				.then(result => resolve(new TvSeasonDetails(result, seriesId, this.tmdb)))
 				.catch(reject);
 		});
 	}

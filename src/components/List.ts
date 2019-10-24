@@ -2,6 +2,7 @@ import { IListDetails, IList }        from "../core/interface/list";
 import { MovieListing, MovieDetails } from "./Movie";
 import { Component }                  from "./Component";
 import { TMDb }                       from "../TMDb";
+import utils                          from "../util";
 
 class List extends Component
 {
@@ -38,17 +39,6 @@ export class ListListing extends List
 {
 	public readonly type: string;
 
-	/**
-	 * Create an array of movies from JSON
-	 */
-	public static fromJson(lists: IList[], tmdb?: TMDb) {
-		let result: ListListing[] = [];
-		for (let list of lists) {
-			result.push(new ListListing(list, tmdb));
-		}
-		return result;
-	}
-
 	constructor(list: IList, tmdb?: TMDb) {
 		super(list, tmdb);
 		this.type = list.list_type;
@@ -57,8 +47,8 @@ export class ListListing extends List
 	/**
 	 * Get the details of the list
 	 */
-	getDetails(lang?: string) {
-		return this.tmdb.list.getDetails(this.id, lang);
+	getDetails(language?: string) {
+		return this.tmdb.list.getDetails(this.id, language);
 	}
 }
 
@@ -70,6 +60,6 @@ export class ListDetails extends List
 	constructor(list: IListDetails, tmdb?: TMDb) {
 		super(list, tmdb);
 		this.createdBy = list.created_by;
-		this.items     = MovieListing.fromJson(list.items, this.tmdb);
+		this.items     = utils.wrap(MovieListing, list.items, this.tmdb);
 	}
 }

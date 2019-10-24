@@ -21,14 +21,6 @@ class Review extends Component
 
 export class ReviewListing extends Review
 {
-	public static fromJson(reviews: IReview[], tmdb?: TMDb) {
-		let result: ReviewListing[] = [];
-		for (let review of reviews) {
-			result.push(new ReviewListing(review, tmdb));
-		}
-		return result;
-	}
-
 	/**
 	 * Get the details of the review
 	 */

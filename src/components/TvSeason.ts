@@ -14,7 +14,7 @@ class TvSeason extends Component
 	public readonly seasonNumber: number;
 	public readonly seriesId    : number;
 
-	constructor(seriesId: number, season: ISeason|ISeasonDetails, tmdb?: TMDb) {
+	constructor(season: ISeason|ISeasonDetails, seriesId: number, tmdb?: TMDb) {
 		super(tmdb);
 		this.airDate      = utils.classOrNull(season.air_date, Date);
 		this.id           = season.id;
@@ -57,19 +57,8 @@ export class TvSeasonListing extends TvSeason
 {
 	public readonly episodeCount: number;
 
-	/**
-	 * Create an array of TV shows from JSON
-	 */
-	public static fromJson(seriesId: number, seasons: ISeason[], tmdb?: TMDb) {
-		let result: TvSeasonListing[] = [];
-		for (let season of seasons) {
-			result.push(new TvSeasonListing(seriesId, season, tmdb));
-		}
-		return result;
-	}
-
-	constructor(seriesId: number, series: ISeason, tmdb?: TMDb) {
-		super(seriesId, series, tmdb);
+	constructor(series: ISeason, seriesId: number, tmdb?: TMDb) {
+		super(series, seriesId, tmdb);
 		this.episodeCount = series.episode_count;
 	}
 
@@ -85,8 +74,8 @@ export class TvSeasonDetails extends TvSeason
 {
 	public readonly episodes : TvEpisodeDetails[];
 
-	constructor(seriesId: number, series: ISeasonDetails, tmdb?: TMDb) {
-		super(seriesId, series, tmdb);
-		this.episodes = TvEpisodeDetails.fromJson(series.episodes);
+	constructor(series: ISeasonDetails, seriesId: number, tmdb?: TMDb) {
+		super(series, seriesId, tmdb);
+		this.episodes = utils.wrap(TvEpisodeDetails, series.episodes, tmdb);
 	}
 }

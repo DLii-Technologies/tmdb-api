@@ -155,17 +155,6 @@ export class MovieListing extends Movie
 	public readonly genres: number[];
 
 	/**
-	 * Create an array of movies from JSON
-	 */
-	public static fromJson(movies: IMovie[], tmdb?: TMDb) {
-		let result: MovieListing[] = [];
-		for (let movie of movies) {
-			result.push(new MovieListing(movie, tmdb));
-		}
-		return result;
-	}
-
-	/**
 	 * Unserialize the object
 	 */
 	static unserialize(serialized: ISerializedMovieListing, tmdb?: TMDb) {

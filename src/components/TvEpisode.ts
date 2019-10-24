@@ -35,17 +35,6 @@ export class TvEpisodeListing extends TvEpisode
 {
 	public readonly showId: number;
 
-	/**
-	 * Create an array of TV shows from JSON
-	 */
-	public static fromJson(episodes: IEpisode[], tmdb?: TMDb) {
-		let result: TvEpisodeListing[] = [];
-		for (let episode of episodes) {
-			result.push(new TvEpisodeListing(episode, tmdb));
-		}
-		return result;
-	}
-
 	constructor(episode: IEpisode, tmdb?: TMDb) {
 		super(episode, tmdb);
 		this.showId = episode.show_id;
@@ -63,17 +52,6 @@ export class TvEpisodeDetails extends TvEpisode
 {
 	public readonly crew : ICrewMember[];
 	public readonly guestStars: IGuestStar[];
-
-	/**
-	 * Create an array of TV shows from JSON
-	 */
-	public static fromJson(episodes: IEpisodeDetails[], tmdb?: TMDb) {
-		let result: TvEpisodeDetails[] = [];
-		for (let episode of episodes) {
-			result.push(new TvEpisodeDetails(episode, tmdb));
-		}
-		return result;
-	}
 
 	constructor(episode: IEpisodeDetails, tmdb?: TMDb) {
 		super(episode, tmdb);
