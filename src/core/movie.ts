@@ -15,14 +15,14 @@ export let movie = {
 	 * Get the primary information about a movie
 	 */
 	getDetails(apiKey: string, movieId: number, language?: string) {
-		return get<IMovieDetails>(apiKey, `/movie/${movieId}`, { language });
+		return get<IMovieDetails>(apiKey, `movie/${movieId}`, { language });
 	},
 
 	/**
 	 * Grab the account states for a session
 	 */
 	getAccountState(apiKey: string, movieId: number, sessionId: string, guestSessionId?: string) {
-		return get<IAccountState>(apiKey, `/movie/${movieId}/account_states`, {
+		return get<IAccountState>(apiKey, `movie/${movieId}/account_states`, {
 			session_id      : sessionId,
 			guest_session_id: guestSessionId
 		});
@@ -32,7 +32,7 @@ export let movie = {
 	 * Get all of the alternative titles for a movie
 	 */
 	getAltTitles(apiKey: string, movieId: number, country?: string) {
-		return get<IAlternativeTitles>(apiKey, `/movie/${movieId}/alternative_titles`, {
+		return get<IAlternativeTitles>(apiKey, `movie/${movieId}/alternative_titles`, {
 			country
 		});
 	},
@@ -41,7 +41,7 @@ export let movie = {
 	 * Get the cast and crew for a movie
 	 */
 	getCredits(apiKey: string, movieId: number) {
-		return get<ICredits>(apiKey, `/movie/${movieId}/credits`);
+		return get<ICredits>(apiKey, `movie/${movieId}/credits`);
 	},
 
 	/**
@@ -53,7 +53,7 @@ export let movie = {
 	 * - Twitter
 	 */
 	getExternalIds(apiKey: string, movieId: number) {
-		return get<IExternalIds>(apiKey, `/movie/${movieId}/external_ids`);
+		return get<IExternalIds>(apiKey, `movie/${movieId}/external_ids`);
 	},
 
 	/**
@@ -63,7 +63,7 @@ export let movie = {
 	 * fallback language you can use the `includeLanguage` parameter, e.g. ['en', null]
 	 */
 	getImages(apiKey: string, movieId: number, language?: string, includeLanguage?: string[]) {
-		return get<IImages>(apiKey, `/movie/${movieId}/images`, {
+		return get<IImages>(apiKey, `movie/${movieId}/images`, {
 			language,
 			include_image_language: includeLanguage && includeLanguage.join(',')
 		});
@@ -73,7 +73,7 @@ export let movie = {
 	 * Get the keywords that have been added to a movie
 	 */
 	getKeywords(apiKey: string, movieId: number) {
-		return get<IKeywords>(apiKey, `/movie/${movieId}/keywords`);
+		return get<IKeywords>(apiKey, `movie/${movieId}/keywords`);
 	},
 
 	/**
@@ -88,28 +88,28 @@ export let movie = {
 	 * 6. TV
 	 */
 	getReleaseDates(apiKey: string, movieId: number) {
-		return get<IReleaseDates>(apiKey, `/movie/${movieId}/release_dates`);
+		return get<IReleaseDates>(apiKey, `movie/${movieId}/release_dates`);
 	},
 
 	/**
 	 * Get the videos that have been added to a movie
 	 */
 	getVideos(apiKey: string, movieId: number, language?: string) {
-		return get<IVideos>(apiKey, `/movie/${movieId}/videos`, { language });
+		return get<IVideos>(apiKey, `movie/${movieId}/videos`, { language });
 	},
 
 	/**
 	 * Get a list of translations that have been created for a movie
 	 */
 	getTranslations(apiKey: string, movieId: number) {
-		return get<IMovieTranslations>(apiKey, `/movie/${movieId}/translations`);
+		return get<IMovieTranslations>(apiKey, `movie/${movieId}/translations`);
 	},
 
 	/**
 	 * Get a list of recommended movies for a movie
 	 */
 	getRecommendations(apiKey: string, movieId: number, page?: number, language?: string) {
-		return get<IMovieResults>(apiKey, `/movie/${movieId}/recommendations`, {
+		return get<IMovieResults>(apiKey, `movie/${movieId}/recommendations`, {
 			language, page
 		});
 	},
@@ -118,7 +118,7 @@ export let movie = {
 	 * Get a list of similar movies. This is not the same as the "Recommendation" system.
 	 */
 	getSimilar(apiKey: string, movieId: number, page?: number, language?: string) {
-		return get<IMovieResults>(apiKey, `/movie/${movieId}/similar`, {
+		return get<IMovieResults>(apiKey, `movie/${movieId}/similar`, {
 			language, page
 		});
 	},
@@ -127,14 +127,14 @@ export let movie = {
 	 * Get a list of lists that a movie belongs to
 	 */
 	getLists(apiKey: string, movieId: number, page?: number, language?: string) {
-		return get<ILists>(apiKey, `/movie/${movieId}/lists`, { language, page });
+		return get<ILists>(apiKey, `movie/${movieId}/lists`, { language, page });
 	},
 
 	/**
 	 * Rate a movie. A valid session or guest session ID is required
 	 */
 	rate(apiKey: string, movieId: number, value: number, sessionId?: string, guestSessionId?: string) {
-		return post<IResponse>(apiKey, `/movie/${movieId}/rating`, {
+		return post<IResponse>(apiKey, `movie/${movieId}/rating`, {
 			guest_session_id: guestSessionId,
 			session_id      : sessionId
 		}, { value });
@@ -144,7 +144,7 @@ export let movie = {
 	 * Remove your rating for a movie. A valid session or guest session ID is required
 	 */
 	unrate(apiKey: string, movieId: number, sessionId?: string, guestSessionId?: string) {
-		return del<IResponse>(apiKey, `/movie/${movieId}/rating`, {
+		return del<IResponse>(apiKey, `movie/${movieId}/rating`, {
 			guest_session_id: guestSessionId,
 			session_id      : sessionId
 		});
@@ -154,34 +154,34 @@ export let movie = {
 	 * Get the most newly created movie. This is a live response and will continuously change
 	 */
 	getLatest(apiKey: string, language?: string) {
-		return get<IMovieDetails>(apiKey, `/movie/latest`, { language });
+		return get<IMovieDetails>(apiKey, `movie/latest`, { language });
 	},
 
 	/**
 	 * Get a list of movies in theaters
 	 */
 	getNowPlaying(apiKey: string, page?: number, region?: string, language?: string) {
-		return get<IMovieResults>(apiKey, `/movie/now_playing`, { language, page, region });
+		return get<IMovieResults>(apiKey, `movie/now_playing`, { language, page, region });
 	},
 
 	/**
 	 * Get a list of the current popular movies on TMDb. This list updates daily
 	 */
 	getPopular(apiKey: string, page?: number, region?: string, language?: string) {
-		return get<IMovieResults>(apiKey, `/movie/popular`, { language, page, region });
+		return get<IMovieResults>(apiKey, `movie/popular`, { language, page, region });
 	},
 
 	/**
 	 * Get the top rated movies on TMDb
 	 */
 	getTopRated(apiKey: string, page?: number, region?: string, language?: string) {
-		return get<IMovieResults>(apiKey, `/movie/top_rated`, { language, page, region });
+		return get<IMovieResults>(apiKey, `movie/top_rated`, { language, page, region });
 	},
 
 	/**
 	 * Get a list of upcoming movies in theaters
 	 */
 	getUpcoming(apiKey: string, page?: number, region?: string, language?: string) {
-		return get<IMovieResults>(apiKey, `/movie/upcoming`, { language, page, region });
+		return get<IMovieResults>(apiKey, `movie/upcoming`, { language, page, region });
 	}
 };

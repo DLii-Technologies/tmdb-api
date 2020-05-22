@@ -91,6 +91,6 @@ export let discover = {
 	 * Get a list of trending media
 	 */
 	getTrending(apiKey: string, mediaType: MediaType, timeWindow: TimeWindow) {
-		return get<IMovieResults>(apiKey, `/trending/${mediaType}/${timeWindow}`);
+		return get<IMovieResults>(apiKey, `trending/${mediaType}/${timeWindow}`);
 	}
 };

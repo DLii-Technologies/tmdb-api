@@ -12,7 +12,7 @@ export let list = {
 	getLists(apiKey: string, sessionId: string, accountId?: number, page?: number,
 		language?: string)
 	{
-		return get<IListResults>(apiKey, uriF("/account/{account_id}/lists", accountId), {
+		return get<IListResults>(apiKey, uriF("account/{account_id}/lists", accountId), {
 			session_id: sessionId,
 			language,
 			page,
@@ -23,14 +23,14 @@ export let list = {
 	 * Get the details of a list
 	 */
 	getDetails(apiKey: string, listId: string | number, language?: string) {
-		return get<IListDetails>(apiKey, `/list/${listId}`, { language });
+		return get<IListDetails>(apiKey, `list/${listId}`, { language });
 	},
 
 	/**
 	 * Get the status of a list item
 	 */
 	getItemStatus(apiKey: string, listId: string | number, movieId: number) {
-		return get<IListItemStatus>(apiKey, `/list/${listId}/item_status`, { movie_id: movieId });
+		return get<IListItemStatus>(apiKey, `list/${listId}/item_status`, { movie_id: movieId });
 	},
 
 	/**
@@ -39,7 +39,7 @@ export let list = {
 	create(apiKey: string, sessionId: string, name: string, description?: string,
 		language?: string)
 	{
-		return post<IListCreateResponse>(apiKey, "/list", { session_id: sessionId },
+		return post<IListCreateResponse>(apiKey, "list", { session_id: sessionId },
 			{ name, description, language });
 	},
 
@@ -47,7 +47,7 @@ export let list = {
 	 * Add a movie to a list
 	 */
 	addMovie(apiKey: string, sessionId: string, listId: string | number, movieId: number) {
-		return post<IResponse>(apiKey, `/list/${listId}/add_item`, { session_id: sessionId },
+		return post<IResponse>(apiKey, `list/${listId}/add_item`, { session_id: sessionId },
 			{ media_id: movieId });
 	},
 
@@ -55,7 +55,7 @@ export let list = {
 	 * Remove a movie from a list
 	 */
 	removeMovie(apiKey: string, sessionId: string, listId: string | number, movieId: number) {
-		return post<IResponse>(apiKey, `/list/${listId}/remove_item`, { session_id: sessionId },
+		return post<IResponse>(apiKey, `list/${listId}/remove_item`, { session_id: sessionId },
 			{ media_id: movieId });
 	},
 
@@ -63,7 +63,7 @@ export let list = {
 	 * Clear a list of all movies
 	 */
 	clearList(apiKey: string, sessionId: string, listId: string | number) {
-		return post<IResponse>(apiKey, `/list/${listId}/clear`, {
+		return post<IResponse>(apiKey, `list/${listId}/clear`, {
 			session_id: sessionId,
 			confirm   : true
 		});
@@ -73,6 +73,6 @@ export let list = {
 	 * Delete a list
 	 */
 	delete(apiKey: string, sessionId: string, listId: string | number) {
-		return del<IResponse>(apiKey, `/list/${listId}`, { session_id: sessionId });
+		return del<IResponse>(apiKey, `list/${listId}`, { session_id: sessionId });
 	}
 };

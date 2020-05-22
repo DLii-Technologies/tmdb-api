@@ -10,7 +10,7 @@ export let search = {
 	 * Find an item by an external ID
 	 */
 	find(apiKey: string, externalId: string, externalSource: ExternalSource, language?: string) {
-		return get<IFindResults>(apiKey, `/find/${externalId}`, {
+		return get<IFindResults>(apiKey, `find/${externalId}`, {
 			external_source: externalSource,
 			language
 		});
@@ -20,7 +20,7 @@ export let search = {
 	 * Search for a company
 	 */
 	companies(apiKey: string, query: string, page?: number) {
-		return get<ICompanyResults>(apiKey, "/search/company", { query, page });
+		return get<ICompanyResults>(apiKey, "search/company", { query, page });
 	},
 
 	/**
@@ -29,7 +29,7 @@ export let search = {
 	collections(apiKey: string, query: string, page?: number,
 		options: ICollectionSearchOptions = {})
 	{
-		return get<ICollectionResults>(apiKey, "/search/collection",
+		return get<ICollectionResults>(apiKey, "search/collection",
 			Object.assign(options, { query, page }));
 	},
 
@@ -37,14 +37,14 @@ export let search = {
 	 * Search for keywords
 	 */
 	keywords(apiKey: string, query: string, page?: number) {
-		return get<IKeywordResults>(apiKey, "/search/keyword", { query, page });
+		return get<IKeywordResults>(apiKey, "search/keyword", { query, page });
 	},
 
 	/**
 	 * Search for a movie
 	 */
 	movies(apiKey: string, query: string, page?: number, options: IMovieSearchOptions = {}) {
-		return get<IMovieResults>(apiKey, "/search/movie",
+		return get<IMovieResults>(apiKey, "search/movie",
 			Object.assign(options, { query, page }));
 	},
 
@@ -52,7 +52,7 @@ export let search = {
 	 * Search for a person
 	 */
 	people(apiKey: string, query: string, page?: number, options: IPersonSearchOptions = {}) {
-		return get<IPersonResults>(apiKey, "/search/person",
+		return get<IPersonResults>(apiKey, "search/person",
 			Object.assign(options, { query, page }));
 	},
 
@@ -60,7 +60,7 @@ export let search = {
 	 * Search for a series
 	 */
 	series(apiKey: string, query: string, page?: number, options: ISeriesSearchOptions = {}) {
-		return get<ISeriesResults>(apiKey, "/search/tv",
+		return get<ISeriesResults>(apiKey, "search/tv",
 			Object.assign(options, { query, page }));
 	},
 
@@ -68,7 +68,7 @@ export let search = {
 	 * Search across movies, TV shows, and people at once
 	 */
 	multi(apiKey: string, query: string, page?: number, options: IMultiSearchOptions = {}) {
-		return get<ICombinedResults>(apiKey, "/search/multi",
+		return get<ICombinedResults>(apiKey, "search/multi",
 			Object.assign(options, { query, page }));
 	}
 };

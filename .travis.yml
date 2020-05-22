@@ -1,0 +1,31 @@
+language: node_js
+
+node_js:
+  - 'node'
+
+matrix:
+  fast_finish: true
+
+branches:
+  only:
+  - master
+  - /^release-.*/
+
+install:
+  - npm uninstall typescript --no-save
+  - npm install
+
+cache:
+  directories:
+    - node_modules
+
+git:
+  depth: 1
+
+script: npm run coverage
+
+after_success:
+  - npm run coveralls
+
+notifications:
+  webhooks: https://coveralls.io/webhook

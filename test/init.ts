@@ -27,27 +27,40 @@ export let auth = {
 	request_token: "",
 	username     : <string>process.env["TMDB_USERNAME"],
 	password     : <string>process.env["TMDB_PASSWORD"]
-}
+};
 
 /**
  * Initialize the user session
  */
-authentication.createRequestToken(auth.api_key).then((result) => {
-	auth.request_token = result.request_token;
-	return authentication.login(auth.api_key, auth.request_token = result.request_token, auth.username, auth.password);
-}).then((result) => {
-	return authentication.createSession(auth.api_key, result.request_token);
-}).then((result) => {
-	auth.session_id = result.session_id;
-	return account.getDetails(auth.api_key, auth.session_id);
-}).then((result) => {
-	auth.account_id = result.id;
-	run(); // Start the tests
-}).catch(e => {
-	console.error(e);
-	console.error("Initialization failed!");
-	process.exit(1);
-});
+(async () => {
+	try {
+		auth.request_token = (await authentication.createRequestToken(auth.api_key)).request_token;
+		await authentication.login(auth.api_key, auth.request_token, auth.username, auth.password);
+		auth.session_id = (await authentication.createSession(auth.api_key, auth.request_token)).session_id;
+		auth.account_id = (await account.getDetails(auth.api_key, auth.session_id)).id;
+	} catch(e) {
+		console.error(e);
+		console.error("Initialization failed!");
+		process.exit(1);
+	}
+	run();
+})();
+// authentication.createRequestToken(auth.api_key).then((result) => {
+// 	auth.request_token = result.request_token;
+// 	return authentication.login(auth.api_key, auth.request_token, auth.username, auth.password);
+// }).then((result) => {
+// 	return authentication.createSession(auth.api_key, result.request_token);
+// }).then((result) => {
+// 	auth.session_id = result.session_id;
+// 	return account.getDetails(auth.api_key, auth.session_id);
+// }).then((result) => {
+// 	auth.account_id = result.id;
+// 	run(); // Start the tests
+// }).catch(e => {
+// 	console.error(e);
+// 	console.error("Initialization failed!");
+// 	process.exit(1);
+// });
 
 // -------------------------------------------------------------------------------------------------
 

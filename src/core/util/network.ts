@@ -1,4 +1,14 @@
-import * as got from "got";
+/**
+ * @TODO
+ * This network utility was written with an older version of GOT. GOT has since updated and has
+ * vastly changed how JSON requests need to be performed. These changes require a complete rewrite
+ * of the request system here.
+ *
+ * On a side note, the website is frequently timing out and returning 502 errors... No idea as to
+ * how long this will last, but it's really hurting the testing here
+ */
+
+import got from "got";
 
 /**
  * Create a simple Request type
@@ -8,7 +18,8 @@ type Request = () => Promise<any>;
 /**
  * Constants
  */
-const BASE_URL    = "https://api.themoviedb.org";
+const BASE_URL    = "https://api.themoviedb.org/";
+const TIMEOUT     = 10000
 const API_VERSION = 3;
 
 /**
@@ -30,9 +41,9 @@ var executeTimeout: NodeJS.Timeout | null = null;
  * Extend Got to use JSON and the base URL
  */
 let tmdb = got.extend({
-	baseUrl: `${BASE_URL}/${API_VERSION}`,
-	json   : true,
-	timeout: 10000
+	prefixUrl: `${BASE_URL}/${API_VERSION}`,
+	responseType: "json",
+	timeout: TIMEOUT
 });
 
 /**
@@ -47,7 +58,7 @@ function getMilliseconds() {
  */
 function cleanBucket() {
 	let ms = getMilliseconds();
-	while (requestBucket.length && ms - requestBucket[0] >= 10000) {
+	while (requestBucket.length && ms - requestBucket[0] >= TIMEOUT) {
 		requestBucket.shift();
 	}
 }
@@ -58,11 +69,11 @@ function cleanBucket() {
 function throttle() {
 	let ms = getMilliseconds();
 	cleanBucket();
-	if (requestBucket.length >= 38 && ms - requestBucket[0] < 10000) {
+	if (requestBucket.length >= 38 && ms - requestBucket[0] < TIMEOUT) {
 		if (executeTimeout) {
 			clearTimeout(executeTimeout);
 		}
-		executeTimeout = setTimeout(sendNextRequest, 10000 - (ms - requestBucket[0]));
+		executeTimeout = setTimeout(sendNextRequest, TIMEOUT - (ms - requestBucket[0]));
 		return true;
 	}
 	return false;
@@ -92,13 +103,13 @@ function enqueueRequest(request: Request) {
 /**
  * Send a GET request
  */
-export function get<T>(apiKey: string, uri: string, query: any = {}) {
-	query["api_key"] = apiKey;
+export function get<T>(apiKey: string, uri: string, searchParams: any = {}) {
+	searchParams["api_key"] = apiKey;
 	return new Promise<T>((resolve, reject) => {
-		enqueueRequest(() => {
-			return tmdb.get(uri, { query })
-				.then(result => resolve(<T>result.body))
-				.catch(e => reject(e.body));
+		enqueueRequest(async () => {
+			return tmdb.get(uri, { searchParams })
+				.then(result => resolve(<T><any>result.body)) // nasty hack
+				.catch(e => reject(e));
 		});
 	});
 }
@@ -106,13 +117,13 @@ export function get<T>(apiKey: string, uri: string, query: any = {}) {
 /**
  * Send a POST request
  */
-export function post<T>(apiKey: string, uri: string, query: any, body: any = {}) {
-	query["api_key"] = apiKey;
+export function post<T>(apiKey: string, uri: string, searchParams: any, body: any = {}) {
+	searchParams["api_key"] = apiKey;
 	return new Promise<T>((resolve, reject) => {
-		enqueueRequest(() => {
-			return tmdb.post(uri, { query, body })
-				.then(result => resolve(<T>result.body))
-				.catch(e => reject(e.body));
+		enqueueRequest(async () => {
+			return tmdb.post(uri, { searchParams, json: body })
+				.then(result => resolve(<T><any>result.body)) // nasty hack
+				.catch(e => reject(e));
 		});
 	});
 }
@@ -120,13 +131,13 @@ export function post<T>(apiKey: string, uri: string, query: any, body: any = {})
 /**
  * Send a DEL request
  */
-export function del<T>(apiKey: string, uri: string, query: any, body: any = {}) {
-	query["api_key"] = apiKey;
+export function del<T>(apiKey: string, uri: string, searchParams: any, body: any = {}) {
+	searchParams["api_key"] = apiKey;
 	return new Promise<T>((resolve, reject) => {
-		enqueueRequest(() => {
-			return tmdb.delete(uri, { query, body })
-				.then(result => resolve(<T>result.body))
-				.catch(e => reject(e.body));
+		enqueueRequest(async () => {
+			return tmdb.delete(uri, { searchParams, json: body })
+				.then(result => resolve(<T><any>result.body)) // nasty hack
+				.catch(e => reject(e));
 		});
 	});
 }

@@ -6,10 +6,12 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
+    "clean": "rm -rf ./.nyc_output; rm -rf ./coverage; rm -rf ./dist",
     "coverage": "nyc npm run test",
+    "coveralls": "coveralls < ./coverage/lcov.info",
     "test": "mocha -r node_modules/ts-node/register ./test/**/*.spec.ts --timeout 60000 --delay",
-    "test-core": "mocha -r node_modules/ts-node/register ./test/core/*.spec.ts --timeout 60000 --delay",
-    "test-main": "mocha -r node_modules/ts-node/register ./test/*.spec.ts --timeout 60000 --delay"
+    "test:core": "mocha -r node_modules/ts-node/register ./test/core/*.spec.ts --timeout 60000 --delay",
+    "test:main": "mocha -r node_modules/ts-node/register ./test/*.spec.ts --timeout 60000 --delay"
   },
   "repository": {
     "type": "git",
@@ -29,27 +31,25 @@
   },
   "homepage": "https://github.com/DLii-Technologies/tmdb-api#readme",
   "devDependencies": {
-    "@istanbuljs/nyc-config-typescript": "^0.1.3",
-    "@types/chai": "^4.1.7",
-    "@types/chai-subset": "^1.3.2",
-    "@types/chai-things": "0.0.33",
-    "@types/dotenv": "^6.1.1",
-    "@types/got": "^9.6.4",
-    "@types/mocha": "^5.2.7",
-    "@types/node": "^12.6.8",
-    "@types/request": "^2.48.2",
+    "@istanbuljs/nyc-config-typescript": "^1.0.1",
+    "@types/chai": "^4.2.11",
+    "@types/chai-subset": "^1.3.3",
+    "@types/chai-things": "0.0.34",
+    "@types/dotenv": "^8.2.0",
+    "@types/got": "^9.6.11",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^14.0.5",
     "chai": "^4.2.0",
     "chai-subset": "^1.6.0",
     "chai-things": "^0.2.0",
-    "dotenv": "^8.0.0",
-    "mocha": "^6.2.0",
-    "nyc": "^14.1.1",
-    "ts-node": "^8.3.0",
-    "typescript": "^3.5.3"
+    "dotenv": "^8.2.0",
+    "mocha": "^7.1.2",
+    "nyc": "^15.0.1",
+    "ts-node": "^8.10.1",
+    "typescript": "^3.9.3"
   },
   "dependencies": {
-    "got": "^9.6.0",
-    "request": "^2.88.0"
+    "got": "^11.1.4"
   },
   "nyc": {
     "all": true,

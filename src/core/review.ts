@@ -7,7 +7,7 @@ export let review = {
 	 * Get the details of a review
 	 */
 	getDetails(apiKey: string, reviewId: string) {
-		return get<IReviewDetails>(apiKey, `/review/${reviewId}`);
+		return get<IReviewDetails>(apiKey, `review/${reviewId}`);
 	},
 
 	/**
@@ -15,6 +15,6 @@ export let review = {
 	 */
 	getReviews(apiKey: string, mediaType: MediaType, movieId: number, page?: number,
 		language?: string) {
-		return get<IReviews>(apiKey, `/${mediaType}/${movieId}/reviews`, { language, page });
+		return get<IReviews>(apiKey, `${mediaType}/${movieId}/reviews`, { language, page });
 	},
 };

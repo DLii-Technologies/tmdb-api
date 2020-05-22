@@ -10,7 +10,7 @@ export let account = {
 	 * Get the details of the provided account
 	 */
 	getDetails(apiKey: string, sessionId: string) {
-		return get<IAccountDetails>(apiKey, "/account", { session_id: sessionId });
+		return get<IAccountDetails>(apiKey, "account", { session_id: sessionId });
 	},
 
 	/**
@@ -19,7 +19,7 @@ export let account = {
 	getFavoriteMovies(apiKey: string, sessionId: string, accountId?: number, page?: number,
 		sortBy?: Sort, language?: string)
 	{
-		return get<IMovieResults>(apiKey, uriF("/account/{account_id}/favorite/movies", accountId),
+		return get<IMovieResults>(apiKey, uriF("account/{account_id}/favorite/movies", accountId),
 			{
 				session_id: sessionId,
 				sort_by   : sortBy,
@@ -34,7 +34,7 @@ export let account = {
 	getFavoriteTvShows(apiKey: string, sessionId: string, accountId?: number, page?: number,
 		sortBy?: Sort, language?: string)
 	{
-		return get<ISeriesResults>(apiKey, uriF("/account/{account_id}/favorite/tv", accountId), {
+		return get<ISeriesResults>(apiKey, uriF("account/{account_id}/favorite/tv", accountId), {
 			session_id: sessionId,
 			sort_by   : sortBy,
 			language,
@@ -48,7 +48,7 @@ export let account = {
 	getRatedMovies(apiKey: string, sessionId: string, accountId?: number, page?: number,
 		sortBy?: Sort, language?: string)
 	{
-		return get<IMovieResults>(apiKey, uriF("/account/{account_id}/rated/movies", accountId), {
+		return get<IMovieResults>(apiKey, uriF("account/{account_id}/rated/movies", accountId), {
 			session_id: sessionId,
 			sort_by   : sortBy,
 			language,
@@ -62,7 +62,7 @@ export let account = {
 	getRatedTvShows(apiKey: string, sessionId: string, accountId?: number, page?: number,
 		sortBy?: Sort, language?: string)
 	{
-		return get<ISeriesResults>(apiKey, uriF("/account/{account_id}/rated/tv", accountId), {
+		return get<ISeriesResults>(apiKey, uriF("account/{account_id}/rated/tv", accountId), {
 			session_id: sessionId,
 			sort_by   : sortBy,
 			language,
@@ -76,7 +76,7 @@ export let account = {
 	getRatedTvEpisodes(apiKey: string, sessionId: string, accountId?: number, page?: number,
 		sortBy?: Sort, language?: string)
 	{
-		return get<IEpisodeResults>(apiKey, uriF("/account/{uri}/rated/tv/episodes", accountId), {
+		return get<IEpisodeResults>(apiKey, uriF("account/{uri}/rated/tv/episodes", accountId), {
 			session_id: sessionId,
 			sort_by   : sortBy,
 			language,
@@ -90,7 +90,7 @@ export let account = {
 	getMovieWatchlist(apiKey: string, sessionId: string, accountId?: number, page?: number,
 		sortBy?: Sort, language?: string)
 	{
-		return get<IMovieResults>(apiKey, uriF("/account/{account_id}/watchlist/movies", accountId), {
+		return get<IMovieResults>(apiKey, uriF("account/{account_id}/watchlist/movies", accountId), {
 			session_id: sessionId,
 			sort_by   : sortBy,
 			language,
@@ -104,7 +104,7 @@ export let account = {
 	getTvShowWatchList(apiKey: string, sessionId: string, accountId?: number, page?: number,
 		sortBy?: Sort, language?: string)
 	{
-		return get<ISeriesResults>(apiKey, uriF("/account/{account_id}/watchlist/tv", accountId), {
+		return get<ISeriesResults>(apiKey, uriF("account/{account_id}/watchlist/tv", accountId), {
 			session_id: sessionId,
 			sort_by   : sortBy,
 			language,
@@ -118,7 +118,7 @@ export let account = {
 	markFavorite(apiKey: string, sessionId: string, mediaType: MediaType, mediaId: number,
 		 isFavorite: boolean, accountId?: number)
 	{
-		return post<IResponse>(apiKey, uriF("/account/{account_id}/favorite", accountId), {
+		return post<IResponse>(apiKey, uriF("account/{account_id}/favorite", accountId), {
 			session_id: sessionId,
 		}, {
 			media_type: mediaType,
@@ -133,7 +133,7 @@ export let account = {
 	markInWatchlist(apiKey: string, sessionId: string, mediaType: MediaType, mediaId: number,
 		isInWatchlist: boolean, accountId?: number)
 	{
-		return post<IResponse>(apiKey, uriF("/account/{account_id}/watchlist", accountId), {
+		return post<IResponse>(apiKey, uriF("account/{account_id}/watchlist", accountId), {
 			session_id: sessionId,
 		}, {
 			media_type: mediaType,

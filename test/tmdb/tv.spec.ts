@@ -15,7 +15,7 @@ let listing: TvSeriesListing;
 let details: TvSeriesDetails;
 let seasonDetails: TvSeasonDetails;
 
-describe.only("TMDb: TV Module", () => {
+describe("TMDb: TV Module", () => {
 
 	// TV Shows ------------------------------------------------------------------------------------
 
