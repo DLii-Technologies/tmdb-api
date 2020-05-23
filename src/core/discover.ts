@@ -75,7 +75,7 @@ export let discover = {
 	 * Discover movies that meet the provided parameters
 	 */
 	movies(apiKey: string, options: IDiscoverMovieOptions, page?: number) {
-		return get<IMovieResults>(apiKey, "/discover/movie",
+		return get<IMovieResults>(apiKey, "discover/movie",
 			Object.assign(compileDiscoverMovieOptions(options), { page }));
 	},
 
@@ -83,7 +83,7 @@ export let discover = {
 	 * Discover TV shows that meet the provided parameters
 	 */
 	tvShows(apiKey: string, options: IDiscoverTvOptions, page?: number) {
-		return get<ISeriesResults>(apiKey, "/discover/tv",
+		return get<ISeriesResults>(apiKey, "discover/tv",
 			Object.assign(compileDiscoverTvOptions(options), { page }));
 	},
 

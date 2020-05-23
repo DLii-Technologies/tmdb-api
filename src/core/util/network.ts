@@ -9,6 +9,7 @@
  */
 
 import got from "got";
+import { cleanObject } from "./utils";
 
 /**
  * Create a simple Request type
@@ -18,7 +19,7 @@ type Request = () => Promise<any>;
 /**
  * Constants
  */
-const BASE_URL    = "https://api.themoviedb.org/";
+const BASE_URL    = "https://api.themoviedb.org";
 const TIMEOUT     = 10000
 const API_VERSION = 3;
 
@@ -104,6 +105,7 @@ function enqueueRequest(request: Request) {
  * Send a GET request
  */
 export function get<T>(apiKey: string, uri: string, searchParams: any = {}) {
+	cleanObject(searchParams);
 	searchParams["api_key"] = apiKey;
 	return new Promise<T>((resolve, reject) => {
 		enqueueRequest(async () => {
@@ -118,6 +120,7 @@ export function get<T>(apiKey: string, uri: string, searchParams: any = {}) {
  * Send a POST request
  */
 export function post<T>(apiKey: string, uri: string, searchParams: any, body: any = {}) {
+	cleanObject(searchParams);
 	searchParams["api_key"] = apiKey;
 	return new Promise<T>((resolve, reject) => {
 		enqueueRequest(async () => {
@@ -132,6 +135,7 @@ export function post<T>(apiKey: string, uri: string, searchParams: any, body: an
  * Send a DEL request
  */
 export function del<T>(apiKey: string, uri: string, searchParams: any, body: any = {}) {
+	cleanObject(searchParams);
 	searchParams["api_key"] = apiKey;
 	return new Promise<T>((resolve, reject) => {
 		enqueueRequest(async () => {

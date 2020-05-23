@@ -35,3 +35,10 @@ export function logicArrayF(arr?: any[] | any[][]) {
 	}
 	return arr.join(',');
 }
+
+/**
+ * Remove any undefined items within an object
+ */
+export function cleanObject(obj: any) {
+	Object.keys(obj).forEach(key => obj[key] === undefined ? delete obj[key] : {});
+}
