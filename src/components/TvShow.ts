@@ -175,7 +175,7 @@ export class TvSeriesDetails extends TvShow
 	public readonly isInProduction     : boolean;
 	public readonly languages          : string[];
 	public readonly lastAirDate        : Date;
-	public readonly latestAiredEpisode : TvEpisodeListing;
+	public readonly latestAiredEpisode : TvEpisodeListing | null;
 	public readonly nextEpisodeToAir   : TvEpisodeListing | null;
 	public readonly networks           : INetwork[];
 	public readonly productionCompanies: IProductionCompany[];
@@ -184,6 +184,10 @@ export class TvSeriesDetails extends TvShow
 	public readonly status             : string;
 	public readonly type               : string;
 
+	/**
+	 * @TODO
+	 * Clean up this constructor a little bit. Some sub-items could be null
+	 */
 	constructor(series: ISeriesDetails, tmdb?: TMDb) {
 		super(series, tmdb);
 		this.createdBy           = series.created_by;
@@ -194,7 +198,7 @@ export class TvSeriesDetails extends TvShow
 		this.isInProduction      = series.in_production;
 		this.languages           = series.languages;
 		this.lastAirDate         = new Date(series.last_air_date);
-		this.latestAiredEpisode  = new TvEpisodeListing(series.last_episode_to_air, tmdb);
+		this.latestAiredEpisode  = null;
 		this.nextEpisodeToAir    = utils.classOrNull(series.next_episode_to_air, TvEpisodeListing);
 		this.networks            = series.networks;
 		this.productionCompanies = series.production_companies;
@@ -202,5 +206,9 @@ export class TvSeriesDetails extends TvShow
 		this.seasonCount         = series.number_of_seasons
 		this.status              = series.status;
 		this.type                = series.type;
+
+		if (series.last_episode_to_air) {
+			this.latestAiredEpisode  = new TvEpisodeListing(series.last_episode_to_air, tmdb);
+		}
 	}
 }
