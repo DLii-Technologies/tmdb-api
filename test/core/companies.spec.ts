@@ -13,7 +13,7 @@ import { IAlternativeNames }                from "../../src/core/interface/info"
 describe("Core: Company API", () => {
 	it("Get the details of a company", () => {
 		return company.getCompanyDetails(auth.api_key, 1).then((result: ICompanyDetails) => {
-			expect(result.name).to.equal("Lucasfilm");
+			expect(result.name).to.equal("Lucasfilm Ltd.");
 		});
 	});
 

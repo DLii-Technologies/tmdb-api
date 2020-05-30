@@ -15,9 +15,6 @@ let listId      = 0;
 let name        = "Test List";
 let description = "A test list";
 
-/**
- * @TODO
- */
 describe("Core: List v3 API", () => {
 	it("Create a list", () => {
 		return list.create(auth.api_key, auth.session_id, name, description).then((result: IListCreateResponse) => {
@@ -99,17 +96,13 @@ describe("Core: List v3 API", () => {
 	/**
 	 * @WARNING
 	 * Delete always throws an error even upon a successful delete.
-	 * So an alternative successful check is added
-	 *
-	 * @TODO
-	 * Skipping this test case until network is rewritten
+	 * To verify deletion, we attempt to get the details of the deleted list
 	 */
-	it.skip("Delete a list", (done) => {
+	it("Delete a list", (done) => {
 		list.delete(auth.api_key, auth.session_id, listId).then((result: IResponse) => {
 			expect(result.status_code).to.equal(StatusCode.RecordDeleteSuccess);
 			done();
 		}).catch(function() {
-			console.log("Error:", arguments);
 			list.getDetails(auth.api_key, listId).catch((e: IResponse) => {
 				expect(e.status_code).to.equal(StatusCode.NotFound);
 			}).finally(done);
