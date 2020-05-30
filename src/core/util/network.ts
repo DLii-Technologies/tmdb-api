@@ -1,27 +1,26 @@
-/**
- * @TODO
- * This network utility was written with an older version of GOT. GOT has since updated and has
- * vastly changed how JSON requests need to be performed. These changes require a complete rewrite
- * of the request system here.
- *
- * On a side note, the website is frequently timing out and returning 502 errors... No idea as to
- * how long this will last, but it's really hurting the testing here
- */
-
 import got from "got";
 import { cleanObject } from "./utils";
 
 /**
- * Create a simple Request type
+ * Constants
+ */
+const BASE_URL = "https://api.themoviedb.org";
+const TIMEOUT = 10000
+const API_VERSION = 3;
+
+/**
+ * Type definitions
  */
 type Request = () => Promise<any>;
 
 /**
- * Constants
+ * The supported request methods
  */
-const BASE_URL    = "https://api.themoviedb.org";
-const TIMEOUT     = 10000
-const API_VERSION = 3;
+enum RequestMethod {
+	Get    = "GET",
+	Post   = "POST",
+	Delete = "DELETE"
+}
 
 /**
  * Keep track of the requests if throttling is enabled
@@ -102,46 +101,41 @@ function enqueueRequest(request: Request) {
 }
 
 /**
- * Send a GET request
+ * Send a generic request
  */
-export function get<T>(apiKey: string, uri: string, searchParams: any = {}) {
+async function request<T>(apiKey: string, method: RequestMethod, uri: string,
+	searchParams: any = {}, body?: any)
+{
 	cleanObject(searchParams);
 	searchParams["api_key"] = apiKey;
 	return new Promise<T>((resolve, reject) => {
 		enqueueRequest(async () => {
-			return tmdb.get(uri, { searchParams })
-				.then(result => resolve(<T><any>result.body)) // nasty hack
-				.catch(e => reject(e));
-		});
+			try {
+				resolve(await tmdb(uri, { method, searchParams, json: body }).json());
+			} catch(e) {
+				reject(e.response.body);
+			}
+		})
 	});
+}
+
+/**
+ * Send a GET request
+ */
+export async function get<T>(apiKey: string, uri: string, query?: any) {
+	return request<T>(apiKey, RequestMethod.Get, uri, query);
 }
 
 /**
  * Send a POST request
  */
-export function post<T>(apiKey: string, uri: string, searchParams: any, body: any = {}) {
-	cleanObject(searchParams);
-	searchParams["api_key"] = apiKey;
-	return new Promise<T>((resolve, reject) => {
-		enqueueRequest(async () => {
-			return tmdb.post(uri, { searchParams, json: body })
-				.then(result => resolve(<T><any>result.body)) // nasty hack
-				.catch(e => reject(e));
-		});
-	});
+export async function post<T>(apiKey: string, uri: string, query?: any, body?: any) {
+	return request<T>(apiKey, RequestMethod.Post, uri, query, body);
 }
 
 /**
  * Send a DEL request
  */
-export function del<T>(apiKey: string, uri: string, searchParams: any, body: any = {}) {
-	cleanObject(searchParams);
-	searchParams["api_key"] = apiKey;
-	return new Promise<T>((resolve, reject) => {
-		enqueueRequest(async () => {
-			return tmdb.delete(uri, { searchParams, json: body })
-				.then(result => resolve(<T><any>result.body)) // nasty hack
-				.catch(e => reject(e));
-		});
-	});
+export async function del<T>(apiKey: string, uri: string, query?: any, body?: any) {
+	return request<T>(apiKey, RequestMethod.Delete, uri, query, body);
 }

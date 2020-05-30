@@ -10,14 +10,11 @@ import { IMovieResults } from "../../src/core/interface/results";
 import { IResponse }     from "../../src/core/interface/response";
 import { StatusCode }    from "../../src/core/enums";
 
-describe("Core: Network API", () => {
+describe.only("Core: Network API", () => {
 	/**
 	 * Test out the error mechanism. Do so by using a bad API key
-	 *
-	 * @TODO
-	 * Skipping until network is rewritten
 	 */
-	it.skip("API error Mechanism", () => {
+	it("API error Mechanism", () => {
 		// Use a bad API key
 		return Promise.all([
 			search.companies("12345", "Sony").catch((response: IResponse) => {
