@@ -7,7 +7,7 @@ import { auth } from "../init";
  */
 import { TMDb } from "../../src";
 
-describe("TMDb: TMDb Instance", () => {
+describe.skip("TMDb: TMDb Instance", () => {
 	it("Destroy current singleton instance", () => {
 		TMDb.instance().destroy();
 		expect(TMDb.instance()).to.equal(undefined);

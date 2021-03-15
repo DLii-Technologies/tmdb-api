@@ -16,7 +16,7 @@ let details: ListDetails;
 /**
  * @TODO Waiting for account module
  */
-describe("TMDb: List Module", () => {
+describe.skip("TMDb: List Module", () => {
 	it("Get the lists that Star Wars is in", () => {
 		return tmdb.movie.getLists(11).then((result) => {
 			expect(result.totalResults).to.be.greaterThan(0);

@@ -73,7 +73,6 @@ export let list = {
 	 * Delete a list
 	 */
 	delete(apiKey: string, sessionId: string, listId: string | number) {
-		console.log("Deleting list...", listId);
 		return del<IResponse>(apiKey, `list/${listId}`, { session_id: sessionId });
 	}
 };

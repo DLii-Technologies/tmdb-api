@@ -15,7 +15,7 @@ let listing: TvSeriesListing;
 let details: TvSeriesDetails;
 let seasonDetails: TvSeasonDetails;
 
-describe("TMDb: TV Module", () => {
+describe.skip("TMDb: TV Module", () => {
 
 	// TV Shows ------------------------------------------------------------------------------------
 

@@ -141,6 +141,7 @@ export let movie = {
 	},
 
 	/**
+	 * @TODO Overload this
 	 * Remove your rating for a movie. A valid session or guest session ID is required
 	 */
 	unrate(apiKey: string, movieId: number, sessionId?: string, guestSessionId?: string) {
