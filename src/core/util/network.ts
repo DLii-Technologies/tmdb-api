@@ -2,6 +2,7 @@ import got from "got";
 import { cleanObject } from "./utils";
 
 /**
+ * @TODO Change timeout to be a configurable option
  * Constants
  */
 const BASE_URL = "https://api.themoviedb.org";
@@ -9,11 +10,7 @@ const TIMEOUT = 10000
 const API_VERSION = 3;
 
 /**
- * Type definitions
- */
-type Request = () => Promise<any>;
-
-/**
+ * @TODO Change this to a string type, no need for enums here...
  * The supported request methods
  */
 enum RequestMethod {
@@ -21,21 +18,6 @@ enum RequestMethod {
 	Post   = "POST",
 	Delete = "DELETE"
 }
-
-/**
- * Keep track of the requests if throttling is enabled
- */
-var requestBucket: number[] = [];
-
-/**
- * Keep a queue of pending requests once limit is reached
- */
-var queue: Request[] = [];
-
-/**
- * Used to delay execution of the next request
- */
-var executeTimeout: NodeJS.Timeout | null = null;
 
 /**
  * Extend Got to use JSON and the base URL
@@ -47,60 +29,6 @@ let tmdb = got.extend({
 });
 
 /**
- * Get the current timestamp in milliseconds
- */
-function getMilliseconds() {
-	return new Date().getTime();
-}
-
-/**
- * Remove any unneeded requests from the bucket
- */
-function cleanBucket() {
-	let ms = getMilliseconds();
-	while (requestBucket.length && ms - requestBucket[0] >= TIMEOUT) {
-		requestBucket.shift();
-	}
-}
-
-/**
- * Throttle too frequent requests
- */
-function throttle() {
-	let ms = getMilliseconds();
-	cleanBucket();
-	if (requestBucket.length >= 38 && ms - requestBucket[0] < TIMEOUT) {
-		if (executeTimeout) {
-			clearTimeout(executeTimeout);
-		}
-		executeTimeout = setTimeout(sendNextRequest, TIMEOUT - (ms - requestBucket[0]));
-		return true;
-	}
-	return false;
-}
-
-/**
- * Send the next request if it's ready
- */
-function sendNextRequest() {
-	if (!throttle()) {
-		queue.shift()!();
-		requestBucket.push(getMilliseconds());
-		if (queue.length) {
-			sendNextRequest();
-		}
-	}
-}
-
-/**
- * Enqueue and attempt to send the next request
- */
-function enqueueRequest(request: Request) {
-	queue.push(request);
-	sendNextRequest();
-}
-
-/**
  * Send a generic request
  */
 async function request<T>(apiKey: string, method: RequestMethod, uri: string,
@@ -108,14 +36,13 @@ async function request<T>(apiKey: string, method: RequestMethod, uri: string,
 {
 	cleanObject(searchParams);
 	searchParams["api_key"] = apiKey;
-	return new Promise<T>((resolve, reject) => {
-		enqueueRequest(async () => {
-			try {
-				resolve(await tmdb(uri, { method, searchParams, json: body }).json());
-			} catch(e) {
-				reject(e.response.body);
-			}
-		})
+	return new Promise<T>(async (resolve, reject) => {
+		try {
+			let response = await tmdb(uri, { method, searchParams, json: body }).json();
+			resolve(<T>response);
+		} catch(e) {
+			reject(e.response.body);
+		}
 	});
 }
 
