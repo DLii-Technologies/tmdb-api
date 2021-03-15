@@ -21,7 +21,7 @@ import { account, auth as authentication } from "../src/core";
  * Store some authentication details for testing
  */
 export let auth = {
-	api_key      : <string>process.env["TMDB_API_KEY"],
+	api_key      : <string>process.env["TMDB_API_KEY_V3"],
 	account_id   : 0,
 	session_id   : "",
 	request_token: "",
