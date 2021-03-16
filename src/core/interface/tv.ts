@@ -133,6 +133,7 @@ export interface ISeriesDetails extends ISeriesBase {
 	production_companies: IProductionCompany[];
 	seasons             : ISeason[];
 	status              : string;
+	tagline             : string;
 	type                : string;
 }
 

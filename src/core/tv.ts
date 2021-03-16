@@ -2,8 +2,9 @@ import { ISeriesDetails, ISeriesContentRatings, IEpisodeGroups,
 	ITheatricalScreenings, IEpisodeDetails, IEpisodeGroupDetails,
 	ISeasonDetails }                                                   from "./interface/tv";
 import { IAccountState, ISeasonAccountStates, IEpisodeAccountState }   from "./interface/account";
-import { IAlternativeNames, IKeywordsAlt }                             from "./interface/info";
-import { ICredits, IEpisodeCredits }                                   from "./interface/credits";
+import { IAlternativeNames, IKeywordsAlt, ITvWatchProviders,
+	IWatchProvidersResult }                                            from "./interface/info";
+import { ICredits, IEpisodeCredits, IAggregateCredits }                from "./interface/credits";
 import { ISeriesExternalIds, ISeasonExternalIds, IEpisodeExternalIds } from "./interface/external";
 import { IImages, IVideos, ISeasonImages, IEpisodeImages }             from "./interface/media";
 import { ISeriesResults }                                              from "./interface/results";
@@ -34,6 +35,13 @@ export let tv = {
 			session_id: sessionId,
 			language
 		});
+	},
+
+	/**
+	 * Get the aggregate credits for a TV show
+	 */
+	 getSeriesAggregateCredits(apiKey: string, seriesId: number, language?: string) {
+		return get<IAggregateCredits>(apiKey, `tv/${seriesId}/aggregate_credits`, { language });
 	},
 
 	/**
@@ -116,6 +124,14 @@ export let tv = {
 	getSeriesTranslations(apiKey: string, seriesId: number, language?: string) {
 		return get<ITranslations<ISeriesTranslation>>(apiKey, `tv/${seriesId}/translations`,
 			{ language });
+	},
+
+	/**
+	 * Get the list of watch providers for the given TV show. **Must** credit *justWatch* if used!
+	 */
+	 getSeriesWatchProviders(apiKey: string, seriesId: number) {
+		return get<IWatchProvidersResult<ITvWatchProviders>>(apiKey,
+			`tv/${seriesId}/watch/providers`);
 	},
 
 	/**
@@ -203,6 +219,15 @@ export let tv = {
 				session_id      : sessionId,
 				language
 			});
+	},
+
+	/**
+	 * Get the aggregate credits for a TV show's season
+	 */
+	getSeasonAggregateCredits(apiKey: string, seriesId: number, season: number, language?: string)
+	{
+		return get<IAggregateCredits>(apiKey, `tv/${seriesId}/season/${season}/aggregate_credits`,
+			{ language });
 	},
 
 	/**

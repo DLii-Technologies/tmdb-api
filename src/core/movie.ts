@@ -1,14 +1,15 @@
-import { get, post, del }                   from "./util/network";
-import { IAccountState }                    from "./interface/account";
-import { IAlternativeTitles, IKeywords }    from "./interface/info";
-import { ICredits }                         from "./interface/credits";
-import { IExternalIds }                     from "./interface/external";
-import { IImages, IVideos }                 from "./interface/media";
-import { ILists }                           from "./interface/list";
-import { IMovieDetails, IReleaseDates }     from "./interface/movie";
-import { IMovieResults }                    from "./interface/results";
-import { IResponse }                        from "./interface/response";
-import { ITranslations, IMovieTranslation } from "./interface/language";
+import { get, post, del }                            from "./util/network";
+import { IAccountState }                             from "./interface/account";
+import { IAlternativeTitles, IKeywords,
+	IMovieWatchProviders, IWatchProvidersResult }    from "./interface/info";
+import { ICredits }                                  from "./interface/credits";
+import { IExternalIds }                              from "./interface/external";
+import { IImages, IVideos }                          from "./interface/media";
+import { ILists }                                    from "./interface/list";
+import { IMovieDetails, IReleaseDates }              from "./interface/movie";
+import { IMovieResults }                             from "./interface/results";
+import { IResponse }                                 from "./interface/response";
+import { ITranslations, IMovieTranslation }          from "./interface/language";
 
 export let movie = {
 	/**
@@ -89,6 +90,14 @@ export let movie = {
 	 */
 	getReleaseDates(apiKey: string, movieId: number) {
 		return get<IReleaseDates>(apiKey, `movie/${movieId}/release_dates`);
+	},
+
+	/**
+	 * Get a list of watch providers for the given movie. **Must** credit *justWatch* if used!
+	 */
+	 getWatchProviders(apiKey: string, movieId: number) {
+		return get<IWatchProvidersResult<IMovieWatchProviders>>(apiKey,
+			`movie/${movieId}/watch/providers`);
 	},
 
 	/**

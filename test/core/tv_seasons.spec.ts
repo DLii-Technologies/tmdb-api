@@ -5,7 +5,7 @@ import { auth } from "../init";
 import { tv }                                from "../../src/core";
 import { ISeasonDetails }                    from "../../src/core/interface/tv";
 import { ISeasonAccountStates }              from "../../src/core/interface/account";
-import { ICredits }                          from "../../src/core/interface/credits";
+import { IAggregateCredits, ICredits }       from "../../src/core/interface/credits";
 import { ISeasonExternalIds }                from "../../src/core/interface/external";
 import { ISeasonImages, IVideos }            from "../../src/core/interface/media";
 import { ITranslations, ISeasonTranslation } from "../../src/core/interface/language";
@@ -20,6 +20,12 @@ describe("Core: TV Seasons API", () => {
 	it("Get season account states", () => {
 		return tv.getSeasonAccountStates(auth.api_key, 2190, 22, auth.session_id).then((result: ISeasonAccountStates) => {
 			expect(result.results).to.be.an("array");
+		});
+	});
+
+	it("Get season aggregate credits", () => {
+		return tv.getSeasonAggregateCredits(auth.api_key, 1396, 5).then((result: IAggregateCredits) => {
+			result.cast.should.include.something.with.property("name", "Bryan Cranston");
 		});
 	});
 

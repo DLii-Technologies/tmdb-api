@@ -115,3 +115,110 @@ export interface IKeywordsAlt {
 	id     : number;
 	results: IKeyword[];
 }
+
+export interface IWatchProvider {
+	display_priority: number;
+	logo_path       : string;
+	provider_id     : number;
+	provider_name   : string;
+}
+
+export interface IWatchProviderSource {
+	link     : string;
+	flatrate?: IWatchProvider[];
+	buy     ?: IWatchProvider[];
+	rent    ?: IWatchProvider[]; // @WARN: This does not seem to be included in TV show listings, only movies
+}
+
+export interface IMovieWatchProviders {
+	AR: IWatchProviderSource;
+	AT: IWatchProviderSource;
+	AU: IWatchProviderSource;
+	BE: IWatchProviderSource;
+	BR: IWatchProviderSource;
+	CA: IWatchProviderSource;
+	CH: IWatchProviderSource;
+	CL: IWatchProviderSource;
+	CO: IWatchProviderSource;
+	CZ: IWatchProviderSource;
+	DE: IWatchProviderSource;
+	DK: IWatchProviderSource;
+	EC: IWatchProviderSource;
+	EE: IWatchProviderSource;
+	ES: IWatchProviderSource;
+	FI: IWatchProviderSource;
+	FR: IWatchProviderSource;
+	GB: IWatchProviderSource;
+	GR: IWatchProviderSource;
+	HU: IWatchProviderSource;
+	ID: IWatchProviderSource;
+	IE: IWatchProviderSource;
+	IN: IWatchProviderSource;
+	IT: IWatchProviderSource;
+	JP: IWatchProviderSource;
+	KR: IWatchProviderSource;
+	LT: IWatchProviderSource;
+	LV: IWatchProviderSource;
+	MX: IWatchProviderSource;
+	MY: IWatchProviderSource;
+	NL: IWatchProviderSource;
+	NO: IWatchProviderSource;
+	NZ: IWatchProviderSource;
+	PE: IWatchProviderSource;
+	PH: IWatchProviderSource;
+	PL: IWatchProviderSource;
+	PT: IWatchProviderSource;
+	RO: IWatchProviderSource;
+	RU: IWatchProviderSource;
+	SE: IWatchProviderSource;
+	SG: IWatchProviderSource;
+	TH: IWatchProviderSource;
+	TR: IWatchProviderSource;
+	US: IWatchProviderSource;
+	VE: IWatchProviderSource;
+	ZA: IWatchProviderSource;
+}
+
+export interface ITvWatchProviders {
+	AR: IWatchProviderSource;
+	AT: IWatchProviderSource;
+	AU: IWatchProviderSource;
+	BE: IWatchProviderSource;
+	BR: IWatchProviderSource;
+	CA: IWatchProviderSource;
+	CH: IWatchProviderSource;
+	CL: IWatchProviderSource;
+	CO: IWatchProviderSource;
+	CZ: IWatchProviderSource;
+	DE: IWatchProviderSource;
+	DK: IWatchProviderSource;
+	EC: IWatchProviderSource;
+	ES: IWatchProviderSource;
+	FI: IWatchProviderSource;
+	FR: IWatchProviderSource;
+	GB: IWatchProviderSource;
+	HU: IWatchProviderSource;
+	IE: IWatchProviderSource;
+	IN: IWatchProviderSource;
+	IT: IWatchProviderSource;
+	JP: IWatchProviderSource;
+	MX: IWatchProviderSource;
+	NL: IWatchProviderSource;
+	NO: IWatchProviderSource;
+	NZ: IWatchProviderSource;
+	PE: IWatchProviderSource;
+	PL: IWatchProviderSource;
+	PT: IWatchProviderSource;
+	RO: IWatchProviderSource;
+	RU: IWatchProviderSource;
+	SE: IWatchProviderSource;
+	TR: IWatchProviderSource;
+	US: IWatchProviderSource;
+	VE: IWatchProviderSource;
+	ZA: IWatchProviderSource;
+}
+
+export interface IWatchProvidersResult<T> {
+	id     : number;
+	results: T;
+}

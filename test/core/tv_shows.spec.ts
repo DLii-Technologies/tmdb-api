@@ -5,19 +5,20 @@ import { auth } from "../init";
 /**
  * Testing modules
  */
-import { tv }                                 from "../../src/core";
-import { ISeriesDetails, ISeriesContentRatings, IEpisodeGroups,
-	ITheatricalScreenings }                   from "../../src/core/interface/tv";
-import { IAccountState }                      from "../../src/core/interface/account";
-import { IAlternativeNames, IKeywords }       from "../../src/core/interface/info";
-import { ICredits }                           from "../../src/core/interface/credits";
-import { ISeriesExternalIds }                 from "../../src/core/interface/external";
-import { IImages, IVideos }                   from "../../src/core/interface/media";
-import { ISeriesResults }                     from "../../src/core/interface/results";
+import { tv }                                  from "../../src/core";
+import { ISeriesDetails, ISeriesContentRatings,
+	IEpisodeGroups,	ITheatricalScreenings }    from "../../src/core/interface/tv";
+import { IAccountState }                       from "../../src/core/interface/account";
+import { IAlternativeNames, IKeywords,
+	ITvWatchProviders, IWatchProvidersResult } from "../../src/core/interface/info";
+import { IAggregateCredits, ICredits }         from "../../src/core/interface/credits";
+import { ISeriesExternalIds }                  from "../../src/core/interface/external";
+import { IImages, IVideos }                    from "../../src/core/interface/media";
+import { ISeriesResults }                      from "../../src/core/interface/results";
 import { ITranslations, ISeriesTranslation,
-	ISeasonTranslation, IEpisodeTranslation } from"../../src/core/interface/language";
-import { IResponse }                          from "../../src/core/interface/response";
-import { StatusCode }                         from "../../src/core/enums";
+	ISeasonTranslation, IEpisodeTranslation }  from"../../src/core/interface/language";
+import { IResponse }                           from "../../src/core/interface/response";
+import { StatusCode }                          from "../../src/core/enums";
 
 describe("Core: TV Shows", () => {
 	it("Get TV series details", () => {
@@ -29,29 +30,36 @@ describe("Core: TV Shows", () => {
 	it("Get TV series account states", () => {
 		return tv.getSeriesAccountStates(auth.api_key, 1396, auth.session_id).then((result: IAccountState) => {
 			expect(result.id).to.equal(1396);
-		}); });
+		});
+	});
+
+	it("Get TV series aggregate credits", () => {
+		return tv.getSeriesAggregateCredits(auth.api_key, 1396).then((result: IAggregateCredits) => {
+			result.cast.should.include.something.with.property("name", "Bryan Cranston");
+		});
+	});
 
 	it("Get TV series alternative titles", () => {
 		return tv.getSeriesAltTitles(auth.api_key, 246).then((result: IAlternativeNames) => {
-			result.results.should.include.something.that.has.property("title", "Avatar: The Legend of Aang");
+			result.results.should.include.something.with.property("title", "Avatar: The Legend of Aang");
 		});
 	});
 
 	it("Get TV series content ratings", () => {
 		return tv.getSeriesContentRatings(auth.api_key, 1396).then((result: ISeriesContentRatings) => {
-			result.results.should.include.something.that.has.property("rating", "TV-MA");
+			result.results.should.include.something.with.property("rating", "TV-MA");
 		});
 	});
 
 	it("Get TV series credits", () => {
 		return tv.getSeriesCredits(auth.api_key, 1396).then((result: ICredits) => {
-			result.cast.should.include.something.that.has.property("character", "Walter White");
+			result.cast.should.include.something.with.property("character", "Walter White");
 		});
 	});
 
 	it("Get TV series episode groups", () => {
 		return tv.getSeriesEpisodeGroups(auth.api_key, 1434).then((result: IEpisodeGroups) => {
-			result.results.should.include.something.that.has.property("name", "DVD Order");
+			result.results.should.include.something.with.property("name", "DVD Order");
 		});
 	});
 
@@ -69,7 +77,7 @@ describe("Core: TV Shows", () => {
 
 	// it("Get TV series keywords", () => {
 	// 	return tv.getSeriesKeywords(auth.api_key, 2190).then((result: IKeywords) => {
-	// 		result.results.should.include.something.that.has.property("name", "colorado");
+	// 		result.results.should.include.something.with.property("name", "colorado");
 	// 	});
 	// });
 
@@ -100,6 +108,14 @@ describe("Core: TV Shows", () => {
 	it("Get TV series videos", () => {
 		return tv.getSeriesVideos(auth.api_key, 1396).then((result: IVideos) => {
 			result.results.should.include.something.with.property("site", "YouTube");
+		});
+	});
+
+	it("Get TV series watch providers", () => {
+		return tv.getSeriesWatchProviders(auth.api_key, 1396).then((result: IWatchProvidersResult<ITvWatchProviders>) => {
+			expect(result.results.US).to.have.property("buy");
+			expect(result.results.US.link).to.not.be.undefined;
+			expect(result.results.US.buy.length).to.be.greaterThan(0);
 		});
 	});
 

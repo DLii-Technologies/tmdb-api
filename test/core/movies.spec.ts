@@ -5,12 +5,13 @@ import { auth } from "../init";
 /**
  * Testing modules
  */
-import { movie }                         from "../../src/core";
-import { IAlternativeTitles, IKeywords } from "../../src/core/interface/info";
-import { IAccountState }                 from "../../src/core/interface/account";
-import { ICredits }                      from "../../src/core/interface/credits";
-import { IExternalIds }                  from "../../src/core/interface/external";
-import { IImages }                       from "../../src/core/interface/media";
+import { movie }                                  from "../../src/core";
+import { IAlternativeTitles, IKeywords,
+	IMovieWatchProviders, IWatchProvidersResult } from "../../src/core/interface/info";
+import { IAccountState }                          from "../../src/core/interface/account";
+import { ICredits }                               from "../../src/core/interface/credits";
+import { IExternalIds }                           from "../../src/core/interface/external";
+import { IImages }                                from "../../src/core/interface/media";
 
 describe("Core: Movie API", () => {
 	it("Get a movie's details", () => {
@@ -67,6 +68,15 @@ describe("Core: Movie API", () => {
 
 	it("Get a movie's videos", () => {
 		return movie.getVideos(auth.api_key, 521029);
+	});
+
+	it("Get a movie's watch providers", () => {
+		return movie.getWatchProviders(auth.api_key, 497).then((result: IWatchProvidersResult<IMovieWatchProviders>) => {
+			expect(result.results.US).to.have.property("buy");
+			expect(result.results.US.link).to.not.be.undefined;
+			expect(result.results.US.buy.length).to.be.greaterThan(0);
+			expect(result.results.US.rent.length).to.be.greaterThan(0);
+		});
 	});
 
 	it("Get a movie's translations", () => {

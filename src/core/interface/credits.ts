@@ -104,3 +104,48 @@ export interface ICredits {
 export interface IEpisodeCredits extends ICredits {
 	guest_stars: IGuestStar[];
 }
+
+/**
+ * @TODO These could be minified a little... We'll see what happens
+ */
+export interface IAggregateCastMember {
+	adult               : boolean;
+	gender              : number | null;
+	id                  : number;
+	known_for_department: string;
+	name                : string;
+	order               : number;
+	original_name       : string;
+	popularity          : number;
+	profile_path        : string | null;
+	total_episode_count : number;
+	roles               : {
+		credit_id    : string;
+		character    : string;
+		episode_count: number;
+	}[];
+}
+
+export interface IAggregateCrewMember {
+	adult               : boolean;
+	department          : string;
+	gender              : number | null;
+	id                  : number;
+	known_for_department: string;
+	name                : string;
+	original_name       : string;
+	popularity          : number;
+	profile_path        : string | null;
+	total_episode_count : number;
+	jobs                : {
+		credit_id    : string;
+		job          : string;
+		episode_count: number;
+	}[];
+}
+
+export interface IAggregateCredits {
+	id  : number;
+	cast: IAggregateCastMember[];
+	crew: IAggregateCrewMember[];
+}
