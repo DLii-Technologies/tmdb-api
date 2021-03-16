@@ -1,34 +1,41 @@
-import { IChangesOptions }                                         from "./interface/options";
-import { IMediaChanges, IChanges, ISeasonChanges, IPersonChanges } from "./interface/changes";
-import { get }                                                     from "./util/network";
+import { IChangesOptions } from "./interface/options";
+import { IChangedMovies,
+         IChangedTvShows,
+         IChangedPeople,
+         IMovieChanges,
+         ISeriesChanges,
+         ISeasonChanges,
+         IEpisodeChanges,
+         IPersonChanges }  from "./interface/changes";
+import { get }             from "./util/network";
 
-export let changes = {
+export const changes = {
 	/**
 	 * Get a list of the most recently changed movies
 	 */
 	getChangedMovies(apiKey: string, page?: number, options: IChangesOptions = {}) {
-		return get<IMediaChanges>(apiKey, `movie/changes`, Object.assign(options, { page }));
+		return get<IChangedMovies>(apiKey, `movie/changes`, Object.assign(options, { page }));
 	},
 
 	/**
 	 * Get a list of the most recently changed people
 	 */
 	getChangedPeople(apiKey: string, page?: number, options: IChangesOptions = {}) {
-		return get<IMediaChanges>(apiKey, `person/changes`, Object.assign(options, { page }));
+		return get<IChangedPeople>(apiKey, `person/changes`, Object.assign(options, { page }));
 	},
 
 	/**
 	 * Get a list of the most recently changed tv shows
 	 */
 	getChangedTvShows(apiKey: string, page?: number, options: IChangesOptions = {}) {
-		return get<IMediaChanges>(apiKey, `tv/changes`, Object.assign(options, { page }));
+		return get<IChangedTvShows>(apiKey, `tv/changes`, Object.assign(options, { page }));
 	},
 
 	/**
 	 * Get the changes for a movie. By default only the last 24 hours are returned
 	 */
 	getMovieChanges(apiKey: string, movieId: number, page?: number, options: IChangesOptions = {}) {
-		return get<IChanges>(apiKey, `movie/${movieId}/changes`, Object.assign(options, { page }));
+		return get<IMovieChanges>(apiKey, `movie/${movieId}/changes`, Object.assign(options, { page }));
 	},
 
 	/**
@@ -57,7 +64,7 @@ export let changes = {
 	getEpisodeChanges(apiKey: string, episodeId: number, page?: number,
 		options: IChangesOptions = {})
 	{
-		return get<IChanges>(apiKey, `tv/episode/${episodeId}/changes`,
+		return get<IEpisodeChanges>(apiKey, `tv/episode/${episodeId}/changes`,
 			Object.assign(options, { page }));
 	},
 
@@ -67,6 +74,6 @@ export let changes = {
 	getSeriesChanges(apiKey: string, seriesId: number, page?: number,
 		options: IChangesOptions = {})
 	{
-		return get<IChanges>(apiKey, `tv/${seriesId}/changes`, Object.assign(options, { page }));
+		return get<ISeriesChanges>(apiKey, `tv/${seriesId}/changes`, Object.assign(options, { page }));
 	},
 };

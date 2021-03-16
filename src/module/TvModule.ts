@@ -1,15 +1,19 @@
-import { tv, search }                            from "../core";
-import { IAlternativeName, IKeyword }            from "../core/interface/info";
-import { ISeriesContentRating, IEpisodeGroup, ITheatricalScreening }
-                                                 from "../core/interface/tv";
-import { TvSeriesDetails, TvSeriesListing, TvSeasonDetails,
-	TvSeasonListing }                            from "../components";
-import { ISeriesSearchOptions }                  from "../core/interface/options";
-import { PaginatedResponse, IPaginatedResponse } from "../util/PaginatedResponse";
-import TMDbModule                                from "./TMDbModule";
-import { ISeriesTranslation }                    from "../core/interface/language";
-import { IVideo }                                from "../core/interface/media";
-import utils                                     from "../util";
+import TMDbModule              from "./TMDbModule";
+import { tv, search }          from "../core";
+import { IAlternativeName,
+         IKeyword,
+         ISeriesContentRating,
+         IEpisodeGroup,
+         ITheatricalScreening,
+         ISeriesSearchOptions,
+         ISeriesTranslation,
+         IVideo }              from "../core/interface";
+import { TvSeriesDetails,
+         TvSeriesListing,
+         TvSeasonDetails }     from "../components";
+import { PaginatedResponse,
+         IPaginatedResponse }  from "../util/PaginatedResponse";
+import utils                   from "../util";
 
 export class TvModule extends TMDbModule
 {

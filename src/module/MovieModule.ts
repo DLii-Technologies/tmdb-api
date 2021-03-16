@@ -1,16 +1,29 @@
-import { IAlternativeTitle }                         from "../core/interface/info";
-import { movie, changes, review, search }            from "../core";
-import { PaginatedResponse, IPaginatedResponse }     from "../util/PaginatedResponse";
-import { IChange }                                   from "../core/interface/changes";
-import { IChangesOptions, IMovieSearchOptions }      from "../core/interface/options";
-import { IReleaseDateGroup }                         from "../core/interface/movie";
-import { IMovieTranslation }                         from "../core/interface/language";
-import { IVideo }                                    from "../core/interface/media";
-import { MovieListing, ReviewListing, MovieDetails } from "../components";
-import { MediaType }                                 from "../core/enums";
-import { ListListing }                               from "../components";
-import TMDbModule                                    from "./TMDbModule";
-import utils                                         from "../util";
+import TMDbModule             from "./TMDbModule";
+import { IAlternativeTitle,
+         IChangeGroup,
+         IMovieChange,
+         IChangesOptions,
+         IMovieSearchOptions,
+         IReleaseDateGroup,
+         IMovieTranslation }  from "../core/interface";
+import { movie,
+         changes,
+         review,
+         search }             from "../core";
+import { PaginatedResponse,
+         IPaginatedResponse } from "../util/PaginatedResponse";
+import { IVideo }             from "../core/interface/media";
+import { MovieListing,
+         ReviewListing,
+         MovieDetails }       from "../components";
+import { MediaType }          from "../core/enums";
+import { ListListing }        from "../components";
+import utils                  from "../util";
+
+/**
+ * @TODO Maybe do something better here...
+ */
+export type MovieChangesResponse = IPaginatedResponse<IChangeGroup<IMovieChange>>;
 
 export class MovieModule extends TMDbModule
 {
@@ -30,7 +43,7 @@ export class MovieModule extends TMDbModule
 	 */
 	public getChanges(id: number, page: number = 1, options: IChangesOptions) {
 		return PaginatedResponse.create(page, (p: number) => {
-			return new Promise<IPaginatedResponse<IChange>>((resolve, reject) => {
+			return new Promise<MovieChangesResponse>((resolve, reject) => {
 				changes.getMovieChanges(this.tmdb.apiKey, id, p, options)
 					.then(changes => resolve({
 						body: changes.changes,
