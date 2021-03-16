@@ -5,18 +5,19 @@ import { auth } from "../init";
 /**
  * Testing modules
  */
-import { tv }                              from "../../src/core";
+import { tv }                                 from "../../src/core";
 import { ISeriesDetails, ISeriesContentRatings, IEpisodeGroups,
-	ITheatricalScreenings }                from "../../src/core/interface/tv";
-import { IAccountState }                   from "../../src/core/interface/account";
-import { IAlternativeNames, IKeywords }    from "../../src/core/interface/info";
-import { ICredits }                        from "../../src/core/interface/credits";
-import { ISeriesExternalIds }              from "../../src/core/interface/external";
-import { IImages, IVideos }                from "../../src/core/interface/media";
-import { ISeriesResults }                  from "../../src/core/interface/results";
-import { IseriesTranslations }             from "../../src/core/interface/language";
-import { IResponse }                       from "../../src/core/interface/response";
-import { StatusCode }                      from "../../src/core/enums";
+	ITheatricalScreenings }                   from "../../src/core/interface/tv";
+import { IAccountState }                      from "../../src/core/interface/account";
+import { IAlternativeNames, IKeywords }       from "../../src/core/interface/info";
+import { ICredits }                           from "../../src/core/interface/credits";
+import { ISeriesExternalIds }                 from "../../src/core/interface/external";
+import { IImages, IVideos }                   from "../../src/core/interface/media";
+import { ISeriesResults }                     from "../../src/core/interface/results";
+import { ITranslations, ISeriesTranslation,
+	ISeasonTranslation, IEpisodeTranslation } from"../../src/core/interface/language";
+import { IResponse }                          from "../../src/core/interface/response";
+import { StatusCode }                         from "../../src/core/enums";
 
 describe("Core: TV Shows", () => {
 	it("Get TV series details", () => {
@@ -91,7 +92,7 @@ describe("Core: TV Shows", () => {
 	});
 
 	it("Get TV series translations", () => {
-		return tv.getSeriesTranslations(auth.api_key, 387).then((result: IseriesTranslations) => {
+		return tv.getSeriesTranslations(auth.api_key, 387).then((result: ITranslations<ISeriesTranslation>) => {
 			result.translations.should.include.something.with.property("english_name", "Spanish");
 		});
 	});

@@ -1,14 +1,14 @@
-import { get, post, del }                from "./util/network";
-import { IAccountState }                 from "./interface/account";
-import { IAlternativeTitles, IKeywords } from "./interface/info";
-import { ICredits }                      from "./interface/credits";
-import { IExternalIds }                  from "./interface/external";
-import { IImages, IVideos }              from "./interface/media";
-import { ILists }                        from "./interface/list";
-import { IMovieDetails, IReleaseDates }  from "./interface/movie";
-import { IMovieResults }                 from "./interface/results";
-import { IResponse }                     from "./interface/response";
-import { IMovieTranslations }            from "./interface/language";
+import { get, post, del }                   from "./util/network";
+import { IAccountState }                    from "./interface/account";
+import { IAlternativeTitles, IKeywords }    from "./interface/info";
+import { ICredits }                         from "./interface/credits";
+import { IExternalIds }                     from "./interface/external";
+import { IImages, IVideos }                 from "./interface/media";
+import { ILists }                           from "./interface/list";
+import { IMovieDetails, IReleaseDates }     from "./interface/movie";
+import { IMovieResults }                    from "./interface/results";
+import { IResponse }                        from "./interface/response";
+import { ITranslations, IMovieTranslation } from "./interface/language";
 
 export let movie = {
 	/**
@@ -102,7 +102,7 @@ export let movie = {
 	 * Get a list of translations that have been created for a movie
 	 */
 	getTranslations(apiKey: string, movieId: number) {
-		return get<IMovieTranslations>(apiKey, `movie/${movieId}/translations`);
+		return get<ITranslations<IMovieTranslation>>(apiKey, `movie/${movieId}/translations`);
 	},
 
 	/**

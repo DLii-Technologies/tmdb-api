@@ -5,10 +5,10 @@ import { auth } from "../init";
 /**
  * Modules to test
  */
-import { collection }              from "../../src/core";
-import { ICollectionDetails }      from "../../src/core/interface/collections";
-import { ICollectionTranslations } from "../../src/core/interface/language";
-import { IImages }                 from "../../src/core/interface/media";
+import { collection }                            from "../../src/core";
+import { ICollectionDetails }                    from "../../src/core/interface/collections";
+import { ITranslations, ICollectionTranslation } from "../../src/core/interface/language";
+import { IImages }                               from "../../src/core/interface/media";
 
 describe("Core: Collections API", () => {
 	it("Get the details of a collection", () => {
@@ -24,7 +24,7 @@ describe("Core: Collections API", () => {
 	});
 
 	it("Get the translations for a collection", () => {
-		return collection.getTranslations(auth.api_key, 10).then((result: ICollectionTranslations) => {
+		return collection.getTranslations(auth.api_key, 10).then((result: ITranslations<ICollectionTranslation>) => {
 			expect(result.translations).to.be.an("array");
 		});
 	});

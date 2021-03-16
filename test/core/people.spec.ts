@@ -10,7 +10,7 @@ import { IPersonDetails }                              from "../../src/core/inte
 import { IMovieCredits, ITvCredits, ICombinedCredits } from "../../src/core/interface/credits";
 import { IPersonExternalIds }                          from "../../src/core/interface/external";
 import { IPersonImages, ITaggedImageResults }          from "../../src/core/interface/media";
-import { IPersonTranslations }                         from "../../src/core/interface/language";
+import { ITranslations, IPersonTranslation }           from "../../src/core/interface/language";
 import { IPersonResults }                              from "../../src/core/interface/results";
 
 describe("Core: People API", () => {
@@ -59,7 +59,7 @@ describe("Core: People API", () => {
 	});
 
 	it("Get translations associated with a person", () => {
-		return people.getTranslations(auth.api_key, 6384).then((result: IPersonTranslations) => {
+		return people.getTranslations(auth.api_key, 6384).then((result: ITranslations<IPersonTranslation>) => {
 			expect(result.translations.length).to.be.greaterThan(0);
 		});
 	});

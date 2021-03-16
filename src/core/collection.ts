@@ -1,7 +1,7 @@
-import { ICollectionDetails }      from "./interface/collections";
-import { get }                     from "./util/network";
-import { IImages }                 from "./interface/media";
-import { ICollectionTranslations } from "./interface/language";
+import { ICollectionDetails }                    from "./interface/collections";
+import { get }                                   from "./util/network";
+import { IImages }                               from "./interface/media";
+import { ITranslations, ICollectionTranslation } from "./interface/language";
 
 export let collection = {
 	/**
@@ -22,7 +22,8 @@ export let collection = {
 	 * Get the list translations for a collection
 	 */
 	getTranslations(apiKey: string, collectionId: number, language?: string) {
-		return get<ICollectionTranslations>(apiKey, `collection/${collectionId}/translations`,
+		return get<ITranslations<ICollectionTranslation>>(apiKey,
+			`collection/${collectionId}/translations`,
 			{ language });
 	}
 };

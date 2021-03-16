@@ -7,36 +7,32 @@ export interface IWithEnglishName {
 	english_name: string;
 }
 
-export interface ITranslation {
-	iso_3166_1  : string;
-	iso_639_1   : string;
-	name        : string;
-	english_name: string;
-	data        : any;
+interface ITranslation extends ILanguage, IWithEnglishName {
+	iso_3166_1: string;
+	data      : any;
 }
 
-export interface ITranslations {
-	id     : number;
-	results: ITranslation[];
+export interface ITranslations<T> {
+	id          : number;
+	translations: T[];
 }
+
+// Translation Types -------------------------------------------------------------------------------
 
 export interface IMovieTranslation extends ITranslation {
 	data: {
-		title   : string;
-		overview: string;
 		homepage: string;
+		overview: string;
+		title   : string;
 	};
 }
 
-export interface IMovieTranslations {
-	translations: IMovieTranslation[];
-}
-
-export interface ICollectionTranslation extends IMovieTranslation
-{}
-
-export interface ICollectionTranslations {
-	translations: ICollectionTranslation[];
+export interface ICollectionTranslation extends ITranslation {
+	data: {
+		homepage: string;
+		overview: string;
+		title   : string;
+	};
 }
 
 export interface IPersonTranslation extends ITranslation {
@@ -45,19 +41,18 @@ export interface IPersonTranslation extends ITranslation {
 	};
 }
 
-export interface IPersonTranslations extends ITranslations {
-	translations: IPersonTranslation[];
-}
-
-export interface IEpisodeTranslation {
+export interface IEpisodeTranslation extends ITranslation {
 	data: {
 		name    : string;
 		overview: string;
 	};
 }
 
-export interface IEpisodeTranslations extends ITranslations {
-	translations: IEpisodeTranslation[];
+export interface ISeasonTranslation extends ITranslation {
+	data: {
+		name    : string;
+		overview: string;
+	}
 }
 
 export interface ISeriesTranslation extends ITranslation {
@@ -66,9 +61,4 @@ export interface ISeriesTranslation extends ITranslation {
 		overview: string;
 		homepage: string;
 	};
-}
-
-export interface IseriesTranslations {
-	id          : number;
-	translations: ISeriesTranslation[];
 }

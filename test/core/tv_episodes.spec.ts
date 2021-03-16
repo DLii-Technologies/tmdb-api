@@ -2,15 +2,15 @@ import { expect } from "chai";
 import "mocha";
 import { auth } from "../init";
 
-import { tv }                      from "../../src/core";
-import { StatusCode }              from "../../src/core/enums";
-import { IEpisodeDetails }         from "../../src/core/interface/tv";
-import { IVideos, IEpisodeImages } from "../../src/core/interface/media";
-import { IResponse }               from "../../src/core/interface/response";
-import { IEpisodeTranslations }    from "../../src/core/interface/language";
-import { IEpisodeExternalIds }     from "../../src/core/interface/external";
-import { IEpisodeCredits }         from "../../src/core/interface/credits";
-import { IEpisodeAccountState }    from "../../src/core/interface/account";
+import { tv }                                 from "../../src/core";
+import { StatusCode }                         from "../../src/core/enums";
+import { IEpisodeDetails }                    from "../../src/core/interface/tv";
+import { IVideos, IEpisodeImages }            from "../../src/core/interface/media";
+import { IResponse }                          from "../../src/core/interface/response";
+import { ITranslations, IEpisodeTranslation } from "../../src/core/interface/language";
+import { IEpisodeExternalIds }                from "../../src/core/interface/external";
+import { IEpisodeCredits }                    from "../../src/core/interface/credits";
+import { IEpisodeAccountState }               from "../../src/core/interface/account";
 
 describe("Core: TV Episodes API", () => {
 	it("Get episode details", () => {
@@ -44,7 +44,7 @@ describe("Core: TV Episodes API", () => {
 	});
 
 	it("Get episode translations", () => {
-		return tv.getEpisodeTranslations(auth.api_key, 2190, 14, 3).then((result: IEpisodeTranslations) => {
+		return tv.getEpisodeTranslations(auth.api_key, 2190, 14, 3).then((result: ITranslations<IEpisodeTranslation>) => {
 			result.translations.should.include.something.with.property("english_name", "Spanish");
 		});
 	});

@@ -1,10 +1,10 @@
+import { get }                                         from "./util/network";
 import { IMovieCredits, ITvCredits, ICombinedCredits } from "./interface/credits";
 import { IPersonDetails }                              from "./interface/people";
 import { IPersonExternalIds }                          from "./interface/external";
 import { IPersonImages, ITaggedImageResults }          from "./interface/media";
 import { IPersonResults }                              from "./interface/results";
-import { IPersonTranslations }                         from "./interface/language";
-import { get }                                         from "./util/network";
+import { ITranslations, IPersonTranslation }           from "./interface/language";
 
 export let people = {
 	/**
@@ -62,7 +62,8 @@ export let people = {
 	 * Get a list of translations that have been created for a person
 	 */
 	getTranslations(apiKey: string, personId: number, language?: string) {
-		return get<IPersonTranslations>(apiKey, `person/${personId}/translations`, { language });
+		return get<ITranslations<IPersonTranslation>>(apiKey, `person/${personId}/translations`,
+		{ language });
 	},
 
 	/**

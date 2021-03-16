@@ -2,12 +2,13 @@ import { expect } from "chai";
 import "mocha";
 import { auth } from "../init";
 
-import { tv }                     from "../../src/core";
-import { ISeasonDetails }         from "../../src/core/interface/tv";
-import { ISeasonAccountStates }   from "../../src/core/interface/account";
-import { ICredits }               from "../../src/core/interface/credits";
-import { ISeasonExternalIds }     from "../../src/core/interface/external";
-import { ISeasonImages, IVideos } from "../../src/core/interface/media";
+import { tv }                                from "../../src/core";
+import { ISeasonDetails }                    from "../../src/core/interface/tv";
+import { ISeasonAccountStates }              from "../../src/core/interface/account";
+import { ICredits }                          from "../../src/core/interface/credits";
+import { ISeasonExternalIds }                from "../../src/core/interface/external";
+import { ISeasonImages, IVideos }            from "../../src/core/interface/media";
+import { ITranslations, ISeasonTranslation } from "../../src/core/interface/language";
 
 describe("Core: TV Seasons API", () => {
 	it("Get season details", () => {
@@ -37,6 +38,12 @@ describe("Core: TV Seasons API", () => {
 	it("Get season images", () => {
 		return tv.getSeasonImages(auth.api_key, 2190, 5).then((result: ISeasonImages) => {
 			expect(result.posters.length).to.be.greaterThan(0);
+		});
+	});
+
+	it("Get season translations", () => {
+		return tv.getSeasonTranslations(auth.api_key, 2190, 5).then((result: ITranslations<ISeasonTranslation>) => {
+			expect(result.translations.length).to.be.greaterThan(0);
 		});
 	});
 

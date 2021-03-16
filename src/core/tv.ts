@@ -1,12 +1,14 @@
-import { ISeriesDetails, ISeriesContentRatings, IEpisodeGroups, ITheatricalScreenings,
-	IEpisodeDetails, IEpisodeGroupDetails, ISeasonDetails }            from "./interface/tv";
+import { ISeriesDetails, ISeriesContentRatings, IEpisodeGroups,
+	ITheatricalScreenings, IEpisodeDetails, IEpisodeGroupDetails,
+	ISeasonDetails }                                                   from "./interface/tv";
 import { IAccountState, ISeasonAccountStates, IEpisodeAccountState }   from "./interface/account";
 import { IAlternativeNames, IKeywordsAlt }                             from "./interface/info";
 import { ICredits, IEpisodeCredits }                                   from "./interface/credits";
 import { ISeriesExternalIds, ISeasonExternalIds, IEpisodeExternalIds } from "./interface/external";
 import { IImages, IVideos, ISeasonImages, IEpisodeImages }             from "./interface/media";
 import { ISeriesResults }                                              from "./interface/results";
-import { IseriesTranslations, IEpisodeTranslations }                   from "./interface/language";
+import { ITranslations, IEpisodeTranslation, ISeasonTranslation,
+	ISeriesTranslation }                                               from "./interface/language";
 import { IResponse }                                                   from "./interface/response";
 import { get, post, del }                                              from "./util/network";
 
@@ -112,7 +114,8 @@ export let tv = {
 	 * Get the list of translations that exdist for a TV show
 	 */
 	getSeriesTranslations(apiKey: string, seriesId: number, language?: string) {
-		return get<IseriesTranslations>(apiKey, `tv/${seriesId}/translations`, { language });
+		return get<ITranslations<ISeriesTranslation>>(apiKey, `tv/${seriesId}/translations`,
+			{ language });
 	},
 
 	/**
@@ -226,6 +229,15 @@ export let tv = {
 	},
 
 	/**
+	 * Get a list of translations for a TV show's season
+	 */
+	getSeasonTranslations(apiKey: string, seriesId: number, season: number, language?: string) {
+		return get<ITranslations<ISeasonTranslation>>(apiKey,
+			`tv/${seriesId}/season/${season}/translations`,
+			{ language });
+	},
+
+	/**
 	 * Get a list of videos for a TV show's season
 	 */
 	getSeasonVideos(apiKey: string, seriesId: number, season: number, language?: string) {
@@ -286,7 +298,7 @@ export let tv = {
 	 * Get the translation data for a TV show episode
 	 */
 	getEpisodeTranslations(apiKey: string, seriesId: number, season: number, episode: number) {
-		return get<IEpisodeTranslations>(apiKey,
+		return get<ITranslations<IEpisodeTranslation>>(apiKey,
 			`tv/${seriesId}/season/${season}/episode/${episode}/translations`);
 	},
 
