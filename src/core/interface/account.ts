@@ -1,9 +1,6 @@
-export interface IAvatar {
-	gravatar: {
-		hash: string;
-	};
-}
-
+/**
+ * The details of the authenticated account
+ */
 export interface IAccountDetails {
 	avatar       : IAvatar;
 	id           : number;
@@ -14,30 +11,68 @@ export interface IAccountDetails {
 	username     : string;
 }
 
+/**
+ * The avatar of the account
+ */
+export interface IAvatar {
+	gravatar: {
+		hash: string;
+	};
+}
+
+// Account State Groupings -------------------------------------------------------------------------
+
+/**
+ * A generalizable grouping of account states
+ */
+interface IAccountStates<T> {
+	id     : number;
+	results: T[];
+}
+
+/**
+ * A grouping of account states for a TV show's season
+ */
+export interface ISeasonAccountStates extends IAccountStates<ISeasonAccountState> {};
+
+// Account State Types -----------------------------------------------------------------------------
+
+/**
+ * The common attributes among all account states
+ */
 interface IAccountStateBase {
 	id   : number;
-	rated: boolean | {
+	rated: false | {
 		value: number;
 	};
 }
 
 /**
- * @TODO Probably needs to be moved, but we'll see.
- * Also probably needs to be an extension of episode account state
+ * Common attributes among movie and TV show account states
  */
-export interface IAccountState extends IAccountStateBase {
+interface IAccountState extends IAccountStateBase {
 	favorite : boolean;
 	watchlist: boolean;
 }
 
-export interface IEpisodeAccountState extends IAccountStateBase
-{}
+/**
+ * Account state information for a particular movie
+ */
+export interface IMovieAccountState extends IAccountState {}
 
+/**
+ * Account state information for a particular TV show
+ */
+export interface ISeriesAccountState extends IAccountState {}
+
+/**
+ * Account state information for a particular TV show's season
+ */
 export interface ISeasonAccountState extends IAccountStateBase {
 	episode: number;
 }
 
-export interface ISeasonAccountStates {
-	id     : number;
-	results: ISeasonAccountState[];
-}
+/**
+ * Account state information for a particular TV show's episode
+ */
+export interface IEpisodeAccountState extends IAccountStateBase {}

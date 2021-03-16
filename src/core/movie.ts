@@ -1,15 +1,20 @@
-import { get, post, del }                            from "./util/network";
-import { IAccountState }                             from "./interface/account";
-import { IAlternativeTitles, IKeywords,
-	IMovieWatchProviders, IWatchProvidersResult }    from "./interface/info";
-import { ICredits }                                  from "./interface/credits";
-import { IExternalIds }                              from "./interface/external";
-import { IImages, IVideos }                          from "./interface/media";
-import { ILists }                                    from "./interface/list";
-import { IMovieDetails, IReleaseDates }              from "./interface/movie";
-import { IMovieResults }                             from "./interface/results";
-import { IResponse }                                 from "./interface/response";
-import { ITranslations, IMovieTranslation }          from "./interface/language";
+import { IMovieAccountState }    from "./interface/account";
+import { IAlternativeTitles,
+         IKeywords,
+         IMovieWatchProviders,
+         IWatchProvidersResult } from "./interface/info";
+import { ICredits }              from "./interface/credits";
+import { IExternalIds }          from "./interface/external";
+import { IImages,
+         IVideos }               from "./interface/media";
+import { ILists }                from "./interface/list";
+import { IMovieDetails,
+         IReleaseDates }         from "./interface/movie";
+import { IMovieResults }         from "./interface/results";
+import { IResponse }             from "./interface/response";
+import { ITranslations,
+         IMovieTranslation }     from "./interface/language";
+import { get, post, del }        from "./util/network";
 
 export let movie = {
 	/**
@@ -23,7 +28,7 @@ export let movie = {
 	 * Grab the account states for a session
 	 */
 	getAccountState(apiKey: string, movieId: number, sessionId: string, guestSessionId?: string) {
-		return get<IAccountState>(apiKey, `movie/${movieId}/account_states`, {
+		return get<IMovieAccountState>(apiKey, `movie/${movieId}/account_states`, {
 			session_id      : sessionId,
 			guest_session_id: guestSessionId
 		});

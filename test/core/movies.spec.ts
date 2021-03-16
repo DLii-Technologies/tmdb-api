@@ -5,13 +5,15 @@ import { auth } from "../init";
 /**
  * Testing modules
  */
-import { movie }                                  from "../../src/core";
-import { IAlternativeTitles, IKeywords,
-	IMovieWatchProviders, IWatchProvidersResult } from "../../src/core/interface/info";
-import { IAccountState }                          from "../../src/core/interface/account";
-import { ICredits }                               from "../../src/core/interface/credits";
-import { IExternalIds }                           from "../../src/core/interface/external";
-import { IImages }                                from "../../src/core/interface/media";
+import { movie }                 from "../../src/core";
+import { IAlternativeTitles,
+         IKeywords,
+         IMovieWatchProviders,
+         IWatchProvidersResult } from "../../src/core/interface/info";
+import { IMovieAccountState }    from "../../src/core/interface/account";
+import { ICredits }              from "../../src/core/interface/credits";
+import { IExternalIds }          from "../../src/core/interface/external";
+import { IImages }               from "../../src/core/interface/media";
 
 describe("Core: Movie API", () => {
 	it("Get a movie's details", () => {
@@ -19,7 +21,7 @@ describe("Core: Movie API", () => {
 	});
 
 	it("Get a movie's account states", () => {
-		return movie.getAccountState(auth.api_key, 278, auth.session_id).then((result: IAccountState) => {
+		return movie.getAccountState(auth.api_key, 278, auth.session_id).then((result: IMovieAccountState) => {
 			expect(result.rated).to.not.equal(undefined);
 		});
 	});

@@ -1,17 +1,34 @@
-import { ISeriesDetails, ISeriesContentRatings, IEpisodeGroups,
-	ITheatricalScreenings, IEpisodeDetails, IEpisodeGroupDetails,
-	ISeasonDetails }                                                   from "./interface/tv";
-import { IAccountState, ISeasonAccountStates, IEpisodeAccountState }   from "./interface/account";
-import { IAlternativeNames, IKeywordsAlt, ITvWatchProviders,
-	IWatchProvidersResult }                                            from "./interface/info";
-import { ICredits, IEpisodeCredits, IAggregateCredits }                from "./interface/credits";
-import { ISeriesExternalIds, ISeasonExternalIds, IEpisodeExternalIds } from "./interface/external";
-import { IImages, IVideos, ISeasonImages, IEpisodeImages }             from "./interface/media";
-import { ISeriesResults }                                              from "./interface/results";
-import { ITranslations, IEpisodeTranslation, ISeasonTranslation,
-	ISeriesTranslation }                                               from "./interface/language";
-import { IResponse }                                                   from "./interface/response";
-import { get, post, del }                                              from "./util/network";
+import { ISeriesDetails,
+         ISeriesContentRatings,
+         IEpisodeGroups,
+         IEpisodeDetails,
+         IEpisodeGroupDetails,
+         ISeasonDetails,
+         ITheatricalScreenings } from "./interface/tv";
+import { ISeasonAccountStates,
+         IEpisodeAccountState,
+         ISeriesAccountState }   from "./interface/account";
+import { IAlternativeNames,
+         IKeywordsAlt,
+         ITvWatchProviders,
+         IWatchProvidersResult } from "./interface/info";
+import { ICredits,
+         IEpisodeCredits,
+         IAggregateCredits }     from "./interface/credits";
+import { ISeriesExternalIds,
+         ISeasonExternalIds,
+         IEpisodeExternalIds }   from "./interface/external";
+import { IImages,
+         IVideos,
+         ISeasonImages,
+         IEpisodeImages }        from "./interface/media";
+import { ISeriesResults }        from "./interface/results";
+import { ITranslations,
+         IEpisodeTranslation,
+         ISeasonTranslation,
+         ISeriesTranslation }    from "./interface/language";
+import { IResponse }             from "./interface/response";
+import { get, post, del }        from "./util/network";
 
 export let tv = {
 
@@ -30,7 +47,7 @@ export let tv = {
 	getSeriesAccountStates(apiKey: string, seriesId: number, sessionId?: string,
 		guestSessionId?: string, language?: string)
 	{
-		return get<IAccountState>(apiKey, `tv/${seriesId}/account_states`, {
+		return get<ISeriesAccountState>(apiKey, `tv/${seriesId}/account_states`, {
 			guest_session_id: guestSessionId,
 			session_id: sessionId,
 			language

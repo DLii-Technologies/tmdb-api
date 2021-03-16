@@ -1,9 +1,11 @@
-import { IAccountDetails }                                from "./interface/account";
-import { MediaType, Sort }                                from "./enums";
-import { IMovieResults, ISeriesResults, IEpisodeResults } from "./interface/results";
-import { IResponse }                                      from "./interface/response";
-import { get, post }                                      from "./util/network";
-import { uriF }                                           from "./util/utils";
+import { IAccountDetails } from "./interface/account";
+import { MediaType, Sort } from "./enums";
+import { IResponse }       from "./interface/response";
+import { IMovieResults,
+         ISeriesResults,
+         IEpisodeResults } from "./interface/results";
+import { get, post }       from "./util/network";
+import { uriF }            from "./util/utils";
 
 export let account = {
 	/**
