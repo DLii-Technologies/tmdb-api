@@ -5,11 +5,17 @@ import { auth } from "../init";
 /**
  * Import modules to test
  */
-import { search }                                    from "../../src/core";
-import { MediaType }                                 from "../../src/core/enums";
-import { ICompanyResults, ICollectionResults, IKeywordResults, IMovieResults, ISeriesResults,
-	IPersonResults, ICombinedResults, IFindResults } from "../../src/core/interface/results";
-import { ExternalSource }                            from "../../src/core/enums";
+import { search }            from "../../src/core";
+import { MediaType }         from "../../src/core/enums";
+import { ICompanyResults,
+         ICollectionResults,
+         IKeywordResults,
+         IMovieResults,
+         ISeriesResults,
+         IPersonResults,
+         ICombinedResults,
+         IFindResults }      from "../../src/core/interface/results";
+import { ExternalSource }    from "../../src/core/enums";
 
 describe("Core: Search API", () => {
 	it("Find a TV show episode from IMDb ID", () => {
@@ -35,9 +41,9 @@ describe("Core: Search API", () => {
 	});
 
 	it("Search for a keyword", () => {
-		return search.keywords(auth.api_key, "action").then((result: IKeywordResults) => {
+		return search.keywords(auth.api_key, "comedy").then((result: IKeywordResults) => {
 			expect(result.total_results).to.be.greaterThan(0);
-			result.results.should.include.something.that.has.property("name", "action");
+			result.results.should.include.something.that.has.property("name", "comedy");
 		});
 	});
 
