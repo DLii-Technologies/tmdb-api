@@ -1,19 +1,31 @@
-import { IPaginated }                 from "./core";
-import { IEpisode, ISeries, ISeason } from "./tv";
-import { IMovie }                     from "./movie";
-import { IKeyword }                   from "./info";
-import { ICompany }                   from "./company";
-import { ICollection }                from "./collections";
-import { IPerson }                    from "./people";
-import { IList }                      from "./list";
+import { IPaginated }  from "./core";
+import { IEpisode,
+         ISeries,
+         ISeason }     from "./tv";
+import { IMovie }      from "./movie";
+import { IKeyword }    from "./info";
+import { ICompany }    from "./company";
+import { ICollection } from "./collections";
+import { IPerson }     from "./people";
+import { IList }       from "./list";
 
-export interface ICompanyResults extends IPaginated {
-	results: ICompany[];
-}
+export interface ICompanyResults extends IPaginated<ICompany> {}
 
-export interface ICollectionResults extends IPaginated {
-	results: ICollection[];
-}
+export interface ICollectionResults extends IPaginated<ICollection> {}
+
+export interface IEpisodeResults extends IPaginated<IEpisode> {}
+
+export interface IListResults extends IPaginated<IList> {}
+
+export interface IMovieResults extends IPaginated<IMovie> {}
+
+export interface ISeriesResults extends IPaginated<ISeries> {}
+
+export interface IKeywordResults extends IPaginated<IKeyword> {}
+
+export interface ICombinedResults extends IPaginated<IMovie | ISeries | IPerson> {}
+
+export interface IPersonResults extends IPaginated<IPerson> {}
 
 export interface IFindResults {
 	movie_results     : IMovie[];
@@ -21,34 +33,6 @@ export interface IFindResults {
 	tv_episode_results: IEpisode[];
 	tv_results        : ISeries[];
 	tv_season_results : ISeason[];
-}
-
-export interface IEpisodeResults extends IPaginated {
-	results: IEpisode[];
-}
-
-export interface IListResults extends IPaginated {
-	results: IList[];
-}
-
-export interface IMovieResults extends IPaginated {
-	results: IMovie[];
-}
-
-export interface ISeriesResults extends IPaginated {
-	results: ISeries[];
-}
-
-export interface IKeywordResults extends IPaginated {
-	results: IKeyword[];
-}
-
-export interface ICombinedResults extends IPaginated {
-	results: IMovie[] | ISeries[] | IPerson[];
-}
-
-export interface IPersonResults extends IPaginated {
-	results: IPerson[];
 }
 
 export interface IWithId {

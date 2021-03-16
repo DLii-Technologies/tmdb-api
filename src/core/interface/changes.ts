@@ -2,9 +2,10 @@ import { IPaginated } from "./core";
 
 // Changed Entities --------------------------------------------------------------------------------
 
-interface IChangedEntities extends IPaginated {
-	results: IChangedEntity[];
-}
+/**
+ * Recently changed generic entities (movies, tv shows, or people)
+ */
+interface IChangedEntities extends IPaginated<IChangedEntity> {}
 
 /**
  * A movie/tv/person entity that has been changed
@@ -118,7 +119,7 @@ export interface ISeasonChange extends IChangeBase {
 export interface IPersonChange extends IChangeBase {
 	original_value: {
 		profile: {
-			file_path: string
-		}
-	}
+			file_path: string;
+		};
+	};
 }

@@ -12,7 +12,7 @@ export * from "./media";
 export * from "./movie";
 export * from "./options";
 export * from "./people";
-export * from "./response";
+// export * from "./response"; // Pretty sure this is not needed...
 export * from "./results";
 export * from "./reviews";
 export * from "./tv";

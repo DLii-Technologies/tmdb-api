@@ -93,7 +93,7 @@ export interface ISeason extends ISeasonBase {
 }
 
 export interface ISeasonDetails extends ISeasonBase {
-	_id     : string;
+	_id     : string; // wat
 	episodes: IEpisodeDetails[];
 }
 

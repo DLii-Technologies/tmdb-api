@@ -1,6 +1,6 @@
-import { IMediaModel, IPaginated } from "./core";
-import { IMovie }                  from "./movie";
-import { ISeries }                 from "./tv";
+import { IMediaModel } from "./core";
+import { IMovie }      from "./movie";
+import { ISeries }     from "./tv";
 
 interface IPersonBase {
 	adult       : boolean;

@@ -51,9 +51,7 @@ export interface ITaggedImage extends IImage {
 	image_type: string;
 }
 
-export interface ITaggedImageResults extends IPaginated {
-	results: ITaggedImage[];
-}
+export interface ITaggedImageResults extends IPaginated<ITaggedImage> {}
 
 export interface IVideo {
 	id        : string;

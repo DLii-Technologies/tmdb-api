@@ -20,9 +20,8 @@ export interface IListDetails extends IListBase {
 	items     : IMovie[];
 }
 
-export interface ILists extends IPaginated {
-	id     : number;
-	results: IList[];
+export interface ILists extends IPaginated<IList> {
+	id: number;
 }
 
 export interface IListItemStatus {
