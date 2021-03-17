@@ -12,7 +12,7 @@ import { ISeriesDetails,
          ITheatricalScreenings }  from "../../src/core/interface/tv";
 import { ISeriesAccountState }    from "../../src/core/interface/account";
 import { IAlternativeNames,
-         ITvWatchProviders,
+         ISeriesWatchProviders,
          IWatchProvidersResults } from "../../src/core/interface/info";
 import { IAggregateCredits,
          ICredits }               from "../../src/core/interface/credits";
@@ -118,7 +118,7 @@ describe("Core: TV Shows", () => {
 	});
 
 	it("Get TV series watch providers", () => {
-		return tv.getSeriesWatchProviders(auth.api_key, 1396).then((result: IWatchProvidersResults<ITvWatchProviders>) => {
+		return tv.getSeriesWatchProviders(auth.api_key, 1396).then((result: IWatchProvidersResults<ISeriesWatchProviders>) => {
 			expect(result.results.US).to.have.property("buy");
 			expect(result.results.US.link).to.not.be.undefined;
 			expect(result.results.US.buy?.length).to.be.greaterThan(0);

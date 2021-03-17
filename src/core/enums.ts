@@ -38,6 +38,9 @@ export enum StatusCode {
 	NotFound               = 34
 }
 
+/**
+ * @TODO
+ */
 export enum ReleaseType {
 
 }

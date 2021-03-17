@@ -5,15 +5,15 @@ import { auth } from "../init";
 /**
  * Testing modules
  */
-import { movie }                 from "../../src/core";
-import { IAlternativeTitles,
-         IKeywords,
+import { movie }                  from "../../src/core";
+import { IAlternativeMovieTitles,
+         IMovieKeywords,
          IMovieWatchProviders,
          IWatchProvidersResults } from "../../src/core/interface/info";
-import { IMovieAccountState }    from "../../src/core/interface/account";
-import { ICredits }              from "../../src/core/interface/credits";
-import { IExternalIds }          from "../../src/core/interface/external";
-import { IImages }               from "../../src/core/interface/media";
+import { IMovieAccountState }     from "../../src/core/interface/account";
+import { ICredits }               from "../../src/core/interface/credits";
+import { IExternalIds }           from "../../src/core/interface/external";
+import { IImages }                from "../../src/core/interface/media";
 
 describe("Core: Movie API", () => {
 	it("Get a movie's details", () => {
@@ -27,7 +27,7 @@ describe("Core: Movie API", () => {
 	});
 
 	it("Get a movie's alternative titles", () => {
-		return movie.getAltTitles(auth.api_key, 813).then((result: IAlternativeTitles) => {
+		return movie.getAltTitles(auth.api_key, 813).then((result: IAlternativeMovieTitles) => {
 			expect(result.titles.length).to.be.greaterThan(0);
 			result.titles.should.include.something.that.has.property("title", "Flying High");
 		});
@@ -59,7 +59,7 @@ describe("Core: Movie API", () => {
 	});
 
 	it("Get a movie's keywords", () => {
-		return movie.getKeywords(auth.api_key, 497).then((result: IKeywords) => {
+		return movie.getKeywords(auth.api_key, 497).then((result: IMovieKeywords) => {
 			result.keywords.should.include.something.that.has.property("name", "electric chair");
 		});
 	});

@@ -1,4 +1,6 @@
-import { DiscoverSort, SortDirection, ReleaseType } from "../enums";
+import { DiscoverSort,
+         SortDirection,
+         ReleaseType }  from "../enums";
 
 export interface IMinMax {
 	minimum?: string;

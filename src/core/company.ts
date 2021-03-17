@@ -1,7 +1,8 @@
-import { ICompanyDetails, INetworkDetails } from "./interface/company";
-import { IAlternativeNames }                from "./interface/info";
-import { INetworkLogos }                    from "./interface/media";
-import { get }                              from "./util/network";
+import { ICompanyDetails,
+         INetworkDetails }   from "./interface/company";
+import { IAlternativeNames } from "./interface/info";
+import { INetworkLogos }     from "./interface/media";
+import { get }               from "./util/network";
 
 export let company = {
 	/**

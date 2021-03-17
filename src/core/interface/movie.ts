@@ -1,11 +1,11 @@
-import { ICompany }                   from "./company";
-import { IGenre, IProductionCountry } from "./info";
-import { ILanguage }                  from "./language";
-import { IResultsWithId }             from "./results";
-import { Status }                     from "../enums";
+import { ICompany }       from "./company";
+import { IGenre }         from "./info";
+import { ILanguage }      from "./language";
+import { IResultsWithId } from "./results";
+import { Status }         from "../enums";
 
 /**
- * A base model for Movies
+ * A base model for Movies containing common attributes
  */
 interface IMovieBase {
 	adult            : boolean;
@@ -55,6 +55,14 @@ export interface IMovieDetails extends IMovieBase {
 	spoken_languages     : ILanguage[];
 	status               : Status;
 	tagline              : string | null;
+}
+
+/**
+ * A production company for a movie
+ */
+ export interface IProductionCountry {
+	iso_3166_1: string;
+	name      : string;
 }
 
 /**

@@ -1,7 +1,8 @@
-import { ICollectionDetails }                    from "./interface/collections";
-import { get }                                   from "./util/network";
-import { IImages }                               from "./interface/media";
-import { ITranslations, ICollectionTranslation } from "./interface/language";
+import { ICollectionDetails }     from "./interface/collections";
+import { get }                    from "./util/network";
+import { IImages }                from "./interface/media";
+import { ITranslations,
+         ICollectionTranslation } from "./interface/language";
 
 export let collection = {
 	/**

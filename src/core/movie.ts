@@ -1,20 +1,20 @@
-import { IMovieAccountState }    from "./interface/account";
-import { IAlternativeTitles,
-         IKeywords,
+import { IMovieAccountState }     from "./interface/account";
+import { IAlternativeMovieTitles,
+         IMovieKeywords,
          IMovieWatchProviders,
          IWatchProvidersResults } from "./interface/info";
-import { ICredits }              from "./interface/credits";
-import { IExternalIds }          from "./interface/external";
+import { ICredits }               from "./interface/credits";
+import { IExternalIds }           from "./interface/external";
 import { IImages,
-         IVideos }               from "./interface/media";
-import { ILists }                from "./interface/list";
+         IVideos }                from "./interface/media";
+import { ILists }                 from "./interface/list";
 import { IMovieDetails,
-         IReleaseDates }         from "./interface/movie";
-import { IMovieResults }         from "./interface/results";
-import { IResponse }             from "./interface/response";
+         IReleaseDates }          from "./interface/movie";
+import { IMovieResults }          from "./interface/results";
+import { IResponse }              from "./interface/response";
 import { ITranslations,
-         IMovieTranslation }     from "./interface/language";
-import { get, post, del }        from "./util/network";
+         IMovieTranslation }      from "./interface/language";
+import { get, post, del }         from "./util/network";
 
 export let movie = {
 	/**
@@ -38,7 +38,7 @@ export let movie = {
 	 * Get all of the alternative titles for a movie
 	 */
 	getAltTitles(apiKey: string, movieId: number, country?: string) {
-		return get<IAlternativeTitles>(apiKey, `movie/${movieId}/alternative_titles`, {
+		return get<IAlternativeMovieTitles>(apiKey, `movie/${movieId}/alternative_titles`, {
 			country
 		});
 	},
@@ -79,7 +79,7 @@ export let movie = {
 	 * Get the keywords that have been added to a movie
 	 */
 	getKeywords(apiKey: string, movieId: number) {
-		return get<IKeywords>(apiKey, `movie/${movieId}/keywords`);
+		return get<IMovieKeywords>(apiKey, `movie/${movieId}/keywords`);
 	},
 
 	/**

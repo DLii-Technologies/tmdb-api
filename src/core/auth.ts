@@ -1,6 +1,7 @@
-import { IRequestTokenResponse, ICreateSessionResponse, IDeleteSessionResponse }
-	from "./interface/response";
-import { get, post, del } from "./util/network";
+import { IRequestTokenResponse,
+         ICreateSessionResponse,
+         IDeleteSessionResponse } from "./interface/response";
+import { get, post, del }         from "./util/network";
 
 export let auth = {
 	/**

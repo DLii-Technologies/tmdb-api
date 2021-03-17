@@ -9,8 +9,8 @@ import { ISeasonAccountStates,
          IEpisodeAccountState,
          ISeriesAccountState }   from "./interface/account";
 import { IAlternativeNames,
-         IKeywordsAlt,
-         ITvWatchProviders,
+         ISeriesKeywords,
+         ISeriesWatchProviders,
          IWatchProvidersResults } from "./interface/info";
 import { ICredits,
          IEpisodeCredits,
@@ -111,7 +111,7 @@ export let tv = {
 	 * Get the list of keywords for a TV show
 	 */
 	getSeriesKeywords(apiKey: string, seriesId: number) {
-		return get<IKeywordsAlt>(apiKey, `tv/${seriesId}/keywords`);
+		return get<ISeriesKeywords>(apiKey, `tv/${seriesId}/keywords`);
 	},
 
 	/**
@@ -147,7 +147,7 @@ export let tv = {
 	 * Get the list of watch providers for the given TV show. **Must** credit *justWatch* if used!
 	 */
 	 getSeriesWatchProviders(apiKey: string, seriesId: number) {
-		return get<IWatchProvidersResults<ITvWatchProviders>>(apiKey,
+		return get<IWatchProvidersResults<ISeriesWatchProviders>>(apiKey,
 			`tv/${seriesId}/watch/providers`);
 	},
 

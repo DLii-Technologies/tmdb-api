@@ -1,5 +1,6 @@
+
 /**
- * @WARN Very similar to `MovieBase`
+ * A particular part of a collection
  */
 export interface ICollectionPart {
 	adult            : boolean;
@@ -18,6 +19,9 @@ export interface ICollectionPart {
 	vote_count       : number;
 }
 
+/**
+ * A complete collection
+ */
 export interface ICollection {
 	id           : number;
 	backdrop_path: string | null;
@@ -25,6 +29,9 @@ export interface ICollection {
 	poster_path  : string | null;
 }
 
+/**
+ * Detailed collection information
+ */
 export interface ICollectionDetails extends ICollection {
 	overview     : string;
 	backdrop_path: string;

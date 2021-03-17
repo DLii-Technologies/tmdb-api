@@ -1,8 +1,13 @@
-import { IMovieResults, ISeriesResults }             from "./interface/results";
-import { MediaType, TimeWindow }                     from "./enums";
-import { IDiscoverMovieOptions, IDiscoverTvOptions } from "./interface/options";
-import { get }                                       from "./util/network";
-import { sortF, optionalProperty, logicArrayF }      from "./util/utils";
+import { IMovieResults,
+         ISeriesResults }       from "./interface/results";
+import { MediaType,
+         TimeWindow }           from "./enums";
+import { IDiscoverMovieOptions,
+         IDiscoverTvOptions }   from "./interface/options";
+import { sortF,
+         optionalProperty,
+         logicArrayF }          from "./util/utils";
+import { get }                  from "./util/network";
 
 /**
  * Used to compile the movie discover options
@@ -70,7 +75,6 @@ function compileDiscoverTvOptions(options: IDiscoverTvOptions) {
 }
 
 export let discover = {
-
 	/**
 	 * Discover movies that meet the provided parameters
 	 */
