@@ -121,7 +121,7 @@ describe("Core: TV Shows", () => {
 		return tv.getSeriesWatchProviders(auth.api_key, 1396).then((result: IWatchProvidersResult<ITvWatchProviders>) => {
 			expect(result.results.US).to.have.property("buy");
 			expect(result.results.US.link).to.not.be.undefined;
-			expect(result.results.US.buy.length).to.be.greaterThan(0);
+			expect(result.results.US.buy?.length).to.be.greaterThan(0);
 		});
 	});
 

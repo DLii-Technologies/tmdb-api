@@ -76,8 +76,8 @@ describe("Core: Movie API", () => {
 		return movie.getWatchProviders(auth.api_key, 497).then((result: IWatchProvidersResult<IMovieWatchProviders>) => {
 			expect(result.results.US).to.have.property("buy");
 			expect(result.results.US.link).to.not.be.undefined;
-			expect(result.results.US.buy.length).to.be.greaterThan(0);
-			expect(result.results.US.rent.length).to.be.greaterThan(0);
+			expect(result.results.US.buy?.length).to.be.greaterThan(0);
+			expect(result.results.US.rent?.length).to.be.greaterThan(0);
 		});
 	});
 
