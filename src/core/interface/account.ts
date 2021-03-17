@@ -1,3 +1,5 @@
+import { IResultsWithId } from "./results";
+
 /**
  * The details of the authenticated account
  */
@@ -23,17 +25,9 @@ export interface IAvatar {
 // Account State Groupings -------------------------------------------------------------------------
 
 /**
- * A generalizable grouping of account states
- */
-interface IAccountStates<T> {
-	id     : number;
-	results: T[];
-}
-
-/**
  * A grouping of account states for a TV show's season
  */
-export interface ISeasonAccountStates extends IAccountStates<ISeasonAccountState> {};
+export interface ISeasonAccountStates extends IResultsWithId<ISeasonAccountState> {}
 
 // Account State Types -----------------------------------------------------------------------------
 

@@ -9,6 +9,14 @@ import { ICollection } from "./collections";
 import { IPerson }     from "./people";
 import { IList }       from "./list";
 
+/**
+ * A generic result structure containing an identifier
+ */
+export interface IResultsWithId<T> {
+	id     : number;
+	results: T[];
+}
+
 export interface ICompanyResults extends IPaginated<ICompany> {}
 
 export interface ICollectionResults extends IPaginated<ICollection> {}

@@ -5,26 +5,26 @@ import { auth } from "../init";
 /**
  * Testing modules
  */
-import { tv }                    from "../../src/core";
+import { tv }                     from "../../src/core";
 import { ISeriesDetails,
          ISeriesContentRatings,
          IEpisodeGroups,
-         ITheatricalScreenings } from "../../src/core/interface/tv";
-import { ISeriesAccountState }   from "../../src/core/interface/account";
+         ITheatricalScreenings }  from "../../src/core/interface/tv";
+import { ISeriesAccountState }    from "../../src/core/interface/account";
 import { IAlternativeNames,
          ITvWatchProviders,
-         IWatchProvidersResult } from "../../src/core/interface/info";
+         IWatchProvidersResults } from "../../src/core/interface/info";
 import { IAggregateCredits,
-         ICredits }              from "../../src/core/interface/credits";
-import { ISeriesExternalIds }    from "../../src/core/interface/external";
-import { IImages, IVideos }      from "../../src/core/interface/media";
-import { ISeriesResults }        from "../../src/core/interface/results";
+         ICredits }               from "../../src/core/interface/credits";
+import { ISeriesExternalIds }     from "../../src/core/interface/external";
+import { IImages, IVideos }       from "../../src/core/interface/media";
+import { ISeriesResults }         from "../../src/core/interface/results";
 import { ITranslations,
          ISeriesTranslation,
          ISeasonTranslation,
-         IEpisodeTranslation }   from"../../src/core/interface/language";
-import { IResponse }             from "../../src/core/interface/response";
-import { StatusCode }            from "../../src/core/enums";
+         IEpisodeTranslation }    from"../../src/core/interface/language";
+import { IResponse }              from "../../src/core/interface/response";
+import { StatusCode }             from "../../src/core/enums";
 
 describe("Core: TV Shows", () => {
 	it("Get TV series details", () => {
@@ -118,7 +118,7 @@ describe("Core: TV Shows", () => {
 	});
 
 	it("Get TV series watch providers", () => {
-		return tv.getSeriesWatchProviders(auth.api_key, 1396).then((result: IWatchProvidersResult<ITvWatchProviders>) => {
+		return tv.getSeriesWatchProviders(auth.api_key, 1396).then((result: IWatchProvidersResults<ITvWatchProviders>) => {
 			expect(result.results.US).to.have.property("buy");
 			expect(result.results.US.link).to.not.be.undefined;
 			expect(result.results.US.buy?.length).to.be.greaterThan(0);

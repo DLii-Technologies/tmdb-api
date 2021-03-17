@@ -1,3 +1,5 @@
+import { IResultsWithId } from "./results";
+
 export interface IApiConfiguration {
 	change_keys: string[];
 	images     : {
@@ -42,10 +44,7 @@ export interface IAlternativeName {
 	type: string;
 }
 
-export interface IAlternativeNames {
-	id     : number;
-	results: IAlternativeName[];
-}
+export interface IAlternativeNames extends IResultsWithId<IAlternativeName> {}
 
 export interface ICertification {
 	certification: string;
@@ -111,10 +110,7 @@ export interface IKeywords {
  * Due to inconsistencies in the REST API, sometimes keywords are returned with a `results` field
  * instead of the `keywords` field
  */
-export interface IKeywordsAlt {
-	id     : number;
-	results: IKeyword[];
-}
+export interface IKeywordsAlt extends IResultsWithId<IKeyword> {}
 
 export interface IWatchProvider {
 	display_priority: number;
@@ -218,7 +214,7 @@ export interface ITvWatchProviders {
 	ZA: IWatchProviderSource;
 }
 
-export interface IWatchProvidersResult<T> {
+export interface IWatchProvidersResults<T> {
 	id     : number;
 	results: T;
 }

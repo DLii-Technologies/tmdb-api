@@ -3,6 +3,7 @@ import { IGuestStar, ICrewMember, IMember } from "./credits";
 import { INetwork, IProductionCompany }     from "./company";
 import { EpisodeGroupType }                 from "../enums";
 import { IGenre }                           from "./info";
+import { IResultsWithId }                   from "./results";
 
 interface IEpisodeBase {
 	air_date       : string;
@@ -51,11 +52,7 @@ export interface IEpisodeGroupDetails extends IEpisodeGroup {
 	groups: IEpisodeGroupItem[];
 }
 
-
-export interface IEpisodeGroups {
-	id     : number;
-	results: IEpisodeGroup[];
-}
+export interface IEpisodeGroups extends IResultsWithId<IEpisodeGroup> {}
 
 interface IEpisodeBase {
 	air_date       : string;
@@ -142,10 +139,7 @@ export interface ISeriesContentRating {
 	rating    : string; // TV-MA, 18+, etc.
 }
 
-export interface ISeriesContentRatings {
-	id     : number;
-	results: ISeriesContentRating[];
-}
+export interface ISeriesContentRatings extends IResultsWithId<ISeriesContentRating> {}
 
 export interface ITheatricalScreening {
 	id            : number;
@@ -153,7 +147,4 @@ export interface ITheatricalScreening {
 	season_number : number;
 }
 
-export interface ITheatricalScreenings {
-	id     : number;
-	results: ITheatricalScreening[];
-}
+export interface ITheatricalScreenings extends IResultsWithId<ITheatricalScreening> {}

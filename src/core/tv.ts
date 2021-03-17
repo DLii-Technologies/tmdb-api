@@ -11,7 +11,7 @@ import { ISeasonAccountStates,
 import { IAlternativeNames,
          IKeywordsAlt,
          ITvWatchProviders,
-         IWatchProvidersResult } from "./interface/info";
+         IWatchProvidersResults } from "./interface/info";
 import { ICredits,
          IEpisodeCredits,
          IAggregateCredits }     from "./interface/credits";
@@ -147,7 +147,7 @@ export let tv = {
 	 * Get the list of watch providers for the given TV show. **Must** credit *justWatch* if used!
 	 */
 	 getSeriesWatchProviders(apiKey: string, seriesId: number) {
-		return get<IWatchProvidersResult<ITvWatchProviders>>(apiKey,
+		return get<IWatchProvidersResults<ITvWatchProviders>>(apiKey,
 			`tv/${seriesId}/watch/providers`);
 	},
 

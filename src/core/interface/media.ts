@@ -1,7 +1,8 @@
-import { VideoType }  from "../enums";
-import { IMovie }     from "./movie";
-import { IPaginated } from "./core";
-import { ISeries }    from "./tv";
+import { VideoType }      from "../enums";
+import { IMovie }         from "./movie";
+import { IPaginated }     from "./core";
+import { IResultsWithId } from "./results";
+import { ISeries }        from "./tv";
 
 export interface IEpisodeImages {
 	id    : number;
@@ -64,7 +65,4 @@ export interface IVideo {
 	type      : VideoType;
 }
 
-export interface IVideos {
-	id     : number;
-	results: IVideo[];
-}
+export interface IVideos extends IResultsWithId<IVideo> {}

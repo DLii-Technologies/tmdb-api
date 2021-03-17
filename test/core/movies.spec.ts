@@ -9,7 +9,7 @@ import { movie }                 from "../../src/core";
 import { IAlternativeTitles,
          IKeywords,
          IMovieWatchProviders,
-         IWatchProvidersResult } from "../../src/core/interface/info";
+         IWatchProvidersResults } from "../../src/core/interface/info";
 import { IMovieAccountState }    from "../../src/core/interface/account";
 import { ICredits }              from "../../src/core/interface/credits";
 import { IExternalIds }          from "../../src/core/interface/external";
@@ -73,7 +73,7 @@ describe("Core: Movie API", () => {
 	});
 
 	it("Get a movie's watch providers", () => {
-		return movie.getWatchProviders(auth.api_key, 497).then((result: IWatchProvidersResult<IMovieWatchProviders>) => {
+		return movie.getWatchProviders(auth.api_key, 497).then((result: IWatchProvidersResults<IMovieWatchProviders>) => {
 			expect(result.results.US).to.have.property("buy");
 			expect(result.results.US.link).to.not.be.undefined;
 			expect(result.results.US.buy?.length).to.be.greaterThan(0);

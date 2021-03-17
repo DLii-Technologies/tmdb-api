@@ -2,7 +2,7 @@ import { IMovieAccountState }    from "./interface/account";
 import { IAlternativeTitles,
          IKeywords,
          IMovieWatchProviders,
-         IWatchProvidersResult } from "./interface/info";
+         IWatchProvidersResults } from "./interface/info";
 import { ICredits }              from "./interface/credits";
 import { IExternalIds }          from "./interface/external";
 import { IImages,
@@ -101,7 +101,7 @@ export let movie = {
 	 * Get a list of watch providers for the given movie. **Must** credit *justWatch* if used!
 	 */
 	 getWatchProviders(apiKey: string, movieId: number) {
-		return get<IWatchProvidersResult<IMovieWatchProviders>>(apiKey,
+		return get<IWatchProvidersResults<IMovieWatchProviders>>(apiKey,
 			`movie/${movieId}/watch/providers`);
 	},
 

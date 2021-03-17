@@ -1,6 +1,7 @@
 import { ICompany }                   from "./company";
 import { IGenre, IProductionCountry } from "./info";
 import { ILanguage }                  from "./language";
+import { IResultsWithId }             from "./results";
 import { Status }                     from "../enums";
 
 /**
@@ -77,11 +78,5 @@ export interface IReleaseDateGroup {
 
 /**
  * A list of release dates for a movie
- *
- * @property {Number} id      Movie ID
- * @property {Array}  results The list of release dates
  */
-export interface IReleaseDates {
-	id     : number;
-	results: IReleaseDateGroup[];
-}
+export interface IReleaseDates extends IResultsWithId<IReleaseDateGroup> {}
