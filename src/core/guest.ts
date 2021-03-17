@@ -1,7 +1,9 @@
-import { IGuestSessionResponse }                          from "./interface/response";
-import { get }                                            from "./util/network";
-import { ISeriesResults, IEpisodeResults, IMovieResults } from "./interface/results";
-import { Sort }                                           from "./enums";
+import { IGuestSessionResponse } from "./interface/response";
+import { get }                   from "./util/network";
+import { ISeriesResults,
+         IEpisodeResults,
+         IMovieResults }         from "./interface/results";
+import { Sort }                  from "./enums";
 
 export let guest = {
 	/**

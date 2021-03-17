@@ -1,8 +1,10 @@
-import { IListDetails, IListItemStatus }  from "./interface/list";
-import { IListCreateResponse, IResponse } from "./interface/response";
-import { IListResults }                   from "./interface/results";
-import { get, post, del }                 from "./util/network";
-import { uriF }                           from "./util/utils";
+import { IListDetails,
+         IListItemStatus }    from "./interface/list";
+import { IListCreateResponse,
+         IResponse }          from "./interface/response";
+import { IListResults }       from "./interface/results";
+import { get, post, del }     from "./util/network";
+import { uriF }               from "./util/utils";
 
 export let list = {
 

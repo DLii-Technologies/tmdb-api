@@ -1,6 +1,3 @@
-/**
- * @TODO Maybe merge all of these varients since they can me null anyway??
- */
 export interface IExternalIds {
 	id          : number;
 	imdb_id     : string | null;
@@ -16,8 +13,7 @@ export interface ISeasonExternalIds {
 	tvrage_id   : number | null;
 }
 
-export interface ISeriesExternalIds extends IExternalIds, ISeasonExternalIds
-{}
+export interface ISeriesExternalIds extends IExternalIds, ISeasonExternalIds {}
 
 export interface IEpisodeExternalIds extends ISeasonExternalIds {
 	imdb_id: string | null;

@@ -1,9 +1,12 @@
-import { IMediaModel }                      from "./core";
-import { IGuestStar, ICrewMember, IMember } from "./credits";
-import { INetwork, IProductionCompany }     from "./company";
-import { EpisodeGroupType }                 from "../enums";
-import { IGenre }                           from "./info";
-import { IResultsWithId }                   from "./results";
+import { IMediaModel }        from "./core";
+import { IGuestStar,
+         ICrewMember,
+         IMember }            from "./credits";
+import { INetwork,
+         IProductionCompany } from "./company";
+import { EpisodeGroupType }   from "../enums";
+import { IGenre }             from "./info";
+import { IResultsWithId }     from "./results";
 
 interface IEpisodeBase {
 	air_date       : string;

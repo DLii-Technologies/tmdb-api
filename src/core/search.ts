@@ -1,9 +1,18 @@
-import { get }                                         from "./util/network";
-import { IFindResults, ICompanyResults, ICollectionResults, IKeywordResults, IMovieResults,
-	IPersonResults, ISeriesResults, ICombinedResults } from "./interface/results";
-import { ExternalSource }                              from "./enums";
-import { IMultiSearchOptions, ISeriesSearchOptions, IPersonSearchOptions, IMovieSearchOptions,
-	ICollectionSearchOptions }                         from "./interface/options";
+import { get }                      from "./util/network";
+import { IFindResults,
+         ICompanyResults,
+         ICollectionResults,
+         IKeywordResults,
+         IMovieResults,
+         IPersonResults,
+         ISeriesResults,
+         ICombinedResults }         from "./interface/results";
+import { ExternalSource }           from "./enums";
+import { IMultiSearchOptions,
+         ISeriesSearchOptions,
+         IPersonSearchOptions,
+         IMovieSearchOptions,
+         ICollectionSearchOptions } from "./interface/options";
 
 export let search = {
 	/**

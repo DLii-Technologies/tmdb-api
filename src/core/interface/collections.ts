@@ -1,4 +1,3 @@
-
 /**
  * A particular part of a collection
  */

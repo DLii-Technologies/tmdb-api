@@ -1,10 +1,14 @@
-import { get }                                         from "./util/network";
-import { IMovieCredits, ITvCredits, ICombinedCredits } from "./interface/credits";
-import { IPersonDetails }                              from "./interface/people";
-import { IPersonExternalIds }                          from "./interface/external";
-import { IPersonImages, ITaggedImageResults }          from "./interface/media";
-import { IPersonResults }                              from "./interface/results";
-import { ITranslations, IPersonTranslation }           from "./interface/language";
+import { get }                 from "./util/network";
+import { IMovieCredits,
+         ITvCredits,
+         ICombinedCredits }    from "./interface/credits";
+import { IPersonDetails }      from "./interface/people";
+import { IPersonExternalIds }  from "./interface/external";
+import { IPersonImages,
+         ITaggedImageResults } from "./interface/media";
+import { IPersonResults }      from "./interface/results";
+import { ITranslations,
+         IPersonTranslation }  from "./interface/language";
 
 export let people = {
 	/**

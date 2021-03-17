@@ -1,4 +1,4 @@
-import got from "got";
+import got             from "got";
 import { cleanObject } from "./utils";
 
 /**
@@ -10,8 +10,7 @@ const TIMEOUT = 10000
 const API_VERSION = 3;
 
 /**
- * @TODO Change this to a string type, no need for enums here...
- * The supported request methods
+ * Available request methods
  */
 enum RequestMethod {
 	Get    = "GET",

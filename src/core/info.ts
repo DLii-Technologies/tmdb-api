@@ -1,8 +1,16 @@
-import { IGenres, IKeyword, IMovieCertifications, ITvCertifications, IApiConfiguration, ICountry,
-	IJob, ITimezone }                  from "./interface/info";
-import { IWithId, IMovieResults }      from "./interface/results";
-import { get }                         from "./util/network";
-import { ILanguage, IWithEnglishName } from "./interface/language";
+import { IGenres,
+         IKeyword,
+         IMovieCertifications,
+         ITvCertifications,
+         IApiConfiguration,
+         ICountry,
+         IJob,
+         ITimezone }           from "./interface/info";
+import { IWithId,
+         IMovieResults }       from "./interface/results";
+import { get }                 from "./util/network";
+import { ILanguage,
+         IWithEnglishName }    from "./interface/language";
 
 export let info = {
 	/**
