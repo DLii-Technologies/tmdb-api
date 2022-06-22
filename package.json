@@ -50,7 +50,7 @@
     "typescript": "^3.9.3"
   },
   "dependencies": {
-    "got": "^11.1.4"
+    "got": "^11.8.5"
   },
   "nyc": {
     "all": true,
